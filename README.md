@@ -18,8 +18,8 @@ A [Vite](https://vitejs.dev/) powered WebExtension ([Chrome](https://developer.c
 - 💬 Effortless communications - powered by [`webext-bridge`](https://github.com/antfu/webext-bridge) and [VueUse](https://github.com/antfu/vueuse) storage
 - 🌈 [UnoCSS](https://github.com/unocss/unocss) - The instant on-demand Atomic CSS engine.
 - 🦾 [TypeScript](https://www.typescriptlang.org/) - type safe
-- 📦 [Components auto importing](srcomponents)
-- 🌟 [Icons](srcomponents) - Access to icons from any iconset directly
+- 📦 [Components auto importing](./src/components)
+- 🌟 [Icons](./src/components) - Access to icons from any iconset directly
 - 🖥 Content Script - Use Vue even in content script
 - 🌍 WebExtension - isomorphic extension for Chrome, Firefox, and others
 - 📃 Dynamic `manifest.json` with full type support
@@ -88,9 +88,8 @@ pnpm i
   - `styles` - styles shared in popup and options page
   - `assets` - assets used in Vue components
   - `manifest.ts` - manifest for the extension.
+- `assets` - static assets (mainly for `manifest.json`).
 - `extension` - extension package root.
-  - `assets` - static assets (mainly for `manifest.json`).
-  - `dist` - built files, also serve stub entry for Vite on development.
 - `scripts` - development and bundling helper scripts.
 
 ### Development

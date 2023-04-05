@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./ChatCrafter",
+    "baseUrl": ".",
     "module": "ESNext",
     "target": "es2016",
     "lib": ["DOM", "ESNext"],
