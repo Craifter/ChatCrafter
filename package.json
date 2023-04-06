@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/Craifter/ChatCrafter/issues"
   },
-  "homepage": "https://github.com/Craifter/ChatCrafter#readme"
+  "homepage": "https://github.com/Craifter/ChatCrafter#readme",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.3"
+  }
 }
