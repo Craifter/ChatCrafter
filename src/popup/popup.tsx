@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './popup.css'
-import Popup from '../components/Popup'
+import Popup from './components/Popup'
 
 const container = document.getElementById('chatcrafter-popup')
 if (container == null) {
