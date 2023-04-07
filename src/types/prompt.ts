@@ -1,4 +1,4 @@
-export interface Promt {
+export interface Prompt {
   id: string;
   name: string;
   description: string;
@@ -15,10 +15,4 @@ export interface Promt {
     source: string;
   };
   model: any;
-}
-
-export interface Prompts {
-  version: string;
-  generator: string;
-  prompts: Promt[];
 }
