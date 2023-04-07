@@ -22,13 +22,13 @@ const PAGES = [
 
 const OPTIONS = {
     MANIFEST: './src/manifest.json',
-    background: './src/background.ts',
+    SERVICE_WORKER: './src/service-worker.ts',
     CHAT_GPT: './src/chat-gpt.ts',
     DIST: path.join(__dirname, 'dist'),
 };
 
 const entry = {
-    background: OPTIONS.background,
+    'service-worker': OPTIONS.SERVICE_WORKER,
     'chat-gpt': OPTIONS.CHAT_GPT,
 }
 

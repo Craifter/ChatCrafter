@@ -8,7 +8,7 @@
     "default_title": "React Chrome Extension"
   },
   "background": {
-    "background": "background.js"
+    "service_worker": "service-worker.js"
   },
   "permissions": [
     "storage",
