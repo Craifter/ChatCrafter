@@ -1,9 +1,9 @@
-import browser from 'webextension-polyfill';
+import browser from 'webextension-polyfill'
 
 browser.runtime.onInstalled.addListener(() => {
-    browser.contextMenus.create({
-        "id": "sampleContextMenu",
-        "title": "Sample Context Menu",
-        "contexts": ["link"]
-    });
-});
+  browser.contextMenus.create({
+    id: 'sampleContextMenu',
+    title: 'Sample Context Menu',
+    contexts: ['link']
+  })
+})

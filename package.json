@@ -14,7 +14,8 @@
     "web:firefox": "npm run web -- -t firefox-desktop --firefox-profile=profile/firefox",
     "web:chromium": "npm run web -- -t chromium --chromium-profile=profile/chromium",
     "web:chromium:windows": "SET var=%cd%&& npm run web -- -t chromium --chromium-profile=\"%var%\\profile\\chromium\"",
-    "lint": "eslint --ext .ts,.tsx src"
+    "lint": "eslint --ext .ts,.tsx src",
+    "lint:fix": "eslint --ext .ts,.tsx src --fix"
   },
   "repository": {
     "type": "git",
