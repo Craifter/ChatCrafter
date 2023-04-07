@@ -1,5 +1,5 @@
 // Import necessary libraries
-import React, { FC, useState, useCallback, useEffect } from 'react';
+import React, { type FC, useState, useCallback, useEffect } from 'react'
 import browser from 'webextension-polyfill'
 
 // Define the props interface
@@ -7,31 +7,30 @@ interface Props { }
 
 // Create the component
 export const PromptArea: FC<Props> = () => {
-    const [prompts, setPrompts] = useState('');
+  const [prompts, setPrompts] = useState('')
 
-    useEffect(() => {
-        const loadPromts = async () => {
-            const propts = await browser.storage.local.get('propts');
-            if (propts.propts) {
-                setPrompts(propts.propts);
-            }
-        }
-        loadPromts();
-    }, [])
+  useEffect(() => {
+    const loadPromts = async () => {
+      const propts = await browser.storage.local.get('propts')
+      if (propts.propts) {
+        setPrompts(propts.propts)
+      }
+    }
+    loadPromts()
+  }, [])
 
+  const handleButtonClick = useCallback(() => {
+    console.log(prompts)
+    browser.storage.local.set({
+      propts: prompts
+    })
+  }, [prompts])
 
-    const handleButtonClick = useCallback(() => {
-        console.log(prompts);
-        browser.storage.local.set({
-            propts: prompts
-        })
-    }, [prompts]);
+  const handleTextChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setPrompts(e.target.value)
+  }, [])
 
-    const handleTextChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setPrompts(e.target.value);
-    }, []);
-
-    return (
+  return (
         <div className="bg-white shadow-md rounded p-4 w-full">
             <textarea
                 className="w-full h-24 p-2 border border-gray-300 rounded"
@@ -45,5 +44,5 @@ export const PromptArea: FC<Props> = () => {
                 Save
             </button>
         </div>
-    );
-};
+  )
+}

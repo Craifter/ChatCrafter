@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { type FC } from 'react'
 
-export default function PopupHeader() {
+export const PopupHeader: FC = () => {
   return (
     <div>
       <h1>ChatCrafter</h1>

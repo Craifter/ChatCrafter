@@ -1,49 +1,49 @@
-import { Prompt } from '../../types/prompt';
-import React, { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { type Prompt } from '../../types/prompt'
+import React, { type FC, type KeyboardEvent, useEffect, useRef, useState } from 'react'
 
 interface Props {
-  prompt: Prompt;
-  onClose: () => void;
-  onUpdatePrompt: (prompt: Prompt) => void;
+  prompt: Prompt
+  onClose: () => void
+  onUpdatePrompt: (prompt: Prompt) => void
 }
 
 export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
-  const [name, setName] = useState(prompt.name);
-  const [description, setDescription] = useState(prompt.description);
-  const [content, setContent] = useState(prompt.prompt);
+  const [name, setName] = useState(prompt.name)
+  const [description, setDescription] = useState(prompt.description)
+  const [content, setContent] = useState(prompt.prompt)
 
-  const modalRef = useRef<HTMLDivElement>(null);
-  const nameInputRef = useRef<HTMLInputElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null)
+  const nameInputRef = useRef<HTMLInputElement>(null)
 
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      onUpdatePrompt({ ...prompt, name, description, prompt: content.trim() });
-      onClose();
+      onUpdatePrompt({ ...prompt, name, description, prompt: content.trim() })
+      onClose()
     }
-  };
+  }
 
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-        window.addEventListener('mouseup', handleMouseUp);
+      if ((modalRef.current != null) && !modalRef.current.contains(e.target as Node)) {
+        window.addEventListener('mouseup', handleMouseUp)
       }
-    };
+    }
 
     const handleMouseUp = (e: MouseEvent) => {
-      window.removeEventListener('mouseup', handleMouseUp);
-      onClose();
-    };
+      window.removeEventListener('mouseup', handleMouseUp)
+      onClose()
+    }
 
-    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousedown', handleMouseDown)
 
     return () => {
-      window.removeEventListener('mousedown', handleMouseDown);
-    };
-  }, [onClose]);
+      window.removeEventListener('mousedown', handleMouseDown)
+    }
+  }, [onClose])
 
   useEffect(() => {
-    nameInputRef.current?.focus();
-  }, []);
+    nameInputRef.current?.focus()
+  }, [])
 
   return (
     <div
@@ -70,7 +70,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
               className="mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 text-neutral-900 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
               placeholder={'A name for your prompt.'}
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => { setName(e.target.value) }}
             />
 
             <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
@@ -81,7 +81,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
               style={{ resize: 'none' }}
               placeholder={'A description for your prompt.'}
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => { setDescription(e.target.value) }}
               rows={3}
             />
 
@@ -95,7 +95,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
                 'Prompt content. Use {{}} to denote a variable. Ex: {{ name }} is a {{ adjective }} {{ noun }}'
               }
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => { setContent(e.target.value) }}
               rows={10}
             />
 
@@ -107,11 +107,11 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
                   ...prompt,
                   name,
                   description,
-                  content: content.trim(),
-                };
+                  content: content.trim()
+                }
 
-                onUpdatePrompt(updatedPrompt);
-                onClose();
+                onUpdatePrompt(updatedPrompt)
+                onClose()
               }}
             >
               {'Save'}
@@ -120,5 +120,5 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,10 +1,10 @@
 // Import necessary libraries
-import React, { FC, ReactNode } from 'react';
+import React, { type FC, type ReactNode } from 'react'
 
 // Define the props interface
 interface Props {
-  header: ReactNode;
-  children: ReactNode | ReactNode[];
+  header: ReactNode
+  children: ReactNode | ReactNode[]
 }
 
 // Create the component
@@ -18,5 +18,5 @@ export const OptionsLayout: FC<Props> = ({ header, children }) => {
         <div className="text-gray-600">{children}</div>
       </div>
     </div>
-  );
-};
+  )
+}

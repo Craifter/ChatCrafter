@@ -1,21 +1,20 @@
 // Import necessary libraries
-import React, { FC, useCallback } from 'react';
+import React, { type FC, useCallback } from 'react'
 import {
   IconChartBubble,
   IconList,
-  IconRobot, IconSettings,
-} from '@tabler/icons-react';
-import { PromptArea } from './PromtArea';
+  IconRobot, IconSettings
+} from '@tabler/icons-react'
+import { PromptArea } from './PromtArea'
 
 // Define the props interface
 interface Props {
-  onOpenChat: () => void;
-  onOpenPromptRepo: () => void;
+  onOpenChat: () => void
+  onOpenPromptRepo: () => void
 }
 
 // Create the component
 export const OptionsContent: FC<Props> = ({ onOpenChat, onOpenPromptRepo }) => {
-
   return (
     <div className="bg-white shadow-md rounded p-4 w-full">
       <div className="flex flex-col space-y-4">
@@ -40,5 +39,5 @@ export const OptionsContent: FC<Props> = ({ onOpenChat, onOpenPromptRepo }) => {
       </div>
       <PromptArea></PromptArea>
     </div>
-  );
-};
+  )
+}

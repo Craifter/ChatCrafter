@@ -1,43 +1,42 @@
-import { Prompt } from '../../types/prompt';
+import { type Prompt } from '../../types/prompt'
 import {
   IconBulbFilled,
   IconCheck,
   IconTrash,
-  IconX,
-} from '@tabler/icons-react';
-import { DragEvent, FC, useEffect, useState } from 'react';
-import { PromptModal } from './PromptModal';
-import React from 'react';
+  IconX
+} from '@tabler/icons-react'
+import React, { type DragEvent, type FC, useEffect, useState } from 'react'
+import { PromptModal } from './PromptModal'
 
 interface Props {
-  prompt: Prompt;
-  onUpdatePrompt: (prompt: Prompt) => void;
-  onDeletePrompt: (prompt: Prompt) => void;
+  prompt: Prompt
+  onUpdatePrompt: (prompt: Prompt) => void
+  onDeletePrompt: (prompt: Prompt) => void
 }
 
 export const PromptComponent: FC<Props> = ({
   prompt,
   onUpdatePrompt,
-  onDeletePrompt,
+  onDeletePrompt
 }) => {
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isRenaming, setIsRenaming] = useState(false);
-  const [renameValue, setRenameValue] = useState('');
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [isRenaming, setIsRenaming] = useState(false)
+  const [renameValue, setRenameValue] = useState('')
 
   const handleDragStart = (e: DragEvent<HTMLButtonElement>, prompt: Prompt) => {
     if (e.dataTransfer) {
-      e.dataTransfer.setData('prompt', JSON.stringify(prompt));
+      e.dataTransfer.setData('prompt', JSON.stringify(prompt))
     }
-  };
+  }
 
   useEffect(() => {
     if (isRenaming) {
-      setIsDeleting(false);
+      setIsDeleting(false)
     } else if (isDeleting) {
-      setIsRenaming(false);
+      setIsRenaming(false)
     }
-  }, [isRenaming, isDeleting]);
+  }, [isRenaming, isDeleting])
 
   return (
     <div className="relative flex items-center">
@@ -45,14 +44,14 @@ export const PromptComponent: FC<Props> = ({
         className="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90"
         draggable="true"
         onClick={(e) => {
-          e.stopPropagation();
-          setShowModal(true);
+          e.stopPropagation()
+          setShowModal(true)
         }}
-        onDragStart={(e) => handleDragStart(e, prompt)}
+        onDragStart={(e) => { handleDragStart(e, prompt) }}
         onMouseLeave={() => {
-          setIsDeleting(false);
-          setIsRenaming(false);
-          setRenameValue('');
+          setIsDeleting(false)
+          setIsRenaming(false)
+          setRenameValue('')
         }}
       >
         <IconBulbFilled size={18} />
@@ -67,13 +66,13 @@ export const PromptComponent: FC<Props> = ({
           <button
             className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
             onClick={(e) => {
-              e.stopPropagation();
+              e.stopPropagation()
 
               if (isDeleting) {
-                onDeletePrompt(prompt);
+                onDeletePrompt(prompt)
               }
 
-              setIsDeleting(false);
+              setIsDeleting(false)
             }}
           >
             <IconCheck size={18} />
@@ -82,8 +81,8 @@ export const PromptComponent: FC<Props> = ({
           <button
             className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
             onClick={(e) => {
-              e.stopPropagation();
-              setIsDeleting(false);
+              e.stopPropagation()
+              setIsDeleting(false)
             }}
           >
             <IconX size={18} />
@@ -96,8 +95,8 @@ export const PromptComponent: FC<Props> = ({
           <button
             className="min-w-[20px] p-1 text-neutral-400 hover:text-neutral-100"
             onClick={(e) => {
-              e.stopPropagation();
-              setIsDeleting(true);
+              e.stopPropagation()
+              setIsDeleting(true)
             }}
           >
             <IconTrash size={18} />
@@ -108,10 +107,10 @@ export const PromptComponent: FC<Props> = ({
       {showModal && (
         <PromptModal
           prompt={prompt}
-          onClose={() => setShowModal(false)}
+          onClose={() => { setShowModal(false) }}
           onUpdatePrompt={onUpdatePrompt}
         />
       )}
     </div>
-  );
-};
+  )
+}

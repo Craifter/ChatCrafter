@@ -1,21 +1,19 @@
 // Import necessary libraries
-import React, { FC, useCallback } from 'react';
+import React, { type FC } from 'react'
 import {
-  IconChartBubble,
   IconList,
-  IconRobot, IconSettings,
-} from '@tabler/icons-react';
+  IconRobot, IconSettings
+} from '@tabler/icons-react'
 
 // Define the props interface
 interface Props {
-  onOpenChat: () => void;
-  onOpenOptions: () => void;
-  onOpenPromptRepo: () => void;
+  onOpenChat: () => void
+  onOpenOptions: () => void
+  onOpenPromptRepo: () => void
 }
 
 // Create the component
 export const PopupContent: FC<Props> = ({ onOpenChat, onOpenOptions, onOpenPromptRepo }) => {
-
   return (
     <div className="bg-white shadow-md rounded p-4 w-full">
       <div className="flex flex-col space-y-4">
@@ -48,5 +46,5 @@ export const PopupContent: FC<Props> = ({ onOpenChat, onOpenOptions, onOpenPromp
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

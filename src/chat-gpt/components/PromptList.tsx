@@ -1,17 +1,17 @@
-import { Prompt } from '../../types/prompt';
-import React, { FC } from 'react';
-import { PromptComponent } from './PromptComponent';
+import { type Prompt } from '../../types/prompt'
+import React, { type FC } from 'react'
+import { PromptComponent } from './PromptComponent'
 
 interface Props {
-  prompts: Prompt[];
-  onUpdatePrompt: (prompt: Prompt) => void;
-  onDeletePrompt: (prompt: Prompt) => void;
+  prompts: Prompt[]
+  onUpdatePrompt: (prompt: Prompt) => void
+  onDeletePrompt: (prompt: Prompt) => void
 }
 
 export const PromptList: FC<Props> = ({
   prompts,
   onUpdatePrompt,
-  onDeletePrompt,
+  onDeletePrompt
 }) => {
   return (
     <div className="flex w-full flex-col gap-1">
@@ -27,5 +27,5 @@ export const PromptList: FC<Props> = ({
           />
         ))}
     </div>
-  );
-};
+  )
+}

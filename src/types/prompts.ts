@@ -1,7 +1,7 @@
-import { Prompt } from "./prompt";
+import { type Prompt } from './prompt'
 
 export interface Prompts {
-  version: string;
-  generator: string;
-  prompts: Prompt[];
+  version: string
+  generator: string
+  prompts: Prompt[]
 }
