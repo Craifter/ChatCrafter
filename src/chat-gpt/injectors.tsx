@@ -24,12 +24,23 @@ export function injectSidebar (): void {
   root.render(<App num={123} />)
 }
 
+export function injectPrompt (prompt: string): void {
+  const getTextArea = (): HTMLTextAreaElement => {
+    const textArea = document.querySelector(TEXT_AREA_QUERY)
+    if (textArea == null) throw new Error('Text area not found')
+    return textArea as HTMLTextAreaElement
+  }
+
+  const textArea = getTextArea()
+  textArea.value = prompt
+}
+
 export function injectDescription (description: string): void {
   const getChatGptLogo = (): Element | null => {
     // get all h1
     const elements = document.querySelectorAll('h1')
     console.log(elements)
-    for (let i = 0; i < elements.length; i++) {
+    for (const i in elements) {
       const element = elements[i]
       if (element.innerHTML.includes('ChatGPT')) {
         const span = element.querySelector('span')
