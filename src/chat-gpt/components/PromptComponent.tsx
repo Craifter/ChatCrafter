@@ -24,10 +24,8 @@ export const PromptComponent: FC<Props> = ({
   const [isRenaming, setIsRenaming] = useState(false)
   const [renameValue, setRenameValue] = useState('')
 
-  const handleDragStart = (e: DragEvent<HTMLButtonElement>, prompt: Prompt) => {
-    if (e.dataTransfer) {
-      e.dataTransfer.setData('prompt', JSON.stringify(prompt))
-    }
+  const handleDragStart = (e: DragEvent<HTMLButtonElement>, prompt: Prompt): void => {
+    e.dataTransfer.setData('prompt', JSON.stringify(prompt))
   }
 
   useEffect(() => {

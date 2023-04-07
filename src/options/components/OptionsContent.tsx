@@ -1,9 +1,8 @@
 // Import necessary libraries
-import React, { type FC, useCallback } from 'react'
+import React, { type FC } from 'react'
 import {
-  IconChartBubble,
   IconList,
-  IconRobot, IconSettings
+  IconRobot
 } from '@tabler/icons-react'
 import { PromptArea } from './PromtArea'
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './options.css'
-import { App } from '../components/App'
 import Options from './components/Options'
 
 const container = document.getElementById('chatcrafter-options')

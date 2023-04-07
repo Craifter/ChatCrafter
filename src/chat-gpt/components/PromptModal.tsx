@@ -15,7 +15,7 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
   const modalRef = useRef<HTMLDivElement>(null)
   const nameInputRef = useRef<HTMLInputElement>(null)
 
-  const handleEnter = (e: KeyboardEvent<HTMLDivElement>) => {
+  const handleEnter = (e: KeyboardEvent<HTMLDivElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
       onUpdatePrompt({ ...prompt, name, description, prompt: content.trim() })
       onClose()
@@ -23,13 +23,13 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
   }
 
   useEffect(() => {
-    const handleMouseDown = (e: MouseEvent) => {
+    const handleMouseDown = (e: MouseEvent): void => {
       if ((modalRef.current != null) && !modalRef.current.contains(e.target as Node)) {
         window.addEventListener('mouseup', handleMouseUp)
       }
     }
 
-    const handleMouseUp = (e: MouseEvent) => {
+    const handleMouseUp = (e: MouseEvent): void => {
       window.removeEventListener('mouseup', handleMouseUp)
       onClose()
     }

@@ -10,18 +10,18 @@ export const PromptArea: FC<Props> = () => {
   const [prompts, setPrompts] = useState('')
 
   useEffect(() => {
-    const loadPromts = async () => {
+    const loadPromts = async (): Promise<void> => {
       const propts = await browser.storage.local.get('propts')
-      if (propts.propts) {
+      if (propts.propts != null) {
         setPrompts(propts.propts)
       }
     }
-    loadPromts()
+    loadPromts().catch((e) => { console.error(e) })
   }, [])
 
-  const handleButtonClick = useCallback(() => {
+  const handleButtonClick = useCallback(async () => {
     console.log(prompts)
-    browser.storage.local.set({
+    await browser.storage.local.set({
       propts: prompts
     })
   }, [prompts])

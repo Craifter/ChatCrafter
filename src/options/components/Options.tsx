@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { OptionsLayout } from './OptionsLayout'
 import OptionsHeader from './OptionsHeader'
 import { OptionsContent } from './OptionsContent'
-import browser from 'webextension-polyfill'
 import { CHATGTP_URL, EXAMPLE_PROMPTS_URL } from '../../constants'
 
-export default function Options () {
+export default function Options (): JSX.Element {
   return (
     <OptionsLayout header={<OptionsHeader></OptionsHeader>}>
       <OptionsContent
