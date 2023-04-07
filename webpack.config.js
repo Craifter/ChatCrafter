@@ -1,6 +1,8 @@
 const path = require('path');
 const HTMLPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const tailwindcss = require("tailwindcss");
 
 /**
  * @type {[{template: string, entry: string, chunk: string}]}
@@ -20,13 +22,13 @@ const PAGES = [
 
 const OPTIONS = {
     MANIFEST: './src/manifest.json',
-    SERVICE_WORKER: './src/service-worker.ts',
+    background: './src/background.ts',
     CHAT_GPT: './src/chat-gpt.ts',
     DIST: path.join(__dirname, 'dist'),
 };
 
 const entry = {
-    service_worker: OPTIONS.SERVICE_WORKER,
+    background: OPTIONS.background,
     'chat-gpt': OPTIONS.CHAT_GPT,
 }
 
@@ -55,8 +57,18 @@ module.exports = {
                 exclude: /node_modules/,
                 test: /\.css$/i,
                 use: [
-                    'style-loader',
-                    'css-loader'
+                    MiniCssExtractPlugin.loader,
+                    'css-loader', {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [
+                                    tailwindcss('./tailwind.config.js'),
+                                    require('autoprefixer'),
+                                ],
+                            }
+                        }
+                    },
                 ]
             },
         ],
@@ -67,6 +79,7 @@ module.exports = {
                 { from: OPTIONS.MANIFEST, to: 'manifest.json' },
             ],
         }),
+        new MiniCssExtractPlugin(),
         ...getHtmlPlugins(PAGES),
     ],
     resolve: {
@@ -93,6 +106,7 @@ function getHtmlPlugins(elements) {
                 filename: `${element.chunk}.html`,
                 chunks: [element.chunk],
                 template: element.template,
+                inject: 'head',
             })
     );
 }
