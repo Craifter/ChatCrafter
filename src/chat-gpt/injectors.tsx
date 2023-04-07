@@ -21,7 +21,6 @@ export function injectSidebar (): void {
   const sidebarContainer = createSidebarContainer()
   container.appendChild(sidebarContainer)
   const root = ReactDOM.createRoot(sidebarContainer)
-  // root.render(<App num={13} />)
   root.render(<SideBar />)
 }
 
