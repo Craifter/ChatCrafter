@@ -8,4 +8,4 @@ if (container == null) {
   throw new Error('Root element not found')
 }
 const root = ReactDOM.createRoot(container)
-root.render(<Popup num={12334} />)
+root.render(<Popup/>)

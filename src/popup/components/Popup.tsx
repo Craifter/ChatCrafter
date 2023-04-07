@@ -3,21 +3,16 @@ import { PopupLayout } from "./PopupLayout";
 import PopupHeader from "./PopupHeader";
 import { PopupContent } from "./PopupContent";
 import browser from 'webextension-polyfill'
+import { CHATGTP_URL, EXAMPLE_PROMPTS_URL } from "../../constants";
 
-type PopupProps = { num: number };
-
-export default function Popup({ num }: PopupProps) {
+export default function Popup() {
 
     return (
         <PopupLayout header={<PopupHeader></PopupHeader>}>
             <PopupContent
-                onOpenChat={function (): void {
-                    throw new Error("Function not implemented.");
-                }}
+                onOpenChat={() => window.open(CHATGTP_URL)}
                 onOpenOptions={() => browser.runtime.openOptionsPage()}
-                onOpenPromptRepo={function (): void {
-                    throw new Error("Function not implemented.");
-                }}></PopupContent>
+                onOpenPromptRepo={() => window.open(EXAMPLE_PROMPTS_URL)}></PopupContent>
         </PopupLayout>
     );
 }
