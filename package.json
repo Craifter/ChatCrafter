@@ -4,7 +4,16 @@
   "description": "A browser extension that enhances the ChatGPT interface by providing prompt templates in the AIPL format, making it easier to write and use prompts. Compatible with Chrome, Firefox, and other popular browsers. Streamline the process of crafting effective messages with customizable prompts featuring variables.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pre-start": "concurrently --restart-after 1000 --restart-tries 10 \"npm run watch\"",
+    "start": "npm run pre-start -- \"npm run web\"",
+    "start:chromium": "npm run pre-start -- \"npm run web:chromium\"",
+    "start:chromium:windows": "npm run pre-start -- \"npm run web:chromium:windows\"",
+    "build": "webpack --config webpack.config.js",
+    "watch": "npm run build -- --watch",
+    "web": "web-ext run --source-dir=dist --devtools --start-url=https://chat.openai.com/ --keep-profile-changes --profile-create-if-missing",
+    "web:firefox": "npm run web -- -t firefox-desktop --firefox-profile=profile/firefox",
+    "web:chromium": "npm run web -- -t chromium --chromium-profile=profile/chromium",
+    "web:chromium:windows": "SET var=%cd%&& npm run web -- -t chromium --chromium-profile=\"%var%\\profile\\chromium\""
   },
   "repository": {
     "type": "git",
@@ -20,7 +29,23 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
+    "@types/webextension-polyfill": "^0.10.0",
+    "concurrently": "^8.0.1",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
     "ts-loader": "^9.4.2",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.3",
+    "web-ext": "^7.6.0",
+    "web-ext-plugin": "^2.7.0",
+    "webextension-polyfill": "^0.10.0",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "style-loader": "^3.3.2",
+    "webext-bridge": "^6.0.1"
   }
 }
