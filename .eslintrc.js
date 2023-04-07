@@ -11,5 +11,6 @@ module.exports = {
         "checksVoidReturn": false
       }
     ]
-  }
+  },
+  ignorePatterns: ['**/*.html', '**/*.js', '**/*.css', '**/*.json'],
 }
