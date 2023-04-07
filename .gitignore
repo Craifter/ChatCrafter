@@ -1,3 +1,6 @@
 .idea
 .vscode
 node_modules
+profile
+!profile/.gitkeep
+dist
