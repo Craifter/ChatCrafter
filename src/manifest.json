@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "name": "ChatCrafter",
+  "description": "A browser extension that enhances the ChatGPT interface by providing prompt templates in the AIPL format, making it easier to write and use prompts. Streamline the process of crafting effective messages with customizable prompts featuring variables.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "React Chrome Extension"
+  },
+  "background": {
+    "background": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/chat/*"
+      ],
+      "js": [
+        "chat-gpt.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}
