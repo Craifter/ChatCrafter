@@ -38,7 +38,6 @@ export function injectPrompt (prompt: string): void {
 
 export function injectDescription (description: string): void {
   const getChatGptLogo = (): Element | null => {
-    // get all h1
     const elements = document.querySelectorAll('h1')
     console.log(elements)
     for (const i in elements) {
