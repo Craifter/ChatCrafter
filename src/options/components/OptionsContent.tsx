@@ -8,6 +8,7 @@ import {
   IconRobot, IconSettings, IconUser
 } from '@tabler/icons-react'
 import { PromptArea } from './PromtArea'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 
 const ICON_SIZE = 16
 
@@ -36,7 +37,6 @@ interface OptionContentProps {
   onOpenPromptRepo: () => void
   onOpenSupport: () => void
 }
-
 export const OptionsContent: FC<OptionContentProps> = ({ onOpenChat, onOpenPromptRepo, onOpenSupport }) => {
   return (
     <div className="bg-white shadow-md rounded p-4 w-full">
@@ -63,6 +63,13 @@ export const OptionsContent: FC<OptionContentProps> = ({ onOpenChat, onOpenPromp
           <ExternalLinkIcon />
         </MenuButton>
       </div>
+      <React.StrictMode>
+        <HashRouter>
+          <Routes>
+            <Route path="/" Component={() => <div>Home</div>} />
+          </Routes>
+        </HashRouter>
+      </React.StrictMode>
       <PromptArea></PromptArea>
     </div>
   )
