@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react'
 import { PromptList } from './components/PromptList'
 import { type Prompt } from '../types/prompt'
 
-const promts: Prompt[] = [
+const prompts: Prompt[] = [
   {
     id: 'name-generator',
     name: 'name generator',
@@ -33,4 +33,4 @@ const promts: Prompt[] = [
   }
 ]
 
-export const SideBar: () => ReactElement = () => <PromptList onDeletePrompt={() => { }} onUpdatePrompt={() => { }} prompts={promts} />
+export const SideBar: () => ReactElement = () => <PromptList onDeletePrompt={() => { }} onUpdatePrompt={() => { }} prompts={prompts} />
