@@ -1,16 +1,10 @@
 // Import necessary libraries
 import React, { type FC, type ReactNode } from 'react'
 import {
-  IconBrandGit,
-  IconGitBranch,
-  IconLink,
-  IconList,
-  IconRobot, IconSettings, IconUser
+  IconLink
 } from '@tabler/icons-react'
-import { PromptArea } from './PromtArea'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-
-const ICON_SIZE = 16
+import { ICON_SIZE } from '../../constants'
 
 const ExternalLinkIcon: FC = () => <IconLink size={ICON_SIZE} className={'inline-block ml-1 -mt-0.5'} />
 
@@ -27,50 +21,63 @@ const MenuButton: FC<MenuButtonProps> = ({ onClick, icon, children }: MenuButton
       onClick={onClick}
     >
       {icon}
-      <span className="ml-2 text-base leading-4 whitespace-nowrap">{children}</span>
+      <span className="ml-1 text-base leading-4 whitespace-nowrap">{children}</span>
     </button>
   )
 }
 
-interface OptionContentProps {
-  onOpenChat: () => void
-  onOpenPromptRepo: () => void
-  onOpenSupport: () => void
+export interface OptionContentPropsPage {
+  menuName: string
+  menuIcon: ReactNode
+  hash: string
+  pageContent: ReactNode
 }
-export const OptionsContent: FC<OptionContentProps> = ({ onOpenChat, onOpenPromptRepo, onOpenSupport }) => {
+
+export interface OptionContentPropsExternal {
+  menuName: string
+  menuIcon: ReactNode
+  externalUrl: string
+}
+
+export interface OptionContentProps {
+  pages: OptionContentPropsPage[]
+  externals: OptionContentPropsExternal[]
+}
+export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => {
   return (
     <div className="bg-white shadow-md rounded p-4 w-full">
       <div className="flex flex-nowrap overflow-x-auto gap-2 pb-4">
-        <MenuButton onClick={() => {}} icon={<IconSettings size={ICON_SIZE} />}>
-          ChatCrafter Options
-        </MenuButton>
-        <MenuButton onClick={() => {}} icon={<IconUser size={ICON_SIZE} />}>
-          Open Own Prompts
-        </MenuButton>
-        <MenuButton onClick={() => {}} icon={<IconList size={ICON_SIZE} />}>
-          Open Prompts List
-        </MenuButton>
-        <MenuButton onClick={onOpenChat} icon={<IconRobot size={ICON_SIZE} />}>
-          Open ChatGPT
-          <ExternalLinkIcon />
-        </MenuButton>
-        <MenuButton onClick={onOpenPromptRepo} icon={<IconBrandGit size={ICON_SIZE} />}>
-          Open Prompt Repo
-          <ExternalLinkIcon />
-        </MenuButton>
-        <MenuButton onClick={onOpenSupport} icon={<IconGitBranch size={ICON_SIZE} />}>
-          Support ChatCrafter
-          <ExternalLinkIcon />
-        </MenuButton>
+        {pages.map((page) => (
+          <MenuButton
+            key={page.hash}
+            onClick={() => {
+              window.location.hash = '/' + page.hash
+            }}
+            icon={page.menuIcon}
+          >
+            {page.menuName}
+          </MenuButton>
+        ))}
+        {externals.map((external) => (
+          <MenuButton
+            key={external.menuName}
+            onClick={() => {
+              window.open(external.externalUrl)
+            }}
+            icon={external.menuIcon}
+          >
+            {external.menuName}
+            <ExternalLinkIcon />
+          </MenuButton>
+        ))}
       </div>
-      <React.StrictMode>
-        <HashRouter>
-          <Routes>
-            <Route path="/" Component={() => <div>Home</div>} />
-          </Routes>
-        </HashRouter>
-      </React.StrictMode>
-      <PromptArea></PromptArea>
+      <HashRouter basename={'/'}>
+        <Routes>
+          {pages.map((page) => (
+            <Route key={page.hash} path={page.hash} element={page.pageContent} />
+          ))}
+        </Routes>
+      </HashRouter>
     </div>
   )
 }
