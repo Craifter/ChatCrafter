@@ -13,13 +13,14 @@ import {
   IconUser
 } from '@tabler/icons-react'
 import { OptionsPageAbout } from './pages/OptionsPageAbout'
+import { OptionsPageOwnPrompts } from './pages/OptionsPageOwnPrompts'
 
 const pages: OptionContentPropsPage[] = [
   {
     menuName: 'Own Prompts',
     menuIcon: <IconUser size={ICON_SIZE}/>,
     hash: '',
-    pageContent: <div>Own Prompts</div>
+    pageContent: <OptionsPageOwnPrompts />
   },
   {
     menuName: 'Prompts List',
