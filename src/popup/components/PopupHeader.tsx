@@ -1,9 +1,14 @@
-import React, { type FC } from 'react'
+import React, { type ReactElement } from 'react'
 
-export const PopupHeader: FC = () => {
+export interface PopupHeaderProps {
+  /** The title of the header */
+  title: string
+}
+
+export const PopupHeader = ({ title }: PopupHeaderProps): ReactElement => {
   return (
-    <div>
-      <h1>ChatCrafter</h1>
-    </div>
+    <header className="border-b border-gray-200 pb-2">
+      <h1 className={'text-xl font-bold text-gray'}>{title}</h1>
+    </header>
   )
 }

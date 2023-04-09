@@ -1,21 +1,18 @@
-// Import necessary libraries
 import React, { type FC, type ReactNode } from 'react'
 
-// Define the props interface
-interface Props {
+interface PopupLayoutProps {
+  /** The header of the options page */
   header: ReactNode
+  /** The content of the options page */
   children: ReactNode | ReactNode[]
 }
 
-// Create the component
-export const PopupLayout: FC<Props> = ({ header, children }) => {
+export const PopupLayout: FC<PopupLayoutProps> = ({ header, children }) => {
   return (
-    <div className="bg-white  rounded p-4 w-full">
-      <header className="border-b border-gray-200 pb-2">
-        <div className="text-xl font-bold text-gray-800">{header}</div>
-      </header>
+    <div className="bg-white rounded p-4 w-full">
+      {header}
       <div className="mt-4">
-        <div className="text-gray-600">{children}</div>
+        {children}
       </div>
     </div>
   )
