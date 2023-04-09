@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './popup.css'
 import PopupApp from './PopupApp'
-import { setDarkMode } from '../utils/setDarkMode'
+import { initLightMode } from '../utils/initLightMode'
+import { sendMessage } from 'webext-bridge/content-script'
 
-setDarkMode()
+initLightMode()
 
 const container = document.getElementById('chatcrafter-popup')
 if (container == null) {
@@ -12,3 +13,9 @@ if (container == null) {
 }
 const root = ReactDOM.createRoot(container)
 root.render(<PopupApp />)
+
+void sendMessage(
+  'get-preferences',
+  { sync: false },
+  'background'
+)

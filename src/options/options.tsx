@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './options.css'
 import OptionsApp from './OptionsApp'
-import { setDarkMode } from '../utils/setDarkMode'
+import { initLightMode } from '../utils/initLightMode'
 
-setDarkMode()
+initLightMode()
 
 const container = document.getElementById('chatcrafter-options')
 if (container == null) {
