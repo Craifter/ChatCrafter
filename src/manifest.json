@@ -5,7 +5,7 @@
   "description": "A browser extension that enhances the ChatGPT interface by providing prompt templates in the AIPL format, making it easier to write and use prompts. Streamline the process of crafting effective messages with customizable prompts featuring variables.",
   "action": {
     "default_popup": "popup.html",
-    "default_title": "React Chrome Extension"
+    "default_title": "ChatCrafter"
   },
   "background": {
     "service_worker": "service-worker.js"
@@ -18,6 +18,12 @@
     "page": "options.html",
     "browser_style": false,
     "open_in_tab": true
+  },
+  "icons": {
+    "16": "assets/logo/16-black.png",
+    "32": "assets/logo/32-black.png",
+    "48": "assets/logo/48-black.png",
+    "128": "assets/logo/128-black.png"
   },
   "content_scripts": [
     {
