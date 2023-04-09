@@ -1,21 +1,19 @@
-// Import necessary libraries
 import React, { type FC, type ReactNode } from 'react'
 
-// Define the props interface
-interface Props {
+interface OptionsLayoutProps {
+  /** The header of the options page */
   header: ReactNode
+  /** The content of the options page */
   children: ReactNode | ReactNode[]
 }
 
-// Create the component
-export const OptionsLayout: FC<Props> = ({ header, children }) => {
+/** A layout for the options page */
+export const OptionsLayout: FC<OptionsLayoutProps> = ({ header, children }) => {
   return (
-    <div className="bg-white  rounded p-4 w-full">
-      <header className="border-b border-gray-200 pb-2">
-        <div className="text-xl font-bold text-gray-800">{header}</div>
-      </header>
+    <div className="bg-white rounded p-4 w-full">
+      {header}
       <div className="mt-4">
-        <div className="text-gray-600">{children}</div>
+        {children}
       </div>
     </div>
   )

@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { type ReactElement } from 'react'
 
-export default function OptionsHeader (): JSX.Element {
+export interface OptionsHeaderProps {
+  /** The title of the header */
+  title: string
+}
+
+export const OptionsHeader = ({ title }: OptionsHeaderProps): ReactElement => {
   return (
-    <div>
-      <h1>ChatCrafter</h1>
-    </div>
+    <header className="border-b border-gray-200 pb-2">
+      <h1 className={'text-xl font-bold text-gray'}>{title}</h1>
+    </header>
   )
 }
