@@ -13,6 +13,7 @@ import {
 } from '@tabler/icons-react'
 import { OptionsPageAbout } from './pages/OptionsPageAbout'
 import { OptionsPagesPrompts } from './pages/OptionsPagesPrompts'
+import { OptionsPageOptions } from './pages/OptionsPageOptions'
 
 const pages: OptionContentPropsPage[] = [
   {
@@ -25,7 +26,7 @@ const pages: OptionContentPropsPage[] = [
     menuName: 'Options',
     menuIcon: <IconSettings size={ICON_SIZE} />,
     hash: 'options',
-    pageContent: <div>Options</div>
+    pageContent: <OptionsPageOptions />
   },
   {
     menuName: 'About',
