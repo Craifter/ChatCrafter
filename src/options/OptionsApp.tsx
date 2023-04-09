@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type ReactElement } from 'react'
 import { OptionsLayout } from './components/OptionsLayout'
 import OptionsHeader from './components/OptionsHeader'
 import { type OptionContentPropsExternal, type OptionContentPropsPage, OptionsContent } from './components/OptionsContent'
@@ -58,8 +58,7 @@ const externals: OptionContentPropsExternal[] = [
     externalUrl: SUPPORT_CHATCRAFTER
   }
 ]
-
-export default function OptionsApp (): JSX.Element {
+export default (): ReactElement => {
   return (
     <OptionsLayout header={<OptionsHeader></OptionsHeader>}>
       <OptionsContent
