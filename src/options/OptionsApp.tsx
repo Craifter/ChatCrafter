@@ -7,26 +7,19 @@ import {
   IconFile,
   IconHeartHandshake,
   IconInfoCircle,
-  IconList,
   IconRobot,
   IconSettings,
   IconUser
 } from '@tabler/icons-react'
 import { OptionsPageAbout } from './pages/OptionsPageAbout'
-import { OptionsPageOwnPrompts } from './pages/OptionsPageOwnPrompts'
+import { OptionsPagesPrompts } from './pages/OptionsPagesPrompts'
 
 const pages: OptionContentPropsPage[] = [
   {
-    menuName: 'Own Prompts',
+    menuName: 'Prompts',
     menuIcon: <IconUser size={ICON_SIZE}/>,
     hash: '',
-    pageContent: <OptionsPageOwnPrompts />
-  },
-  {
-    menuName: 'Prompts List',
-    menuIcon: <IconList size={ICON_SIZE} />,
-    hash: 'prompts-list',
-    pageContent: <div>Prompts List</div>
+    pageContent: <OptionsPagesPrompts />
   },
   {
     menuName: 'Options',
