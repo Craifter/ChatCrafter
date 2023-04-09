@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import { OptionsButton } from './OptionsButton'
+import { Button } from '../../components/Button'
 import { IconLink } from '@tabler/icons-react'
 import { ICON_SIZE } from '../../constants'
 
@@ -26,7 +26,7 @@ export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => 
     <div className="bg-white shadow-md rounded p-4 w-full">
       <div className="flex flex-nowrap overflow-x-auto gap-2 pb-4">
         {pages.map((page) => (
-          <OptionsButton
+          <Button
             key={page.menuName}
             onClick={() => {
               window.location.hash = '/' + page.hash
@@ -34,10 +34,10 @@ export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => 
             icon={page.menuIcon}
           >
             {page.menuName}
-          </OptionsButton>
+          </Button>
         ))}
         {externals.map((external) => (
-          <OptionsButton
+          <Button
             key={external.menuName}
             onClick={() => {
               window.open(external.externalUrl)
@@ -46,7 +46,7 @@ export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => 
           >
             {external.menuName}
             <IconLink size={ICON_SIZE} className={'inline-block ml-1 -mt-0.5'} />
-          </OptionsButton>
+          </Button>
         ))}
       </div>
       <HashRouter basename={'/'}>
