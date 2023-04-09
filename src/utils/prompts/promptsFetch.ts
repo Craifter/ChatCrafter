@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { type Prompts } from '../types/prompts'
-import { validatePrompts } from './validatePrompts'
+import { type Prompts } from '../../types/prompts'
+import { promptsValidate } from './promptsValidate'
 
 /**
  * Fetch prompts from JSON
@@ -8,7 +8,7 @@ import { validatePrompts } from './validatePrompts'
  */
 export async function fetchPromptsFromJSON (url: string): Promise<Prompts> {
   const response = await axios.get(url)
-  return validatePrompts(response.data)
+  return promptsValidate(response.data)
 }
 
 /**
@@ -18,5 +18,5 @@ export async function fetchPromptsFromJSON (url: string): Promise<Prompts> {
 export async function fetchPromptsFromOPRM (url: string): Promise<Prompts> {
   const response = await axios.get(url, { responseType: 'arraybuffer' })
   const data = new TextDecoder('utf-8').decode(new Uint8Array(response.data))
-  return validatePrompts(JSON.parse(data))
+  return promptsValidate(JSON.parse(data))
 }

@@ -1,11 +1,11 @@
-import { type Prompts } from '../types/prompts'
-import { type Prompt } from '../types/prompt'
+import { type Prompts } from '../../types/prompts'
+import { type Prompt } from '../../types/prompt'
 
 /**
  * Validate prompt variables
  * @param variables - Prompt variables
  */
-function validateVariables (variables: any): Array<{ name: string, type: string, description: string }> {
+function promptsValidateVariables (variables: any): Array<{ name: string, type: string, description: string }> {
   if (!Array.isArray(variables)) {
     throw new Error('Invalid prompt variables type: expected array, got ' + typeof variables)
   }
@@ -34,7 +34,7 @@ function validateVariables (variables: any): Array<{ name: string, type: string,
  * Validate prompt tags
  * @param tags
  */
-function validateTags (tags: any): string[] {
+function promptsValidateTags (tags: any): string[] {
   if (!Array.isArray(tags)) {
     throw new Error('Invalid prompt tags type: expected array, got ' + typeof tags)
   }
@@ -50,7 +50,7 @@ function validateTags (tags: any): string[] {
  * Validate prompt
  * @param prompt
  */
-export function validatePrompt (prompt: any): Prompt {
+export function promptsValidatePrompt (prompt: any): Prompt {
   if (typeof prompt !== 'object' || prompt === null) {
     throw new Error('Invalid prompt type: expected object, got ' + typeof prompt)
   }
@@ -66,8 +66,8 @@ export function validatePrompt (prompt: any): Prompt {
   if (typeof prompt.prompt !== 'string') {
     throw new Error('Invalid prompt prompt type: expected string, got ' + typeof prompt.prompt)
   }
-  const validatedVariables = validateVariables(prompt.variables)
-  const validatedTags = validateTags(prompt.tags)
+  const validatedVariables = promptsValidateVariables(prompt.variables)
+  const validatedTags = promptsValidateTags(prompt.tags)
   if (typeof prompt.metadata !== 'object' || prompt.metadata === null) {
     throw new Error('Invalid prompt metadata type: expected object, got ' + typeof prompt.metadata)
   }
@@ -87,7 +87,7 @@ export function validatePrompt (prompt: any): Prompt {
  * Validate prompts
  * @param prompts
  */
-export function validatePrompts (prompts: any): Prompts {
+export function promptsValidate (prompts: any): Prompts {
   if (typeof prompts !== 'object' || prompts === null) {
     throw new Error('Invalid prompts type: expected object, got ' + typeof prompts)
   }
@@ -100,7 +100,7 @@ export function validatePrompts (prompts: any): Prompts {
   if (!Array.isArray(prompts.prompts)) {
     throw new Error('Invalid prompts prompts type: expected array, got ' + typeof prompts.prompts)
   }
-  const validatedPrompts = prompts.prompts.map((prompt: any) => validatePrompt(prompt))
+  const validatedPrompts = prompts.prompts.map((prompt: any) => promptsValidatePrompt(prompt))
   return {
     version: prompts.version,
     generator: prompts.generator,
