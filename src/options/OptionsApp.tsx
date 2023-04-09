@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react'
 import { OptionsLayout } from './components/OptionsLayout'
-import OptionsHeader from './components/OptionsHeader'
+import { OptionsHeader } from './components/OptionsHeader'
 import { type OptionContentPropsExternal, type OptionContentPropsPage, OptionsContent } from './components/OptionsContent'
 import { CHATCRAFTER_DESCRIPTION, CHATGTP_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE, SUPPORT_CHATCRAFTER } from '../constants'
 import {
@@ -58,9 +58,11 @@ const externals: OptionContentPropsExternal[] = [
     externalUrl: SUPPORT_CHATCRAFTER
   }
 ]
+
+/** The main component of the options page */
 export default (): ReactElement => {
   return (
-    <OptionsLayout header={<OptionsHeader></OptionsHeader>}>
+    <OptionsLayout header={<OptionsHeader title={'ChatCrafter'}></OptionsHeader>}>
       <OptionsContent
         pages={pages}
         externals={externals}
