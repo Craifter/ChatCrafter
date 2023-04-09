@@ -11,18 +11,15 @@ const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 /**
  * @type {[{template: string, entry: string, chunk: string}]}
  */
-const PAGES = [
-  {
-    entry: './src/popup/popup.tsx',
-    chunk: 'popup',
-    template: './src/popup/popup.html'
-  },
-  {
-    entry: './src/options/options.tsx',
-    chunk: 'options',
-    template: './src/options/options.html'
-  }
-]
+const PAGES = [{
+  entry: './src/popup/popup.tsx',
+  chunk: 'popup',
+  template: './src/popup/popup.html'
+}, {
+  entry: './src/options/options.tsx',
+  chunk: 'options',
+  template: './src/options/options.html'
+}]
 
 const OPTIONS = {
   MANIFEST: './src/manifest.json',
@@ -44,7 +41,7 @@ PAGES.forEach((page) => {
  * Plugin for analyze bundle if analyze flag is set
  */
 class AnalyzerPlugin {
-  apply(compiler) {
+  apply (compiler) {
     if (!compiler.options.analyze) {
       return
     }
@@ -62,54 +59,40 @@ module.exports = (env, argv) => {
     mode: isProduction ? 'production' : 'development',
     devtool: false,
     module: {
-      rules: [
-        {
-          test: /\.tsx?$/,
-          use: [
-            {
-              loader: 'ts-loader',
-              options: {
-                compilerOptions: { noEmit: false }
-              }
-            }],
-          exclude: /node_modules/
-        },
-        {
-          exclude: /node_modules/,
-          test: /\.css$/i,
-          use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader', {
-              loader: 'postcss-loader',
-              options: {
-                postcssOptions: {
-                  plugins: [
-                    tailwindcss('./tailwind.config.js'),
-                    require('autoprefixer')
-                  ]
-                }
-              }
+      rules: [{
+        test: /\.tsx?$/,
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            compilerOptions: { noEmit: false }
+          }
+        }],
+        exclude: /node_modules/
+      }, {
+        exclude: /node_modules/,
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', {
+          loader: 'postcss-loader',
+          options: {
+            postcssOptions: {
+              plugins: [tailwindcss('./tailwind.config.js'), require('autoprefixer')]
             }
-          ]
-        },
-        {
-          test: /\.(jpe?g|png|gif|svg)$/i,
-          type: 'asset'
-        },
-      ]
+          }
+        }]
+      }, {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        type: 'asset'
+      },]
     },
-    plugins: [
-      new CopyPlugin({
-        patterns: [
-          { from: OPTIONS.MANIFEST, to: 'manifest.json' },
-          { from: './src/assets', to: 'assets' }
-        ]
-      }),
-      new MiniCssExtractPlugin(),
-      ...getHtmlPlugins(PAGES),
-      new AnalyzerPlugin(),
-      new MiniCssExtractPlugin()
-    ],
+    plugins: [new CopyPlugin({
+      patterns: [{
+        from: OPTIONS.MANIFEST,
+        to: 'manifest.json'
+      }, {
+        from: './src/assets',
+        to: 'assets'
+      }]
+    }), new MiniCssExtractPlugin(), ...getHtmlPlugins(PAGES), new AnalyzerPlugin(), new MiniCssExtractPlugin()],
     resolve: {
       extensions: ['.tsx', '.ts', '.js']
     },
@@ -119,51 +102,35 @@ module.exports = (env, argv) => {
     },
     optimization: {
       minimize: isProduction,
-      minimizer: [
-        new CssMinimizerPlugin(),
-        new TerserPlugin({
-          terserOptions: {
-            format: {
-              comments: false,
-            },
+      minimizer: [new CssMinimizerPlugin(), new TerserPlugin({
+        terserOptions: {
+          format: {
+            comments: false,
           },
-          extractComments: false,
-        }),
-        new ImageMinimizerPlugin({
-          minimizer: {
-            implementation: ImageMinimizerPlugin.imageminMinify,
-            options: {
-              plugins: [
-                ['gifsicle', { interlaced: true }],
-                ['jpegtran', { progressive: true }],
-                ['optipng', { optimizationLevel: 5 }],
-                [
-                  'svgo',
-                  {
-                    plugins: [
-                      {
-                        name: 'preset-default',
-                        params: {
-                          overrides: {
-                            removeViewBox: false,
-                            addAttributesToSVGElement: {
-                              params: {
-                                attributes: [
-                                  { xmlns: 'http://www.w3.org/2000/svg' },
-                                ],
-                              },
-                            },
-                          },
-                        },
+        },
+        extractComments: false,
+      }), new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [['gifsicle', { interlaced: true }], ['jpegtran', { progressive: true }], ['optipng', { optimizationLevel: 5 }], ['svgo', {
+              plugins: [{
+                name: 'preset-default',
+                params: {
+                  overrides: {
+                    removeViewBox: false,
+                    addAttributesToSVGElement: {
+                      params: {
+                        attributes: [{ xmlns: 'http://www.w3.org/2000/svg' },],
                       },
-                    ],
+                    },
                   },
-                ],
-              ],
-            },
+                },
+              },],
+            },],],
           },
-        }),
-      ],
+        },
+      }),],
       splitChunks: {
         chunks: (chunk) => chunk.name !== 'service-worker',
         cacheGroups: {
@@ -201,14 +168,11 @@ module.exports = (env, argv) => {
  * @return {*}
  */
 function getHtmlPlugins (elements) {
-  return elements.map(
-    (element) =>
-      new HTMLPlugin({
-        title: 'React extension',
-        filename: `${element.chunk}.html`,
-        chunks: [element.chunk],
-        template: element.template,
-        inject: 'head'
-      })
-  )
+  return elements.map((element) => new HTMLPlugin({
+    title: 'ChatCrafter',
+    filename: `${element.chunk}.html`,
+    chunks: [element.chunk],
+    template: element.template,
+    inject: 'head'
+  }))
 }
