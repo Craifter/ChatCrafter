@@ -3,9 +3,10 @@ const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const tailwindcss = require('tailwindcss')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 /**
  * @type {[{template: string, entry: string, chunk: string}]}
@@ -90,13 +91,18 @@ module.exports = (env, argv) => {
               }
             }
           ]
-        }
+        },
+        {
+          test: /\.(jpe?g|png|gif|svg)$/i,
+          type: 'asset'
+        },
       ]
     },
     plugins: [
       new CopyPlugin({
         patterns: [
-          { from: OPTIONS.MANIFEST, to: 'manifest.json' }
+          { from: OPTIONS.MANIFEST, to: 'manifest.json' },
+          { from: './src/assets', to: 'assets' }
         ]
       }),
       new MiniCssExtractPlugin(),
@@ -123,14 +129,67 @@ module.exports = (env, argv) => {
           },
           extractComments: false,
         }),
+        new ImageMinimizerPlugin({
+          minimizer: {
+            implementation: ImageMinimizerPlugin.imageminMinify,
+            options: {
+              plugins: [
+                ['gifsicle', { interlaced: true }],
+                ['jpegtran', { progressive: true }],
+                ['optipng', { optimizationLevel: 5 }],
+                [
+                  'svgo',
+                  {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            addAttributesToSVGElement: {
+                              params: {
+                                attributes: [
+                                  { xmlns: 'http://www.w3.org/2000/svg' },
+                                ],
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              ],
+            },
+          },
+        }),
       ],
       splitChunks: {
-        chunks: 'all'
+        chunks: (chunk) => chunk.name !== 'service-worker',
+        cacheGroups: {
+          reactRouter: {
+            test: /[\\/]node_modules[\\/](react-router|react-router-dom)[\\/]/,
+            priority: 10,
+            reuseExistingChunk: true,
+            name: 'react-router'
+          },
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/](?!@tabler\/icons)[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+            name: 'vendors'
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true
+          }
+        }
       }
     },
     performance: {
       maxEntrypointSize: 500000,
-    }
+    },
   }
 }
 
