@@ -13,7 +13,7 @@ interface PopupContentProps {
 
 export const PopupContent: FC<PopupContentProps> = ({ links }) => {
   return (
-    <div className="bg-white shadow-md rounded p-4 w-full">
+    <div className="bg-white dark:bg-opacity-10 shadow-md rounded p-4 w-full">
       <div className="flex flex-col space-y-4">
         {links.map((link) => (
           <Button onClick={link.onClick} icon={link.menuIcon} key={link.menuName}>

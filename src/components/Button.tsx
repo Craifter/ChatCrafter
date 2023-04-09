@@ -13,7 +13,7 @@ export interface ButtonProps {
 export const Button: FC<ButtonProps> = ({ onClick, icon, children }: ButtonProps) => {
   return (
     <button
-      className="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      className="flex bg-blue-500 dark:bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       onClick={onClick}
     >
       {icon}

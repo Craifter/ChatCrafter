@@ -23,7 +23,7 @@ export interface OptionContentProps {
 }
 export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => {
   return (
-    <div className="bg-white shadow-md rounded p-4 w-full">
+    <div className="bg-white dark:bg-opacity-10 shadow-md rounded p-4 w-full">
       <div className="flex flex-nowrap overflow-x-auto gap-2 pb-4">
         {pages.map((page) => (
           <Button

@@ -9,7 +9,7 @@ interface PopupLayoutProps {
 
 export const PopupLayout: FC<PopupLayoutProps> = ({ header, children }) => {
   return (
-    <div className="bg-white rounded p-4 w-full">
+    <div className="bg-white dark:bg-black p-4 w-full">
       {header}
       <div className="mt-4">
         {children}

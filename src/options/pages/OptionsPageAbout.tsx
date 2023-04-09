@@ -6,6 +6,6 @@ export interface OptionsPageAboutProps {
 
 export const OptionsPageAbout: FC<OptionsPageAboutProps> = ({ description }) => {
   return (
-    <p className={'text-base'}>{description}</p>
+    <p className={'text-base dark:text-white'}>{description}</p>
   )
 }

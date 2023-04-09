@@ -10,7 +10,7 @@ interface OptionsLayoutProps {
 /** A layout for the options page */
 export const OptionsLayout: FC<OptionsLayoutProps> = ({ header, children }) => {
   return (
-    <div className="bg-white rounded p-4 w-full">
+    <div className="bg-white dark:bg-black p-4 w-full min-h-screen">
       {header}
       <div className="mt-4">
         {children}
