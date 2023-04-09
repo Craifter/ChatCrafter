@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode } from 'react'
 
-export interface OptionsButtonProps {
+export interface ButtonProps {
   /** The function to call when the button is clicked */
   onClick: () => void | Promise<void>
   /** Button icon */
@@ -10,7 +10,7 @@ export interface OptionsButtonProps {
 }
 
 /** A button for the options page */
-export const OptionsButton: FC<OptionsButtonProps> = ({ onClick, icon, children }: OptionsButtonProps) => {
+export const Button: FC<ButtonProps> = ({ onClick, icon, children }: ButtonProps) => {
   return (
     <button
       className="flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
