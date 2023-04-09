@@ -1,7 +1,7 @@
 import React, { type FC, type ReactNode } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { Button } from '../../components/Button'
-import { IconLink } from '@tabler/icons-react'
+import { IconExternalLink } from '@tabler/icons-react'
 import { ICON_SIZE } from '../../constants'
 
 export interface OptionContentPropsPage {
@@ -45,7 +45,7 @@ export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => 
             icon={external.menuIcon}
           >
             {external.menuName}
-            <IconLink size={ICON_SIZE} className={'inline-block ml-1 -mt-0.5'} />
+            <IconExternalLink size={ICON_SIZE} className={'inline-block ml-1 -mt-0.5'} />
           </Button>
         ))}
       </div>
