@@ -14,7 +14,11 @@
     "storage",
     "contextMenus"
   ],
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": false,
+    "open_in_tab": true
+  },
   "content_scripts": [
     {
       "matches": [
