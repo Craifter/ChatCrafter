@@ -1,8 +1,11 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const tailwindcss = require('tailwindcss')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin')
 
 /**
  * @type {[{template: string, entry: string, chunk: string}]}
@@ -36,58 +39,98 @@ PAGES.forEach((page) => {
   entry[page.chunk] = page.entry
 })
 
-module.exports = {
-  entry,
-  mode: 'development',
-  devtool: false,
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: [
-          {
-            loader: 'ts-loader',
-            options: {
-              compilerOptions: { noEmit: false }
-            }
-          }],
-        exclude: /node_modules/
-      },
-      {
-        exclude: /node_modules/,
-        test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader', {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: [
-                  tailwindcss('./tailwind.config.js'),
-                  require('autoprefixer')
-                ]
+/**
+ * Plugin for analyze bundle if analyze flag is set
+ */
+class AnalyzerPlugin {
+  apply(compiler) {
+    if (!compiler.options.analyze) {
+      return
+    }
+    console.log('asdasdadsadsad')
+    compiler.hooks.afterPlugins.tap('AnalyzerPlugin', (compiler) => {
+      compiler.options.plugins.push(new BundleAnalyzerPlugin())
+    })
+  }
+}
+
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production'
+  return {
+    entry,
+    mode: isProduction ? 'production' : 'development',
+    devtool: false,
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: 'ts-loader',
+              options: {
+                compilerOptions: { noEmit: false }
+              }
+            }],
+          exclude: /node_modules/
+        },
+        {
+          exclude: /node_modules/,
+          test: /\.css$/i,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  plugins: [
+                    tailwindcss('./tailwind.config.js'),
+                    require('autoprefixer')
+                  ]
+                }
               }
             }
-          }
-        ]
-      }
-    ]
-  },
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: OPTIONS.MANIFEST, to: 'manifest.json' }
+          ]
+        }
       ]
-    }),
-    new MiniCssExtractPlugin(),
-    ...getHtmlPlugins(PAGES)
-  ],
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js']
-  },
-  output: {
-    path: OPTIONS.DIST,
-    filename: '[name].js'
+    },
+    plugins: [
+      new CopyPlugin({
+        patterns: [
+          { from: OPTIONS.MANIFEST, to: 'manifest.json' }
+        ]
+      }),
+      new MiniCssExtractPlugin(),
+      ...getHtmlPlugins(PAGES),
+      new AnalyzerPlugin(),
+      new MiniCssExtractPlugin()
+    ],
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js']
+    },
+    output: {
+      path: OPTIONS.DIST,
+      filename: '[name].js'
+    },
+    optimization: {
+      minimize: isProduction,
+      minimizer: [
+        new CssMinimizerPlugin(),
+        new TerserPlugin({
+          terserOptions: {
+            format: {
+              comments: false,
+            },
+          },
+          extractComments: false,
+        }),
+      ],
+      splitChunks: {
+        chunks: 'all'
+      }
+    },
+    performance: {
+      maxEntrypointSize: 500000,
+    }
   }
 }
 
