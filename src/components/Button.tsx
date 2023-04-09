@@ -13,6 +13,7 @@ export interface ButtonProps {
 
 /** A button for the options page */
 export const Button: FC<ButtonProps> = ({ onClick, icon, children, extendButtonClass }: ButtonProps) => {
+  if (extendButtonClass === undefined) extendButtonClass = ''
   return (
     <button
       className={`flex bg-blue-500 dark:bg-blue-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${extendButtonClass}`}
