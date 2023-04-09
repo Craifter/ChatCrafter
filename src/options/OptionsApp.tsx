@@ -11,9 +11,9 @@ import {
   IconSettings,
   IconUser
 } from '@tabler/icons-react'
-import { OptionsPageAbout } from './pages/OptionsPageAbout'
+import { OptionsPagesOptions } from './pages/OptionsPagesOptions'
+import { OptionsPagesAbout } from './pages/OptionsPagesAbout'
 import { OptionsPagesPrompts } from './pages/OptionsPagesPrompts'
-import { OptionsPageOptions } from './pages/OptionsPageOptions'
 
 const pages: OptionContentPropsPage[] = [
   {
@@ -26,13 +26,13 @@ const pages: OptionContentPropsPage[] = [
     menuName: 'Options',
     menuIcon: <IconSettings size={ICON_SIZE} />,
     hash: 'options',
-    pageContent: <OptionsPageOptions />
+    pageContent: <OptionsPagesOptions />
   },
   {
     menuName: 'About',
     menuIcon: <IconInfoCircle size={ICON_SIZE} />,
     hash: 'about',
-    pageContent: <OptionsPageAbout description={'About this extension: ' + CHATCRAFTER_DESCRIPTION} />
+    pageContent: <OptionsPagesAbout description={'About this extension: ' + CHATCRAFTER_DESCRIPTION} />
   }
 ]
 
