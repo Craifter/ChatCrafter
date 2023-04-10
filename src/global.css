@@ -1,5 +1,6 @@
 :root {
-  --scrollbar-width: 4px;
+  --scrollbar-width: 12px;
+  --scrollbar-height: 12px;
   --scrollbar-track-color: transparent;
   --scrollbar-thumb-color: rgb(59, 130, 246);
   --scrollbar-thumb-color-dark: rgb(23, 37, 84);
@@ -21,6 +22,7 @@
 
 .scrollbar::-webkit-scrollbar {
   width: var(--scrollbar-width);
+  height: var(--scrollbar-height);
 }
 
 .scrollbar::-webkit-scrollbar-track {
