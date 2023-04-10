@@ -33,6 +33,8 @@ const entry = {
   'chat-gpt': OPTIONS.CHAT_GPT
 }
 
+const chunksDisabledForChunkSplitting = ['service-worker', 'chat-gpt']
+
 PAGES.forEach((page) => {
   entry[page.chunk] = page.entry
 })
@@ -132,7 +134,7 @@ module.exports = (env, argv) => {
         },
       }),],
       splitChunks: {
-        chunks: (chunk) => chunk.name !== 'service-worker',
+        chunks: (chunk) => !chunksDisabledForChunkSplitting.includes(chunk.name),
         cacheGroups: {
           reactRouter: {
             test: /[\\/]node_modules[\\/](react-router|react-router-dom)[\\/]/,
