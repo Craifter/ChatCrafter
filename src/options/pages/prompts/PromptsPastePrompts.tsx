@@ -1,4 +1,5 @@
 import React, { type FC } from 'react'
+import { PromptArea } from '../../components/PromtArea'
 
 export interface PromptsPastePromptsProps {
 
@@ -6,6 +7,6 @@ export interface PromptsPastePromptsProps {
 
 export const PromptsPastePrompts: FC<PromptsPastePromptsProps> = () => {
   return (
-    <h1>Paste Prompts</h1>
+    <PromptArea />
   )
 }
