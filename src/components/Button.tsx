@@ -2,11 +2,11 @@ import React, { type FC, type ReactNode } from 'react'
 
 export interface ButtonProps {
   /** The function to call when the button is clicked */
-  onClick: () => void | Promise<void>
+  onClick?: () => void | Promise<void>
   /** Button icon */
   icon?: ReactNode
   /** Button content */
-  children: ReactNode
+  children?: ReactNode
   /** Additional class name to extend the button */
   extendButtonClass?: string
 }
