@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode, useState } from 'react'
 import { Button } from '../../components/Button'
-import { IconFile, IconLink, IconPackageImport } from '@tabler/icons-react'
+import { IconFile, IconLink, IconPackageImport, IconPlus } from '@tabler/icons-react'
 import { ICON_SIZE } from '../../constants'
 import { PromptsShowPrompts } from './prompts/PromptsShowPrompts'
 import { PromptsSourceListsPrompts } from './prompts/PromptsSourceLists'
@@ -30,6 +30,10 @@ export interface OptionsPageOwnPromptsProps {
 export const OptionsPagesPrompts: FC<OptionsPageOwnPromptsProps> = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0)
 
+  const addPrompt = (): void => {
+    console.log('Add Prompt') // todo open prompt overlay
+  }
+
   return (
     <div className={'flex flex-col'}>
       <div className={'scrollbar flex flex-nowrap overflow-x-auto gap-2 pb-2'}>
@@ -43,6 +47,7 @@ export const OptionsPagesPrompts: FC<OptionsPageOwnPromptsProps> = () => {
           >
             {menuItem.label}
           </Button>))}
+        <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={() => { addPrompt() }}> Create Prompt </Button>
       </div>
       <div className={'flex-grow mt-4'}>
         {menuItems[selectedMenuItem].pageContent}
