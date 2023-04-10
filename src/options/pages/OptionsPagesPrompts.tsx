@@ -3,7 +3,6 @@ import { Button } from '../../components/Button'
 import { IconFile, IconLink, IconPackageImport } from '@tabler/icons-react'
 import { ICON_SIZE } from '../../constants'
 import { PromptsShowPrompts } from './prompts/PromptsShowPrompts'
-import { PromptsShowGroups } from './prompts/PromptsShowGroups'
 import { PromptsSourceListsPrompts } from './prompts/PromptsSourceLists'
 import { PromptsPastePrompts } from './prompts/PromptsPastePrompts'
 
@@ -15,10 +14,6 @@ const menuItems: Array<{
   label: 'Show Prompts',
   icon: <IconPackageImport size={ICON_SIZE}/>,
   pageContent: <PromptsShowPrompts/>
-}, {
-  label: 'Show Groups',
-  icon: <IconLink size={ICON_SIZE}/>,
-  pageContent: <PromptsShowGroups/>
 }, {
   label: 'Show Source Lists',
   icon: <IconLink size={ICON_SIZE}/>,
