@@ -9,7 +9,7 @@
     "start:chromium": "npm run pre-start -- \"npm run web:chromium\"",
     "start:chromium:windows": "npm run pre-start -- \"npm run web:chromium:windows\"",
     "build": "webpack --config webpack.config.js",
-    "build:prod": "wnpm run build -- --mode=production",
+    "build:prod": "npm run build -- --mode=production",
     "watch": "npm run build -- --watch",
     "web": "web-ext run --source-dir=dist --devtools --start-url=https://chat.openai.com/ --keep-profile-changes --profile-create-if-missing",
     "web:firefox": "npm run web -- -t firefox-desktop --firefox-profile=profile/firefox",
