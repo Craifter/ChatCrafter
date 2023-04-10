@@ -77,7 +77,7 @@ export const PromptsSourceListsPrompts: FC<PromptsSourceListsProps> = () => {
     <div className={'mt-4'}>
       <h3 className={'dark:text-white text-lg'}>User Source Lists</h3>
       {userSourceLists.map((list) => (
-        <div className={'flex gap-2 my-2 p-2 hover:bg-black/50 rounded-md'} key={list.url}>
+        <div className={'flex gap-2 my-2 p-2 hover:bg-black/10 rounded-md'} key={list.url}>
           <p className={'dark:text-white text-lg overflow-y-auto'}>{list.url}</p>
           <div className={'flex-1 ml-auto flex flex-row-reverse'}>
             <Button icon={<IconTrash size={ICON_SIZE} onClick={() => { deleteList(list.url) }} />} extendButtonClass={'pr-3'}></Button>
