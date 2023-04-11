@@ -32,7 +32,7 @@ const pages: OptionContentPropsPage[] = [
     menuName: 'About',
     menuIcon: <IconInfoCircle size={ICON_SIZE} />,
     hash: 'about',
-    pageContent: <OptionsPagesAbout description={'About this extension: ' + CHATCRAFTER_DESCRIPTION} />
+    pageContent: <OptionsPagesAbout description={CHATCRAFTER_DESCRIPTION} title='About this extension' />
   }
 ]
 
