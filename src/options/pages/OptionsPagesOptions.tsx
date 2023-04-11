@@ -1,5 +1,5 @@
 import React, { type FC } from 'react'
-import { Field, Formik, type FormikErrors } from 'formik'
+import { Field, Form, Formik, type FormikErrors } from 'formik'
 import { Button } from '../../components/Button'
 
 export interface OptionsPageOptionsProps {
@@ -27,15 +27,13 @@ export const OptionsPagesOptions: FC<OptionsPageOptionsProps> = () => {
           }
           return errors
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-          }, 400)
+        onSubmit={(values, actions) => {
+          console.log({ values, actions })
+          actions.setSubmitting(false)
         }}
       >
         {({ values }) => (
-          <form className={'dark:text-white text-lg'}>
+          <Form className={'dark:text-white text-lg'}>
             <label htmlFor="darkBrowserIcons" className={'flex gap-2'}>
               <div>
                 <Field type="checkbox" name="darkBrowserIcons" id="darkBrowserIcons" />
@@ -47,7 +45,7 @@ export const OptionsPagesOptions: FC<OptionsPageOptionsProps> = () => {
                 <Button>Submit</Button>
               </div>
             </div>
-          </form>
+          </Form>
         )}
       </Formik>
     </div>
