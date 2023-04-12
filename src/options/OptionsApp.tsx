@@ -54,8 +54,6 @@ const externals: OptionContentPropsExternal[] = [
   }
 ]
 
-console.log('test')
-
 /** The main component of the options page */
 export default (): ReactElement => {
   return (
