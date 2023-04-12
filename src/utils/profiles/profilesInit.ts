@@ -1,12 +1,11 @@
-import { profilesGetStorage } from './profilesGet';
 import { DEFAULT_PROMPTS } from '../../constants';
-import { profilesAddPrompt, profilesAddStorageSet } from './profilesAdd';
+import { profilesStorageGet, profilesStorageSet } from './profilesStorage';
 
 /**
  * Initialize profiles with default profile if empty
  */
 export const profilesInit = async (): Promise<void> => {
-  let storage = await profilesGetStorage();
+  let storage = await profilesStorageGet();
   if (storage == null) {
     storage = [
       {
@@ -14,7 +13,6 @@ export const profilesInit = async (): Promise<void> => {
         prompts: DEFAULT_PROMPTS
       }
     ];
-    await profilesAddStorageSet(storage);
+    await profilesStorageSet(storage);
   }
-  await profilesAddPrompt('default', DEFAULT_PROMPTS.prompts[0]);
 };
