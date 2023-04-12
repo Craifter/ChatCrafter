@@ -1,8 +1,8 @@
-import { injectDescription, injectSidebar } from './chat-gpt/injectors'
+import { injectDescription, injectSidebar } from './chat-gpt/injectors';
 
-console.log('ChatCrafter injected')
+console.log('ChatCrafter injected');
 
-injectSidebar()
+injectSidebar();
 setTimeout(() => {
-  injectDescription('ChatCrafter')
-}, 1000)
+  injectDescription('ChatCrafter');
+}, 1000);

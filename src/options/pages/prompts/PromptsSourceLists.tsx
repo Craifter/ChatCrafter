@@ -1,7 +1,7 @@
-import React, { type FC } from 'react'
-import { Button } from '../../../components/Button'
-import { IconDatabaseExport, IconDatabaseImport, IconPlus, IconTrash } from '@tabler/icons-react'
-import { ICON_SIZE } from '../../../constants'
+import React, { type FC } from 'react';
+import { Button } from '../../../components/Button';
+import { IconDatabaseExport, IconDatabaseImport, IconPlus, IconTrash } from '@tabler/icons-react';
+import { ICON_SIZE } from '../../../constants';
 
 interface SourceList {
   url: string
@@ -13,23 +13,23 @@ export interface PromptsSourceListsProps {
 
 export const PromptsSourceListsPrompts: FC<PromptsSourceListsProps> = () => {
   const importList = (): void => {
-    console.log('Import') // todo import list
-  }
+    console.log('Import'); // todo import list
+  };
 
   const exportLists = (): void => {
-    console.log('Export') // todo export lists
-  }
+    console.log('Export'); // todo export lists
+  };
 
   const deleteList = (url: string): void => {
-    console.log('Delete', url) // todo delete list
-  }
+    console.log('Delete', url); // todo delete list
+  };
 
-  const [inputListUrl, setInputListUrl] = React.useState('')
+  const [inputListUrl, setInputListUrl] = React.useState('');
   const addListForm = (e: React.SyntheticEvent): void => {
-    e.preventDefault()
-    console.log('Add list', inputListUrl) // todo add list
-    setInputListUrl('')
-  }
+    e.preventDefault();
+    console.log('Add list', inputListUrl); // todo add list
+    setInputListUrl('');
+  };
 
   const userSourceLists: SourceList[] = [
     { url: 'https://raw.githubusercontent.com/Craifter/oprm/main/examples/examples.oprm' },
@@ -37,7 +37,7 @@ export const PromptsSourceListsPrompts: FC<PromptsSourceListsProps> = () => {
     { url: 'https://raw.githubusercontent.com/Craifter/oprm/main/examples/examples2.oprm' },
     { url: 'https://raw.githubusercontent.com/Craifter/oprm/main/examples/examples3.oprm' },
     { url: 'https://raw.githubusercontent.com/Craifter/oprm/main/examples/examples4.oprm' }
-  ]
+  ];
 
   return (<>
     <div className={'md:flex gap-2'}>
@@ -57,7 +57,7 @@ export const PromptsSourceListsPrompts: FC<PromptsSourceListsProps> = () => {
           <div className="relative z-0 w-full mb-6 group">
             <input id="sourcelist_url"
                    value={inputListUrl}
-                   onChange={(e) => { setInputListUrl(e.target.value) }}
+                   onChange={(e) => { setInputListUrl(e.target.value); }}
                    className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                    name="sourcelist_url"
                    type="url"
@@ -80,10 +80,10 @@ export const PromptsSourceListsPrompts: FC<PromptsSourceListsProps> = () => {
         <div className={'flex gap-2 my-2 p-2 hover:bg-black/10 rounded-md'} key={list.url}>
           <p className={'dark:text-white text-lg overflow-y-auto'}>{list.url}</p>
           <div className={'flex-1 ml-auto flex flex-row-reverse'}>
-            <Button icon={<IconTrash size={ICON_SIZE} onClick={() => { deleteList(list.url) }} />} extendButtonClass={'pr-3'}></Button>
+            <Button icon={<IconTrash size={ICON_SIZE} onClick={() => { deleteList(list.url); }} />} extendButtonClass={'pr-3'}></Button>
           </div>
         </div>
       ))}
     </div>
-  </>)
-}
+  </>);
+};

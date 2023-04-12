@@ -1,8 +1,8 @@
-import React, { type FC, type ReactNode, useState } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
-import { Button } from '../../components/Button'
-import { IconExternalLink } from '@tabler/icons-react'
-import { ICON_SIZE } from '../../constants'
+import React, { type FC, type ReactNode, useState } from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import { Button } from '../../components/Button';
+import { IconExternalLink } from '@tabler/icons-react';
+import { ICON_SIZE } from '../../constants';
 
 export interface OptionContentPropsPage {
   menuName: string
@@ -22,20 +22,20 @@ export interface OptionContentProps {
   externals: OptionContentPropsExternal[]
 }
 export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => {
-  const locationHash = window.location.hash
-  const [activeTab, setActiveTab] = useState((locationHash !== '') ? locationHash.replace('#/', '') : pages[0].hash)
+  const locationHash = window.location.hash;
+  const [activeTab, setActiveTab] = useState((locationHash !== '') ? locationHash.replace('#/', '') : pages[0].hash);
 
   const handleTabClick = (hash: string): void => {
-    setActiveTab(hash)
-    window.location.hash = '/' + hash
-  }
+    setActiveTab(hash);
+    window.location.hash = '/' + hash;
+  };
   return (
     <div className="bg-white dark:bg-opacity-10 shadow dark:shadow-neutral-800 rounded p-4 w-full">
       <div className="scrollbar flex flex-nowrap overflow-x-auto gap-2 pb-2 mb-4">
         {pages.map((page) => (
           <Button
             key={page.menuName}
-            onClick={() => { handleTabClick(page.hash) }}
+            onClick={() => { handleTabClick(page.hash); }}
             icon={page.menuIcon}
             extendButtonClass={activeTab === page.hash ? 'underline underline-offset-2' : ''}
           >
@@ -46,7 +46,7 @@ export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => 
           <Button
             key={external.menuName}
             onClick={() => {
-              window.open(external.externalUrl)
+              window.open(external.externalUrl);
             }}
             icon={external.menuIcon}
           >
@@ -63,5 +63,5 @@ export const OptionsContent: FC<OptionContentProps> = ({ pages, externals }) => 
         </Routes>
       </HashRouter>
     </div>
-  )
-}
+  );
+};

@@ -1,6 +1,6 @@
-import React, { type ReactElement } from 'react'
-import { PromptList } from './components/PromptList'
-import { type Prompt } from '../types/prompt'
+import React, { type ReactElement } from 'react';
+import { PromptList } from './components/PromptList';
+import { type Prompt } from '../types/prompt';
 
 const prompts: Prompt[] = [
   {
@@ -31,6 +31,6 @@ const prompts: Prompt[] = [
       tokenLimit: 4000
     }
   }
-]
+];
 
-export const SideBar: () => ReactElement = () => <PromptList onDeletePrompt={() => { }} onUpdatePrompt={() => { }} prompts={prompts} />
+export const SideBar: () => ReactElement = () => <PromptList onDeletePrompt={() => { }} onUpdatePrompt={() => { }} prompts={prompts} />;

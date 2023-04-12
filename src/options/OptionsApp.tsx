@@ -1,8 +1,8 @@
-import React, { type ReactElement } from 'react'
-import { OptionsLayout } from './components/OptionsLayout'
-import { OptionsHeader } from './components/OptionsHeader'
-import { type OptionContentPropsExternal, type OptionContentPropsPage, OptionsContent } from './components/OptionsContent'
-import { CHATCRAFTER_DESCRIPTION, CHATGTP_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE, SUPPORT_CHATCRAFTER } from '../constants'
+import React, { type ReactElement } from 'react';
+import { OptionsLayout } from './components/OptionsLayout';
+import { OptionsHeader } from './components/OptionsHeader';
+import { type OptionContentPropsExternal, type OptionContentPropsPage, OptionsContent } from './components/OptionsContent';
+import { CHATCRAFTER_DESCRIPTION, CHATGTP_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE, SUPPORT_CHATCRAFTER } from '../constants';
 import {
   IconFile,
   IconHeartHandshake,
@@ -10,10 +10,10 @@ import {
   IconRobot,
   IconSettings,
   IconUser
-} from '@tabler/icons-react'
-import { OptionsPagesOptions } from './pages/OptionsPagesOptions'
-import { OptionsPagesAbout } from './pages/OptionsPagesAbout'
-import { OptionsPagesPrompts } from './pages/OptionsPagesPrompts'
+} from '@tabler/icons-react';
+import { OptionsPagesOptions } from './pages/OptionsPagesOptions';
+import { OptionsPagesAbout } from './pages/OptionsPagesAbout';
+import { OptionsPagesPrompts } from './pages/OptionsPagesPrompts';
 
 const pages: OptionContentPropsPage[] = [
   {
@@ -34,7 +34,7 @@ const pages: OptionContentPropsPage[] = [
     hash: 'about',
     pageContent: <OptionsPagesAbout description={CHATCRAFTER_DESCRIPTION} title='About this extension' />
   }
-]
+];
 
 const externals: OptionContentPropsExternal[] = [
   {
@@ -52,7 +52,7 @@ const externals: OptionContentPropsExternal[] = [
     menuIcon: <IconHeartHandshake size={ICON_SIZE} />,
     externalUrl: SUPPORT_CHATCRAFTER
   }
-]
+];
 
 /** The main component of the options page */
 export default (): ReactElement => {
@@ -63,5 +63,5 @@ export default (): ReactElement => {
         externals={externals}
       ></OptionsContent>
     </OptionsLayout >
-  )
-}
+  );
+};

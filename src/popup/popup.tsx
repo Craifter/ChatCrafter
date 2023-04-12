@@ -1,14 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './popup.css'
-import PopupApp from './PopupApp'
-import { initLightMode } from '../utils/initLightMode'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './popup.css';
+import PopupApp from './PopupApp';
+import { initLightMode } from '../utils/initLightMode';
 
-initLightMode()
+initLightMode();
 
-const container = document.getElementById('chatcrafter-popup')
+const container = document.getElementById('chatcrafter-popup');
 if (container == null) {
-  throw new Error('Root element not found')
+  throw new Error('Root element not found');
 }
-const root = ReactDOM.createRoot(container)
-root.render(<PopupApp />)
+const root = ReactDOM.createRoot(container);
+root.render(<PopupApp />);

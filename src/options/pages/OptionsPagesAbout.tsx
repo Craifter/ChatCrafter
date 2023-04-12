@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import React, { type FC } from 'react';
 
 export interface OptionsPageAboutProps {
   title: string
@@ -11,5 +11,5 @@ export const OptionsPagesAbout: FC<OptionsPageAboutProps> = ({ description, titl
       <h1 className={'text-xl font-bold dark:text-white'}>{title}</h1>
       <p className={'pt-2 text-base dark:text-white'}>{description}</p>
     </div>
-  )
-}
+  );
+};

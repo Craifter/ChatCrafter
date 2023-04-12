@@ -1,4 +1,4 @@
-import React, { type FC } from 'react'
+import React, { type FC } from 'react';
 
 export interface PromptCardProps {
   name: string
@@ -48,5 +48,5 @@ export const PromptCard: FC<PromptCardProps> = ({
       </div>
       <div className={'overflow-y-auto scrollbar'}>{source}</div>
       <div>Created by <b>{author}</b></div>
-    </div>)
-}
+    </div>);
+};

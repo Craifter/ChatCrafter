@@ -1,4 +1,4 @@
-import React, { type FC, type ReactNode } from 'react'
+import React, { type FC, type ReactNode } from 'react';
 
 interface PopupLayoutProps {
   /** The header of the options page */
@@ -15,5 +15,5 @@ export const PopupLayout: FC<PopupLayoutProps> = ({ header, children }) => {
         {children}
       </div>
     </div>
-  )
-}
+  );
+};

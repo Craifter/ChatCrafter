@@ -1,5 +1,5 @@
-import React, { type FC, type ReactNode } from 'react'
-import { Button } from '../../components/Button'
+import React, { type FC, type ReactNode } from 'react';
+import { Button } from '../../components/Button';
 
 export interface PopupContentPropsLinks {
   menuName: string
@@ -22,5 +22,5 @@ export const PopupContent: FC<PopupContentProps> = ({ links }) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

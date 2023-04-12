@@ -1,4 +1,4 @@
-import React, { type FC, type ReactNode } from 'react'
+import React, { type FC, type ReactNode } from 'react';
 
 interface OptionsLayoutProps {
   /** The header of the options page */
@@ -16,5 +16,5 @@ export const OptionsLayout: FC<OptionsLayoutProps> = ({ header, children }) => {
         {children}
       </div>
     </div>
-  )
-}
+  );
+};

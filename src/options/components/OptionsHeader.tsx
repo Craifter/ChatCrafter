@@ -1,5 +1,5 @@
-import React, { type ReactElement } from 'react'
-import { LightSwitch } from '../../components/LightSwitch'
+import React, { type ReactElement } from 'react';
+import { LightSwitch } from '../../components/LightSwitch';
 
 export interface OptionsHeaderProps {
   /** The title of the header */
@@ -14,5 +14,5 @@ export const OptionsHeader = ({ title }: OptionsHeaderProps): ReactElement => {
         <LightSwitch />
       </div>
     </header>
-  )
-}
+  );
+};

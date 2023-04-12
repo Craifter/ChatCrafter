@@ -10,7 +10,10 @@ module.exports = {
       {
         "checksVoidReturn": false
       }
-    ]
+    ],
+    "semi": [1, "always"],
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/no-empty-interface": "off"
   },
   ignorePatterns: ['**/*.html', '**/*.js', '**/*.css', '**/*.json'],
 }

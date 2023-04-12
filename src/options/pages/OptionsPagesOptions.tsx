@@ -1,7 +1,7 @@
-import React, { type FC, useEffect } from 'react'
-import { type FormikErrors, useFormik } from 'formik'
-import { Button } from '../../components/Button'
-import Browser from 'webextension-polyfill'
+import React, { type FC, useEffect } from 'react';
+import { type FormikErrors, useFormik } from 'formik';
+import { Button } from '../../components/Button';
+import Browser from 'webextension-polyfill';
 
 export interface OptionsPageOptionsProps {
 
@@ -17,24 +17,24 @@ export const OptionsPagesOptions: FC<OptionsPageOptionsProps> = () => {
       whiteBrowserIcons: false
     },
     validate: (values) => {
-      const errors: FormikErrors<OptionsFormValues> = {}
-      if (values.whiteBrowserIcons === undefined) errors.whiteBrowserIcons = '- Required'
-      return errors
+      const errors: FormikErrors<OptionsFormValues> = {};
+      if (values.whiteBrowserIcons === undefined) errors.whiteBrowserIcons = '- Required';
+      return errors;
     },
     onSubmit: async (values, actions) => {
-      await Browser.storage.sync.set({ syncOptions: values })
-      actions.setSubmitting(false)
+      await Browser.storage.sync.set({ syncOptions: values });
+      actions.setSubmitting(false);
     }
-  })
+  });
 
   useEffect(() => {
     void (async () => {
-      const { syncOptions } = await Browser.storage.sync.get('syncOptions')
+      const { syncOptions } = await Browser.storage.sync.get('syncOptions');
       if (syncOptions.whiteBrowserIcons !== undefined) {
-        await formik.setFieldValue('whiteBrowserIcons', syncOptions.whiteBrowserIcons)
+        await formik.setFieldValue('whiteBrowserIcons', syncOptions.whiteBrowserIcons);
       }
-    })()
-  }, [])
+    })();
+  }, []);
 
   return (
     <div className={'max-w-4xl mx-auto p-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg text-base dark:text-white'}>
@@ -56,5 +56,5 @@ export const OptionsPagesOptions: FC<OptionsPageOptionsProps> = () => {
           </div>
       </form>
     </div>
-  )
-}
+  );
+};
