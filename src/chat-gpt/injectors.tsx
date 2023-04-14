@@ -38,10 +38,9 @@ export function injectPrompt (prompt: string): void {
 export function injectDescription (description: string): void {
   const getChatGptLogo = (): Element | null => {
     const elements = document.querySelectorAll('h1');
-    console.log(elements);
     for (const i in elements) {
       const element = elements[i];
-      if (element.innerHTML.includes('ChatGPT')) {
+      if (element?.innerHTML?.includes('ChatGPT')) {
         const span = element.querySelector('span');
         if ((span != null) && span.innerHTML === 'Plus') {
           return element;
