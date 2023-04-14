@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pre-start": "concurrently --restart-after 1000 --restart-tries 10 \"npm run watch\"",
-    "start": "npm run pre-start -- \"npm run web\"",
+    "start": "npm run pre-start -- \"npm run web:firefox\"",
     "start:chromium": "npm run pre-start -- \"npm run web:chromium\"",
     "start:chromium:windows": "npm run pre-start -- \"npm run web:chromium:windows\"",
     "build": "webpack --config webpack.config.js",
