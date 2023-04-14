@@ -1,8 +1,9 @@
 import { injectDescription, injectSidebar } from './chat-gpt/injectors';
+import { listenersChatChanged } from './chat-gpt/listeners';
 
-console.log('ChatCrafter injected');
-
-injectSidebar();
-setTimeout(() => {
+async function chatGptMain (): Promise<void> {
+  injectSidebar();
   injectDescription('ChatCrafter');
-}, 1000);
+}
+
+listenersChatChanged(chatGptMain);
