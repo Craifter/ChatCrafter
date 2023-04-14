@@ -3,7 +3,7 @@
  * Based on DOMNodeInserted event on #__next element with url change and 500ms delay.
  * @param cb Callback to call when a change is detected.
  */
-export function listenersChatChanged (cb: () => void): void {
+export function listenersChatChanged (cb: (chatId: string) => void): void {
   const container = document.querySelector('#__next');
   if (container === null) {
     throw new Error('Could not find container');
@@ -21,7 +21,7 @@ export function listenersChatChanged (cb: () => void): void {
       clearTimeout(timeout);
     }
     timeout = setTimeout(() => {
-      cb();
+      cb(currentUrl.split('/').pop() ?? '');
     }, 500);
   });
 }

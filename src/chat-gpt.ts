@@ -1,7 +1,7 @@
 import { injectDescription, injectSidebar } from './chat-gpt/injectors';
 import { listenersChatChanged } from './chat-gpt/listeners';
 
-async function chatGptMain (): Promise<void> {
+async function chatGptMain (chatId: string): Promise<void> {
   injectSidebar();
   injectDescription('ChatCrafter');
 }
