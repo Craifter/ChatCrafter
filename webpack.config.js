@@ -46,21 +46,21 @@ PAGES.forEach((page) => {
 
 let vendor = process.env.VENDOR || 'firefox';
 
-const webExtConfig = {
-  sourceDir: dist,
-  target: vendor === 'firefox' ? 'firefox-desktop' : 'chromium',
-  startUrl: 'https://chat.openai.com/',
-  browserConsole: true,
-  devtools: true,
-  keepProfileChanges: true,
-  profileCreateIfMissing: true,
-  chromiumProfile: path.join(__dirname, 'profile/chromium'),
-  firefoxProfile: path.join(__dirname, 'profile/firefox'),
-  runLint: vendor === 'firefox',
-};
-
 module.exports = async (env, argv) => {
   const isProduction = argv.mode === 'production';
+
+  const webExtConfig = {
+    sourceDir: dist,
+    target: vendor === 'firefox' ? 'firefox-desktop' : 'chromium',
+    startUrl: 'https://chat.openai.com/',
+    browserConsole: true,
+    devtools: true,
+    keepProfileChanges: true,
+    profileCreateIfMissing: true,
+    chromiumProfile: path.join(__dirname, 'profile/chromium'),
+    firefoxProfile: path.join(__dirname, 'profile/firefox'),
+    runLint: isProduction
+  };
 
   const WEP = (await WebExtPlugin).default;
 
@@ -84,7 +84,7 @@ module.exports = async (env, argv) => {
         compiler.options.plugins.push(new BundleAnalyzerPlugin());
       });
     }
-  }(), new WEP(webExtConfig),  ...getHtmlPlugins(PAGES), new ForkTsCheckerWebpackPlugin(), new MiniCssExtractPlugin()];
+  }(), new WEP(webExtConfig), ...getHtmlPlugins(PAGES), new ForkTsCheckerWebpackPlugin(), new MiniCssExtractPlugin()];
 
   return {
     entry,
@@ -150,7 +150,7 @@ module.exports = async (env, argv) => {
           },
         },
       }),],
-      splitChunks: {
+      splitChunks: !isProduction ? false : {
         chunks: (chunk) => !chunksDisabledForChunkSplitting.includes(chunk.name),
         cacheGroups: {
           reactRouter: {
@@ -171,7 +171,9 @@ module.exports = async (env, argv) => {
             reuseExistingChunk: true
           }
         }
-      }
+      },
+      removeEmptyChunks: isProduction,
+      removeAvailableModules: isProduction,
     },
     performance: {
       maxEntrypointSize: 500000,
