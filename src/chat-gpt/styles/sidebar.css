@@ -1,0 +1,7 @@
+.cc-sidebar {
+  display: block;
+  padding: 8px;
+  width: 260px;
+  flex-direction: column;
+  background-color: var(--cc-background-color);
+}
