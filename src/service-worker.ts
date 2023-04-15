@@ -14,11 +14,11 @@ const setBrowserIcons = async (isBlack: boolean = true): Promise<void> => {
 
 const setupConfig = async (): Promise<void> => {
   const { syncOptions } = await browser.storage.sync.get('syncOptions');
-  if (syncOptions.whiteBrowserIcons === true) { void setBrowserIcons(false); }
+  if (syncOptions !== undefined && syncOptions.whiteBrowserIcons === true) { void setBrowserIcons(false); }
 };
 
 const onStorageSyncChange = async (changes: Record<string, browser.Storage.StorageChange>): Promise<void> => {
-  if (changes.syncOptions?.newValue !== undefined) {
+  if (changes?.syncOptions?.newValue !== undefined) {
     const options = changes.syncOptions.newValue;
     if (options.whiteBrowserIcons === true) { void setBrowserIcons(false); } else { void setBrowserIcons(); }
   }
