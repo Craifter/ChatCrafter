@@ -21,7 +21,7 @@ export function injectSidebar (): void {
   const createSidebarContainer = (): Element => {
     const sidebar = document.createElement('div');
     sidebar.id = ID_SIDEBAR;
-    sidebar.classList.add('dark', 'hidden', 'bg-gray-900', 'md:flex', 'md:w-[260px]', 'md:flex-col');
+    sidebar.classList.add('cc-sidebar');
     return sidebar;
   };
 
