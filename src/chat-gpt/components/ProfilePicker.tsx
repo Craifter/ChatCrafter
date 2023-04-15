@@ -3,20 +3,20 @@ import { type ProfilesStorage } from '../../types/profilesStorage';
 import { IconCaretDown, IconCaretUp } from '@tabler/icons-react';
 import { ICON_SIZE } from '../../constants';
 
-export interface SidebarProfilesActionProps {
+export interface ProfilePickerActionProps {
   label: string
   icon: React.ReactNode
   handler: () => void
 }
 
-interface SidebarProfilesProps {
+interface ProfilePickerProps {
   profiles: ProfilesStorage[]
   activeProfile: string
   onProfileSelect: (id: string) => void
-  actions: SidebarProfilesActionProps[]
+  actions: ProfilePickerActionProps[]
 }
 
-export const SidebarProfiles: FC<SidebarProfilesProps> = ({
+export const ProfilePicker: FC<ProfilePickerProps> = ({
   profiles,
   onProfileSelect,
   actions

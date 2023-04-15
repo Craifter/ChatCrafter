@@ -1,6 +1,6 @@
 import React, { type ReactElement } from 'react';
 import { type Prompt } from '../types/prompt';
-import { SidebarProfiles, type SidebarProfilesActionProps } from './components/SidebarProfiles';
+import { ProfilePicker, type ProfilePickerActionProps } from './components/ProfilePicker';
 import { type ProfilesStorage } from '../types/profilesStorage';
 
 import './chat-gpt.css';
@@ -59,7 +59,7 @@ const profiles: ProfilesStorage[] = [
   }
 ];
 
-const sidebarProfilesActions: SidebarProfilesActionProps[] = [
+const sidebarProfilesActions: ProfilePickerActionProps[] = [
   {
     label: 'Load',
     icon: <IconCloudDownload size={ICON_SIZE} />,
@@ -79,7 +79,7 @@ const sidebarProfilesActions: SidebarProfilesActionProps[] = [
 export const SideBar: () => ReactElement = () => {
   return (
     <div>
-      <SidebarProfiles profiles={profiles} activeProfile="1" onProfileSelect={() => {}} actions={sidebarProfilesActions}/>
+      <ProfilePicker profiles={profiles} activeProfile="1" onProfileSelect={() => {}} actions={sidebarProfilesActions}/>
     </div>
   );
 };
