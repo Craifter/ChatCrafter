@@ -10,7 +10,7 @@ import { ICON_SIZE } from '../constants';
 const prompts: Prompt[] = [
   {
     id: 'name-generator',
-    name: 'name generator',
+    name: 'name generator 2',
     description: 'Gives names for a gender',
     prompt: 'Give me names for a {{gender}}',
     variables: [
