@@ -1,6 +1,11 @@
 import React, { type ReactElement } from 'react';
-import { PromptList } from './components/PromptList';
 import { type Prompt } from '../types/prompt';
+import { SidebarProfiles, type SidebarProfilesActionProps } from './components/SidebarProfiles';
+import { type ProfilesStorage } from '../types/profilesStorage';
+
+import './chat-gpt.css';
+import { IconCloudDownload, IconPlus } from '@tabler/icons-react';
+import { ICON_SIZE } from '../constants';
 
 const prompts: Prompt[] = [
   {
@@ -33,4 +38,48 @@ const prompts: Prompt[] = [
   }
 ];
 
-export const SideBar: () => ReactElement = () => <PromptList onDeletePrompt={() => { }} onUpdatePrompt={() => { }} prompts={prompts} />;
+const profiles: ProfilesStorage[] = [
+  {
+    id: '1',
+    name: 'Profile 1',
+    prompts: [] as any
+  },
+  {
+    id: '2',
+    name: 'Profile 2',
+    prompts: [] as any
+  }, {
+    id: '3',
+    name: 'Profile 3',
+    prompts: [] as any
+  }, {
+    id: '4',
+    name: 'Profile 4',
+    prompts: [] as any
+  }
+];
+
+const sidebarProfilesActions: SidebarProfilesActionProps[] = [
+  {
+    label: 'Load',
+    icon: <IconCloudDownload size={ICON_SIZE} />,
+    handler: () => {
+      console.log('Load');
+    }
+  },
+  {
+    label: 'Create',
+    icon: <IconPlus size={ICON_SIZE} />,
+    handler: () => {
+      console.log('Create');
+    }
+  }
+];
+
+export const SideBar: () => ReactElement = () => {
+  return (
+    <div>
+      <SidebarProfiles profiles={profiles} activeProfile="1" onProfileSelect={() => {}} actions={sidebarProfilesActions}/>
+    </div>
+  );
+};
