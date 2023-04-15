@@ -15,17 +15,11 @@ The extension will be automatically launched in the browser, and the console wil
 Run `npm run build` to build the browser extension in production mode. The extension will be saved in the `dist` directory.
 
 ## Commands
-- `npm run start` starts the development environment.
-- `npm run start:chromium` starts the development environment in the Chromium browser.
-- `npm run start:chromium:windows` starts the development environment in the Chromium browser on a Windows system.
-- `npm run build` builds the browser extension in production mode.
-- `npm run watch` builds the browser extension and watches files for changes.
-- `npm run web` starts the browser extension in the browser.
-- `npm run web:firefox` starts the browser extension in the Firefox browser.
-- `npm run web:chromium` starts the browser extension in the Chromium browser.
-- `npm run web:chromium:windows` starts the browser extension in the Chromium browser on a Windows system.
-
-## Useful Links
-- [web-ext](https://extensionworkshop.com/documentation/develop/getting-started-with-web-ext/)
-- [webextension-polyfill](https://github.com/mozilla/webextension-polyfill)
-- [webext-bridge](https://github.com/zikaari/webext-bridge)
+- `npm run start` starts the development environment in firefox
+- `npm run start:chromium` starts the development environment in the Chromium browser
+- `npm run build` builds the browser extension in development mode
+- `npm run build:prod` builds the browser extension in production  mode
+- `npm run analyze` Analyzes the bundle size of the production build with [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+- `npm run watch` builds the browser extension and watches files for changes
+- `npm run lint` runs the linter (ESLint)
+- `npm run lint:fix` runs the linter and fixes any syntax or style errors automatically if possible
