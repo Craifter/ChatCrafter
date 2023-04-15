@@ -9,6 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const JsonMinimizerPlugin = require('json-minimizer-webpack-plugin');
 const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const WebExtPlugin = import('web-ext-plugin');
 
 /**
@@ -83,7 +84,7 @@ module.exports = async (env, argv) => {
         compiler.options.plugins.push(new BundleAnalyzerPlugin());
       });
     }
-  }(), new WEP(webExtConfig), new MiniCssExtractPlugin(), ...getHtmlPlugins(PAGES), new MiniCssExtractPlugin()];
+  }(), new WEP(webExtConfig),  ...getHtmlPlugins(PAGES), new ForkTsCheckerWebpackPlugin(), new MiniCssExtractPlugin()];
 
   return {
     entry,
@@ -95,6 +96,8 @@ module.exports = async (env, argv) => {
         use: [{
           loader: 'ts-loader',
           options: {
+            transpileOnly: true,
+            happyPackMode: true,
             compilerOptions: { noEmit: false }
           }
         }],
@@ -128,7 +131,7 @@ module.exports = async (env, argv) => {
     },
     optimization: {
       minimize: isProduction,
-      minimizer: [new CssMinimizerPlugin(), new JsonMinimizerPlugin(), new TerserPlugin({
+      minimizer: !isProduction ? [] : [new CssMinimizerPlugin(), new JsonMinimizerPlugin(), new TerserPlugin({
         terserOptions: {
           format: {
             comments: false,
@@ -173,6 +176,9 @@ module.exports = async (env, argv) => {
     performance: {
       maxEntrypointSize: 500000,
     },
+    watchOptions: {
+      ignored: /node_modules/
+    }
   };
 };
 
