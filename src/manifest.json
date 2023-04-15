@@ -34,6 +34,7 @@
       "js": [
         "chat-gpt.js"
       ],
+      "css" : ["chat-gpt.css"],
       "run_at": "document_end"
     }
   ]
