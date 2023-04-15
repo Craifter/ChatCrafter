@@ -10,6 +10,7 @@ export const profilesInit = async (): Promise<void> => {
     storage = [
       {
         id: 'default',
+        name: 'Default',
         prompts: DEFAULT_PROMPTS
       }
     ];
