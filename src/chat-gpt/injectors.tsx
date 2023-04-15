@@ -2,17 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { SideBar } from './SideBar';
 
-const CONTAINER_QUERY = 'body>div>div:not(:empty)';
-const TEXT_AREA_QUERY = 'textarea[placeholder="Send a message..."]';
+const QUERY_CONTAINER = 'body>div>div:not(:empty)';
+const QUERY_TEXT_AREA = 'textarea[placeholder="Send a message..."]';
+
+const ID_SIDEBAR = 'chatcrafter-sidebar';
+const ID_DESCRIPTION = 'chatcrafter-description';
 export function injectSidebar (): void {
+  const alreadyInjectedCheck = document.getElementById(ID_SIDEBAR);
+  if (alreadyInjectedCheck != null) {
+    alreadyInjectedCheck.remove();
+  }
   const getContainer = (): Element => {
-    const container = document.querySelector(CONTAINER_QUERY);
+    const container = document.querySelector(QUERY_CONTAINER);
     if (container == null) throw new Error('Sidebar container not found');
     return container;
   };
 
   const createSidebarContainer = (): Element => {
     const sidebar = document.createElement('div');
+    sidebar.id = ID_SIDEBAR;
     sidebar.classList.add('dark', 'hidden', 'bg-gray-900', 'md:flex', 'md:w-[260px]', 'md:flex-col');
     return sidebar;
   };
@@ -26,7 +34,7 @@ export function injectSidebar (): void {
 
 export function injectPrompt (prompt: string): void {
   const getTextArea = (): HTMLTextAreaElement => {
-    const textArea = document.querySelector(TEXT_AREA_QUERY);
+    const textArea = document.querySelector(QUERY_TEXT_AREA);
     if (textArea == null) throw new Error('Text area not found');
     return textArea as HTMLTextAreaElement;
   };
@@ -36,6 +44,10 @@ export function injectPrompt (prompt: string): void {
 }
 
 export function injectDescription (description: string): void {
+  const alreadyInjectedCheck = document.getElementById(ID_DESCRIPTION);
+  if (alreadyInjectedCheck != null) {
+    alreadyInjectedCheck.remove();
+  }
   const getChatGptLogo = (): Element | null => {
     const elements = document.querySelectorAll('h1');
     for (const i in elements) {
@@ -55,6 +67,7 @@ export function injectDescription (description: string): void {
     return;
   }
   const descriptionElement = document.createElement('span');
+  descriptionElement.id = ID_DESCRIPTION;
   descriptionElement.classList.add('text-xs', 'text-gray-400', 'pt-3');
   descriptionElement.innerHTML = description;
   chatGptLogo.appendChild(descriptionElement);
