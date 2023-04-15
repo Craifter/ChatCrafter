@@ -1,0 +1,12 @@
+{
+  "background": {
+    "scripts": [
+      "service-worker.js"
+    ]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com"
+    }
+  }
+}

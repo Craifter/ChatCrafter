@@ -1,12 +1,15 @@
-const path = require('path')
-const HTMLPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
-const tailwindcss = require('tailwindcss')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+const path = require('path');
+const HTMLPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+const tailwindcss = require('tailwindcss');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const JsonMinimizerPlugin = require('json-minimizer-webpack-plugin');
+const MergeJsonWebpackPlugin = require('merge-jsons-webpack-plugin');
+const WebExtPlugin = import('web-ext-plugin');
 
 /**
  * @type {[{template: string, entry: string, chunk: string}]}
@@ -19,47 +22,73 @@ const PAGES = [{
   entry: './src/options/options.tsx',
   chunk: 'options',
   template: './src/options/options.html'
-}]
+}];
 
 const OPTIONS = {
-  MANIFEST: './src/manifest.json',
   SERVICE_WORKER: './src/service-worker.ts',
   CHAT_GPT: './src/chat-gpt.ts',
   DIST: path.join(__dirname, 'dist')
-}
+};
+
+const dist = path.join(__dirname, 'dist');
 
 const entry = {
   'service-worker': OPTIONS.SERVICE_WORKER,
   'chat-gpt': OPTIONS.CHAT_GPT
-}
+};
 
-const chunksDisabledForChunkSplitting = ['service-worker', 'chat-gpt']
+const chunksDisabledForChunkSplitting = ['service-worker', 'chat-gpt'];
 
 PAGES.forEach((page) => {
-  entry[page.chunk] = page.entry
-})
+  entry[page.chunk] = page.entry;
+});
 
-/**
- * Plugin for analyze bundle if analyze flag is set
- */
-class AnalyzerPlugin {
-  apply (compiler) {
-    if (!compiler.options.analyze) {
-      return
+let vendor = process.env.VENDOR || 'firefox';
+
+const webExtConfig = {
+  sourceDir: dist,
+  target: vendor === 'firefox' ? 'firefox-desktop' : 'chromium',
+  startUrl: 'https://chat.openai.com/',
+  browserConsole: true,
+  devtools: true,
+  keepProfileChanges: true,
+  profileCreateIfMissing: true,
+  chromiumProfile: path.join(__dirname, 'profile/chromium'),
+  firefoxProfile: path.join(__dirname, 'profile/firefox'),
+  runLint: vendor === 'firefox',
+};
+
+module.exports = async (env, argv) => {
+  const isProduction = argv.mode === 'production';
+
+  const WEP = (await WebExtPlugin).default;
+
+  const plugins = [new CopyPlugin({
+    patterns: [{
+      from: './src/assets',
+      to: 'assets'
+    }]
+  }), new MergeJsonWebpackPlugin({
+    files: ['./src/manifest.json', vendor === 'firefox' ? './src/manifest.firefox.json' : './src/manifest.chromium.json'],
+    output: {
+      fileName: 'manifest.json'
+    },
+  }), new class AnalyzerPlugin {
+    apply (compiler) {
+      if (!compiler.options.analyze) {
+        return;
+      }
+      compiler.options.plugins = compiler.options.plugins.filter((plugin) => !(plugin instanceof WEP));
+      compiler.hooks.afterPlugins.tap('AnalyzerPlugin', (compiler) => {
+        compiler.options.plugins.push(new BundleAnalyzerPlugin());
+      });
     }
-    console.log('asdasdadsadsad')
-    compiler.hooks.afterPlugins.tap('AnalyzerPlugin', (compiler) => {
-      compiler.options.plugins.push(new BundleAnalyzerPlugin())
-    })
-  }
-}
+  }(), new WEP(webExtConfig), new MiniCssExtractPlugin(), ...getHtmlPlugins(PAGES), new MiniCssExtractPlugin()];
 
-module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production'
   return {
     entry,
     mode: isProduction ? 'production' : 'development',
-    devtool: false,
+    devtool: isProduction ? false : 'inline-source-map',
     module: {
       rules: [{
         test: /\.tsx?$/,
@@ -84,17 +113,12 @@ module.exports = (env, argv) => {
       }, {
         test: /\.(jpe?g|png|gif|svg)$/i,
         type: 'asset'
+      }, {
+        test: /\.json$/i,
+        type: 'asset/resource',
       },]
     },
-    plugins: [new CopyPlugin({
-      patterns: [{
-        from: OPTIONS.MANIFEST,
-        to: 'manifest.json'
-      }, {
-        from: './src/assets',
-        to: 'assets'
-      }]
-    }), new MiniCssExtractPlugin(), ...getHtmlPlugins(PAGES), new AnalyzerPlugin(), new MiniCssExtractPlugin()],
+    plugins: plugins,
     resolve: {
       extensions: ['.tsx', '.ts', '.js']
     },
@@ -104,7 +128,7 @@ module.exports = (env, argv) => {
     },
     optimization: {
       minimize: isProduction,
-      minimizer: [new CssMinimizerPlugin(), new TerserPlugin({
+      minimizer: [new CssMinimizerPlugin(), new JsonMinimizerPlugin(), new TerserPlugin({
         terserOptions: {
           format: {
             comments: false,
@@ -118,16 +142,6 @@ module.exports = (env, argv) => {
             plugins: [['gifsicle', { interlaced: true }], ['jpegtran', { progressive: true }], ['optipng', { optimizationLevel: 5 }], ['svgo', {
               plugins: [{
                 name: 'preset-default',
-                params: {
-                  overrides: {
-                    removeViewBox: false,
-                    addAttributesToSVGElement: {
-                      params: {
-                        attributes: [{ xmlns: 'http://www.w3.org/2000/svg' },],
-                      },
-                    },
-                  },
-                },
               },],
             },],],
           },
@@ -159,8 +173,8 @@ module.exports = (env, argv) => {
     performance: {
       maxEntrypointSize: 500000,
     },
-  }
-}
+  };
+};
 
 /**
  *
@@ -176,5 +190,5 @@ function getHtmlPlugins (elements) {
     chunks: [element.chunk],
     template: element.template,
     inject: 'head'
-  }))
+  }));
 }
