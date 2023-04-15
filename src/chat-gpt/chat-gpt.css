@@ -1,6 +1,8 @@
 @import url('../global.css');
 @import url('./styles/sidebar.css');
 @import url('./styles/profile-picker.css');
+@import url('./styles/sidebar.css');
+@import url('./styles/profile-picker.css');
 @import url('./styles/prompt-list.css');
 @import url('./styles/prompt-item.css');
 
