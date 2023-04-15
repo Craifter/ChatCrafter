@@ -10,8 +10,7 @@ export function listenersChatChanged (cb: (chatId: string) => void): void {
   }
   let timeout: ReturnType<typeof setTimeout> | undefined;
   let lastUrl: string | undefined;
-
-  container.addEventListener('DOMNodeInserted', function listenersContainerDom () {
+  function listenersContainerDom (): void {
     const currentUrl = window.location.href;
     if (currentUrl === lastUrl) {
       return;
@@ -23,5 +22,7 @@ export function listenersChatChanged (cb: (chatId: string) => void): void {
     timeout = setTimeout(() => {
       cb(currentUrl.split('/').pop() ?? '');
     }, 500);
-  });
+  }
+  container.addEventListener('DOMNodeInserted', listenersContainerDom);
+  listenersContainerDom();
 }
