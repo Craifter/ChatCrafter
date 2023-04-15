@@ -4,6 +4,8 @@ import { type Prompts } from './prompts';
 export interface ProfilesStorage {
   /** Profile id */
   id: string
+  /** Profile name */
+  name: string
   /** Profile prompts */
   prompts: Prompts
 }
