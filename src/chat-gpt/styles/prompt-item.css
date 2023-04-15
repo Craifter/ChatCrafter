@@ -1,0 +1,50 @@
+.cc-prompt-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 4px;
+  margin: 4px 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 4px;
+  color: var(--cc-text-white);
+}
+
+.cc-prompt-item__name {
+  flex: 1;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  padding: 0 16px;
+}
+
+.cc-prompt-item__image {
+  margin-left: 8px;
+}
+
+.cc-prompt-item__image, .cc-prompt-item__actions {
+  margin-top: 2px;
+}
+
+.cc-prompt-item--placeholder {
+  background: red;
+}
+
+.cc-prompt-item--dragging {
+  position: absolute;
+  max-width: 300px;
+  background: pink;
+}
+
+.cc-prompt-item--dragging .cc-prompt-item__actions {
+  display: none;
+}
+
+.cc-prompt-item--dragging .cc-prompt-item__image {
+  margin-right: -8px;
+}
+
+.cc-prompt-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

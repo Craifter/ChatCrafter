@@ -2,6 +2,7 @@
   display: block;
   padding: 8px;
   width: 260px;
+  height: 100%;
   flex-direction: column;
   background-color: var(--cc-background-color);
 }
