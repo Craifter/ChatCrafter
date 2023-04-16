@@ -49,15 +49,15 @@ export const PromptList: FC<PromptListProps> = ({
           onToggle,
           isDragging
         }) => <PromptItem
-          node={node}
-          depth={depth}
-          onDelete={onDelete}
-          onNameChange={onNameChange}
-          onSelect={onSelect}
-        />}
+            node={node}
+            depth={depth}
+            onDelete={onDelete}
+            onNameChange={onNameChange}
+            onSelect={onSelect}
+          />}
         dragPreviewRender={(monitorProps) => {
           return (<>
-            {monitorProps.item.data !== undefined && (<PromptItem node={monitorProps.item} isDragging={true}/>)}
+            {monitorProps.item.data !== undefined && (<PromptItem node={monitorProps.item} isDragging={true} />)}
           </>);
         }}
         onDrop={handleDrop}
@@ -76,7 +76,9 @@ export const PromptList: FC<PromptListProps> = ({
         dropTargetOffset={10}
         placeholderRender={(node, { depth }) => {
           return (<>
-            {node.data !== undefined && (<PromptItem node={node} isPlaceholder={true} depth={depth}/>)}
+            {node.data !== undefined && (
+              <PromptItem node={node} isPlaceholder={true} depth={depth} />
+            )}
           </>);
         }}
       />
