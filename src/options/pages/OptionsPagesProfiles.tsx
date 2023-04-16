@@ -30,7 +30,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
 
   const addPrompt = (): void => {
-    console.log('Add Prompt'); // todo open prompt overlay
+    console.log('Import Profile from file'); // todo import profile
   };
 
   return (
@@ -46,7 +46,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
           >
             {menuItem.label}
           </Button>))}
-        <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={() => { addPrompt(); }}> Create Prompt </Button>
+        <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={() => { addPrompt(); }}> Import Profile </Button>
       </div>
       <div className={'flex-grow mt-4'}>
         {menuItems[selectedMenuItem].pageContent}
