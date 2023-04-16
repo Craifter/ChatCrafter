@@ -38,6 +38,11 @@
   margin: 8px 0 4px 0;
 }
 
+.modal__text--underline {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .modal__input {
   width: 100%;
   padding: 0.5rem;

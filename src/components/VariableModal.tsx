@@ -91,7 +91,7 @@ export const VariableModal: FC<Props> = ({
             />
           </div>
         ))}
-        {errorMessage != null && (<div className="modal__text">{errorMessage}</div>)}
+        {errorMessage != null && (<div className="modal__text modal__text--underline">{errorMessage}</div>)}
         <button className="modal__button" onClick={handleSubmit}>Submit</button>
       </div>
     </div>
