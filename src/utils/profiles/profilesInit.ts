@@ -30,7 +30,7 @@ export const profilesInit = async (): Promise<void> => {
         id: 'default',
         name: 'Default',
         prompts: DEFAULT_PROMPTS,
-        editable: false
+        editable: true
       },
       {
         id: 'default2',
@@ -48,7 +48,7 @@ export const profilesInit = async (): Promise<void> => {
             getExample()
           ]
         },
-        editable: false
+        editable: true
       }
     ];
     await profilesStorageSet(storage);
