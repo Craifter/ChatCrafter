@@ -19,6 +19,7 @@ export const VariableModal: FC<Props> = ({
       .map((variable) => ({ key: variable, value: '' }))
       .filter((item, index, array) => array.findIndex((t) => t.key === item.key) === index)
   );
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLTextAreaElement>(null);
@@ -33,12 +34,11 @@ export const VariableModal: FC<Props> = ({
 
   const handleSubmit = (): void => {
     if (updatedVariables.some((variable) => variable.value === '')) {
-      alert('Please fill out all variables');
+      setErrorMessage('Please fill out all variables.');
       return;
     }
-
+    setErrorMessage('');
     onSubmit(updatedVariables.map((variable) => variable.value));
-    onClose();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
@@ -50,23 +50,6 @@ export const VariableModal: FC<Props> = ({
     }
   };
 
-  // useEffect(() => {
-  //   const handleOutsideClick = (e: MouseEvent): void => {
-  //     console.log(e.target);
-  //     console.log(modalRef.current);
-
-  //     if ((modalRef?.current) != null && !modalRef.current.contains(e.target as Node)) {
-  //       onClose();
-  //     }
-  //   };
-
-  //   window.addEventListener('click', handleOutsideClick);
-
-  //   return () => {
-  //     window.removeEventListener('click', handleOutsideClick);
-  //   };
-  // }, [onClose]);
-
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent): void => {
       if (((modalRef?.current) != null) && !modalRef.current.contains(e.target as Node)) {
@@ -74,16 +57,13 @@ export const VariableModal: FC<Props> = ({
       }
     };
 
-    const handleMouseUp = (e: MouseEvent): void => {
+    const handleMouseUp = (): void => {
       window.removeEventListener('mouseup', handleMouseUp);
       onClose();
     };
 
     window.addEventListener('mousedown', handleMouseDown);
-
-    return () => {
-      window.removeEventListener('mousedown', handleMouseDown);
-    };
+    return () => { window.removeEventListener('mousedown', handleMouseDown); };
   }, [onClose]);
 
   useEffect(() => {
@@ -93,32 +73,16 @@ export const VariableModal: FC<Props> = ({
   }, []);
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-      onKeyDown={handleKeyDown}
-    >
-      <div
-        ref={modalRef}
-        className="border-netural-400 inline-block max-h-[400px] transform overflow-hidden overflow-y-auto rounded-lg border px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all bg-gray-900 sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
-        role="dialog"
-      >
-        <div className="mb-4 text-xl font-bold text-neutral-200">
-          {prompt.name}
-        </div>
-
-        <div className="mb-4 text-sm italic text-neutral-200">
-          {prompt.description}
-        </div>
-
+    <div className="variable-modal__background" onKeyDown={handleKeyDown}>
+      <div ref={modalRef} className="variable-modal" role="dialog">
+        <div className="variable-modal__title">{prompt.name}</div>
+        <div className="variable-modal__description">{prompt.description}</div>
         {updatedVariables.map((variable, index) => (
-          <div className="mb-4" key={index}>
-            <div className="mb-2 text-sm font-bold text-neutral-200">
-              {variable.key}
-            </div>
-
+          <div key={index}>
+            <div className="variable-modal__variable-title">{variable.key}</div>
             <textarea
               ref={index === 0 ? nameInputRef : undefined}
-              className="mt-1 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
+              className="variable-modal__variable-textarea"
               style={{ resize: 'none' }}
               placeholder={`Enter a value for ${variable.key}...`}
               value={variable.value}
@@ -127,13 +91,8 @@ export const VariableModal: FC<Props> = ({
             />
           </div>
         ))}
-
-        <button
-          className="mt-6 w-full rounded-lg border px-4 py-2  shadow focus:outline-none border-neutral-800 border-opacity-50 bg-white text-black hover:bg-neutral-300"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
+        {errorMessage != null && (<div className="variable-modal__error-message">{errorMessage}</div>)}
+        <button className="variable-modal__submit" onClick={handleSubmit}>Submit</button>
       </div>
     </div>
   );
