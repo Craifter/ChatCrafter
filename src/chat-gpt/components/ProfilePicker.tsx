@@ -22,6 +22,7 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [activeProfile, setActiveProfile] = useState(selectedProfile);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [createName, setCreateName] = useState('');
 
   const sidebarProfilesActions = [{
     label: 'Load',
@@ -43,8 +44,10 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
   };
 
   const handleCreate = (): void => {
+    actions.createProfile(createName);
     setIsOpen(false);
-    actions.createProfile('test123');
+    setIsCreateOpen(false);
+    setCreateName('');
   };
 
   useEffect(() => {
@@ -79,21 +82,22 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
           {action.label}
         </button>))}
       </li>
-      {isCreateOpen && (
-        <li key={'create'} className={'cc-profile-picker__create'}>
+      {isCreateOpen && (<li key={'create'} className={'cc-profile-picker__create'}>
           <label htmlFor="create-profile">
             <div className={'cc-profile-picker__create__label'}>Profile Name</div>
           </label>
           <div className={'cc-profile-picker__create__container'}>
-            <input className={'cc-profile-picker__create__input'} id="create-profile" type="text" placeholder={''}/>
+            <input className={'cc-profile-picker__create__input'} id="create-profile" type="text" placeholder={''}
+                   value={createName} onChange={(event) => {
+                     setCreateName(event.target.value);
+                   }}/>
             <button className={'cc-profile-picker__create__button'} onClick={() => {
               handleCreate();
             }}>
               <IconPlus size={ICON_SIZE}/>
             </button>
           </div>
-        </li>
-      )}
+        </li>)}
       {profiles.map((profile) => (<li key={profile.id}>
         <button className={'cc-profile-picker__button'} onClick={() => {
           handleSelect(profile.id);
