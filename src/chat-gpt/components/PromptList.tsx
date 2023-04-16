@@ -9,20 +9,18 @@ interface PromptListProps {
   prompts: Prompt[]
   onDelete: (promptId: string) => void
   onNameChange: (promptId: string, newName: string) => void
+  onSelect: (promptId: string) => void
 }
 
 /**
  * List of prompts
  * based on https://minop1205.github.io/react-dnd-treeview/?path=/docs/basic-examples-manual-sort-with-placeholder--manual-sort-with-placeholder-story
- * @param prompts
- * @param onDelete
- * @param onNameChange
- * @constructor
  */
 export const PromptList: FC<PromptListProps> = ({
   prompts,
   onDelete,
-  onNameChange
+  onNameChange,
+  onSelect
 }) => {
   const data = prompts.map((prompt) => ({
     id: prompt.id,
@@ -56,6 +54,7 @@ export const PromptList: FC<PromptListProps> = ({
           depth={depth}
           onDelete={onDelete}
           onNameChange={onNameChange}
+          onSelect={onSelect}
         />))
           : (<></>)}
         dragPreviewRender={(monitorProps) => {

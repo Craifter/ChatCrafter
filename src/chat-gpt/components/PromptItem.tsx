@@ -11,6 +11,7 @@ interface PromptItemProps {
   isDragging?: boolean
   onDelete?: (promptId: string) => void
   onNameChange?: (promptId: string, newName: string) => void
+  onSelect?: (promptId: string) => void
 }
 
 export const PromptItem: FC<PromptItemProps> = ({
@@ -19,7 +20,8 @@ export const PromptItem: FC<PromptItemProps> = ({
   node,
   depth = 0,
   onDelete,
-  onNameChange
+  onNameChange,
+  onSelect
 }) => {
   const [tryDelete, setTryDelete] = useState<boolean>(false);
   const [tryEdit, setTryEdit] = useState<boolean>(false);
@@ -53,7 +55,22 @@ export const PromptItem: FC<PromptItemProps> = ({
   return (data !== undefined
     ? (
     <div className={'cc-prompt-item ' + itemModifiers} style={{ paddingInlineStart: indent }}
-         title={data.name.length > 16 ? data.name : ''}>
+         title={data.name.length > 16 ? data.name : ''}
+        onClick={(event) => {
+          if (event.target instanceof HTMLInputElement && event.target.classList.contains('cc-prompt-item__name__input')) {
+            return;
+          }
+          const actionButtons = event.currentTarget.querySelectorAll('.cc-prompt-item__actions');
+          for (let i = 0; i < actionButtons.length; i++) {
+            if (actionButtons[i].contains(event.target as any)) {
+              event.stopPropagation();
+              return;
+            }
+          }
+          if (onSelect !== undefined) {
+            onSelect(data.id);
+          }
+        }}>
       <div className="cc-prompt-item__image">
         <IconClipboardText size={ICON_SIZE}/>
       </div>
@@ -66,7 +83,7 @@ export const PromptItem: FC<PromptItemProps> = ({
       </div>
       {onDelete !== undefined && onNameChange !== undefined && !isDragging && (<>
         {!tryEdit && !tryDelete && (<>
-            <div className="cc-prompt-item__actions" onClick={() => { setTryEdit(true); setFocusOnInput(); }}>
+            <div className="cc-prompt-item__actions" onClick={(event) => { setTryEdit(true); setFocusOnInput(); }}>
               <IconPencil size={ICON_SIZE}/>
             </div>
             <div className="cc-prompt-item__actions" onClick={() => { setTryDelete(true); }}>

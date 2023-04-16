@@ -9,12 +9,14 @@ import { uuid } from '../utils/uuid';
 import { profilesPromptsById, profilesPromptsRemove, profilesPromptsUpdate } from '../utils/profiles/profilesPrompts';
 import { IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../constants';
+import { VariableModal } from '../components/VariableModal';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
   const [activeProfileId, setActiveProfileId] = React.useState<string | null>(null);
   const [activePrompts, setActivePrompts] = React.useState<Prompt[]>([]);
 
+  const [activeVariableModal, setActiveVariableModal] = React.useState<Prompt | null>(null);
   const openProfile = (id: string): void => {
     const profile = profiles.find((profile) => profile.id === id);
     if (profile != null) {
@@ -59,6 +61,10 @@ export const SideBar: () => ReactElement = () => {
     });
   };
 
+  const getPrompt = (promptId: string): Prompt => {
+    return activePrompts.find((prompt) => prompt.id === promptId) as Prompt;
+  };
+
   const profilePickerActions = {
     createProfile: (name: string): void => {
       const profile: ProfilesStorage = {
@@ -93,7 +99,10 @@ export const SideBar: () => ReactElement = () => {
         <PromptList
           prompts={activePrompts}
           onDelete={(promptId) => { deletePrompt(activeProfileId, promptId); }}
-          onNameChange={(promptId, newName) => { changePromptName(activeProfileId, promptId, newName); }} />
+          onNameChange={(promptId, newName) => { changePromptName(activeProfileId, promptId, newName); }}
+           onSelect={(promptId) => {
+             setActiveVariableModal(getPrompt(promptId));
+           }}/>
         <div>
           <button className={'cc-sidebar__add-prompt'}>
             <IconPlus size={ICON_SIZE} />
@@ -106,6 +115,18 @@ export const SideBar: () => ReactElement = () => {
             ChatCrafter v0.0.1
           </div>
         </div>
+        {activeVariableModal !== null && (
+          <VariableModal
+            prompt={activeVariableModal}
+            onClose={() => { setActiveVariableModal(null); }}
+            variables={activeVariableModal.variables.map((variable) => {
+              return variable.name;
+            })}
+            onSubmit={(data) => {
+              console.log(activeVariableModal);
+              console.log(data);
+            }} />
+        )}
       </>
     )}
     {profiles.length === 0 && (
