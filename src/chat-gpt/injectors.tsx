@@ -40,13 +40,8 @@ export function injectPrompt (prompt: string): void {
   };
 
   const textArea = getTextArea();
-
-  let textAreaHeight = parseInt(textArea.style.height);
   textArea.value = prompt;
-  (prompt.split('\n')).forEach(() => {
-    textAreaHeight = textAreaHeight + 20;
-  });
-  textArea.style.height = textAreaHeight.toString() + 'px';
+  textArea.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
 export function injectDescription (description: string): void {
