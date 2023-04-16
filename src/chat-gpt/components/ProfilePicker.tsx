@@ -1,6 +1,6 @@
 import React, { type FC, useEffect, useState } from 'react';
 import { type ProfilesStorage } from '../../types/profilesStorage';
-import { IconCaretDown, IconCaretUp, IconCloudDownload, IconPlus } from '@tabler/icons-react';
+import { IconCaretDown, IconCaretUp, IconPencil, IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../../constants';
 
 interface ProfilePickerProps {
@@ -25,10 +25,10 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
   const [createName, setCreateName] = useState('');
 
   const sidebarProfilesActions = [{
-    label: 'Load',
-    icon: <IconCloudDownload size={ICON_SIZE}/>,
+    label: 'Edit',
+    icon: <IconPencil size={ICON_SIZE}/>,
     handler: () => {
-      console.log('Load');
+      // todo: send message to service worker to open options page
     }
   }, {
     label: 'Create',
