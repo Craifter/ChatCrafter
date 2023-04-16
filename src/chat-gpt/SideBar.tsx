@@ -6,11 +6,17 @@ import { type ProfilesStorage } from '../types/profilesStorage';
 import { PromptList } from './components/PromptList';
 import { profilesStorage, profilesStorageGet } from '../utils/profiles/profilesStorage';
 import { uuid } from '../utils/uuid';
-import { profilesPromptsById, profilesPromptsRemove, profilesPromptsUpdate } from '../utils/profiles/profilesPrompts';
+import {
+  profilesPromptsAdd,
+  profilesPromptsById,
+  profilesPromptsRemove,
+  profilesPromptsUpdate
+} from '../utils/profiles/profilesPrompts';
 import { IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../constants';
 import { VariableModal } from '../components/VariableModal';
 import { injectPrompt } from './injectors';
+import { PromptModal } from '../components/Promt/PromptModal';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -18,6 +24,7 @@ export const SideBar: () => ReactElement = () => {
   const [activePrompts, setActivePrompts] = React.useState<Prompt[]>([]);
 
   const [activeVariableModal, setActiveVariableModal] = React.useState<Prompt | null>(null);
+  const [activePromptModal, setActivePromptModal] = React.useState<Prompt | null>(null);
   const openProfile = (id: string): void => {
     const profile = profiles.find((profile) => profile.id === id);
     if (profile != null) {
@@ -105,7 +112,23 @@ export const SideBar: () => ReactElement = () => {
              setActiveVariableModal(getPrompt(promptId));
            }}/>
         <div>
-          <button className={'cc-sidebar__add-prompt'}>
+          <button className={'cc-sidebar__add-prompt'} onClick={() => {
+            setActivePromptModal({
+              id: uuid(),
+              name: 'New Prompt',
+              description: '',
+              metadata: {
+                author: '',
+                creation_date: new Date().toISOString(),
+                source: ''
+              },
+              prompt: '',
+              variables: [],
+              model: '',
+              tags: []
+            });
+          }
+          }>
             <IconPlus size={ICON_SIZE} />
             Add Prompt
           </button>
@@ -128,6 +151,44 @@ export const SideBar: () => ReactElement = () => {
               injectPrompt(message);
               setActiveVariableModal(null);
             }} />
+        )}
+        {activePromptModal !== null && (
+          <PromptModal prompt={activePromptModal} onClose={() => { setActivePromptModal(null); }} onUpdatePrompt={(newPrompt) => {
+            const variables: Array<{
+              name: string
+              type: string
+              description: string
+            }> = [];
+
+            const regex = /{{(.*?)}}/g;
+            let m;
+            while ((m = regex.exec(newPrompt.prompt)) !== null) {
+              if (m.index === regex.lastIndex) {
+                regex.lastIndex++;
+              }
+              m.forEach((match, groupIndex) => {
+                if (groupIndex === 1) {
+                  variables.push({
+                    name: match,
+                    type: 'string',
+                    description: ''
+                  });
+                }
+              });
+            }
+
+            if (variables.length > 0) {
+              newPrompt.variables = variables;
+            }
+
+            void profilesPromptsAdd(activeProfileId, {
+              ...newPrompt,
+              variables
+            }).then(() => {
+              loadProfiles(activeProfileId);
+              setActivePromptModal(null);
+            });
+          }} />
         )}
       </>
     )}
