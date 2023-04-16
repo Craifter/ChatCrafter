@@ -200,44 +200,6 @@ export const SideBar: () => ReactElement = () => {
             });
           }} />
         )}
-        {activePromptModal !== null && (
-          <PromptModal prompt={activePromptModal} onClose={() => { setActivePromptModal(null); }} onUpdatePrompt={(newPrompt) => {
-            const variables: Array<{
-              name: string
-              type: string
-              description: string
-            }> = [];
-
-            const regex = /{{(.*?)}}/g;
-            let m;
-            while ((m = regex.exec(newPrompt.prompt)) !== null) {
-              if (m.index === regex.lastIndex) {
-                regex.lastIndex++;
-              }
-              m.forEach((match, groupIndex) => {
-                if (groupIndex === 1) {
-                  variables.push({
-                    name: match,
-                    type: 'string',
-                    description: ''
-                  });
-                }
-              });
-            }
-
-            if (variables.length > 0) {
-              newPrompt.variables = variables;
-            }
-
-            void profilesPromptsAdd(activeProfileId, {
-              ...newPrompt,
-              variables
-            }).then(() => {
-              loadProfiles(activeProfileId);
-              setActivePromptModal(null);
-            });
-          }} />
-        )}
       </>
     )}
     {profiles.length === 0 && (
