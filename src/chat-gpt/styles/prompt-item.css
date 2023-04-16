@@ -20,7 +20,7 @@
 }
 
 .cc-prompt-item__name__input {
-  background: transparent;
+  background: transparent !important;
   border: none;
   box-sizing: border-box;
   color: var(--cc-text-white);
@@ -29,7 +29,7 @@
   font-weight: 500;
   width: 100%;
   text-align: left;
-  padding: 0 0 2px 0;
+  padding: 0 0 2px 0 !important;
   outline: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 2px;
 }
