@@ -58,25 +58,25 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
 
           <div
             ref={modalRef}
-            className="dark:border-netural-400 inline-block max-h-[400px] transform overflow-hidden rounded-lg border border-gray-300 bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all dark:bg-[#202123] sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
+            className="border-netural-400 inline-block max-h-[400px] transform overflow-hidden rounded-lg border px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all bg-gray-900 sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
             role="dialog"
           >
-            <div className="text-sm font-bold text-black dark:text-neutral-200">
+            <div className="text-sm font-bold text-neutral-200">
               Name
             </div>
             <input
               ref={nameInputRef}
-              className="text-black mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
+              className="mt-2 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
               placeholder={'A name for your prompt.'}
               value={name}
               onChange={(e) => { setName(e.target.value); }}
             />
 
-            <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
+            <div className="mt-6 text-sm font-bold text-neutral-200">
               Description
             </div>
             <textarea
-              className="text-black mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
+              className="mt-2 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
               style={{ resize: 'none' }}
               placeholder={'A description for your prompt.'}
               value={description}
@@ -84,11 +84,11 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
               rows={3}
             />
 
-            <div className="mt-6 text-sm font-bold text-black dark:text-neutral-200">
+            <div className="mt-6 text-sm font-bold text-neutral-200">
               Prompt
             </div>
             <textarea
-              className="text-black mt-2 w-full rounded-lg border border-neutral-500 px-4 py-2 shadow focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-[#40414F] dark:text-neutral-100"
+              className="mt-2 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
               style={{ resize: 'none' }}
               placeholder={
                 'Prompt content. Use {{}} to denote a variable. Ex: {{ name }} is a {{ adjective }} {{ noun }}'
