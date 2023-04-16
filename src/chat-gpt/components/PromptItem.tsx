@@ -47,7 +47,6 @@ export const PromptItem: FC<PromptItemProps> = ({
   };
 
   const {
-    droppable,
     data
   } = node;
   const indent = depth * 24;
