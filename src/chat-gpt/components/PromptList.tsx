@@ -48,15 +48,13 @@ export const PromptList: FC<PromptListProps> = ({
           depth,
           onToggle,
           isDragging
-        }) => !isDragging
-          ? ((<PromptItem
+        }) => <PromptItem
           node={node}
           depth={depth}
           onDelete={onDelete}
           onNameChange={onNameChange}
           onSelect={onSelect}
-        />))
-          : (<></>)}
+        />}
         dragPreviewRender={(monitorProps) => {
           return (<>
             {monitorProps.item.data !== undefined && (<PromptItem node={monitorProps.item} isDragging={true}/>)}
