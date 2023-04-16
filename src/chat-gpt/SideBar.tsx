@@ -11,6 +11,7 @@ import { IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../constants';
 import { VariableModal } from '../components/VariableModal';
 import { injectPrompt } from './injectors';
+import { buildPromptString } from '../utils/prompts/promptTemplateWriter';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -90,6 +91,19 @@ export const SideBar: () => ReactElement = () => {
     }
   };
 
+  const handleSubmit = (updatedVariables: string[]): void => {
+    if (activeVariableModal === null) {
+      return;
+    }
+    const message = buildPromptString(activeVariableModal, updatedVariables);
+
+    if (message !== undefined) {
+      injectPrompt(message);
+    }
+
+    setActiveVariableModal(null);
+  };
+
   return (<>
     {profiles.length > 0 && activeProfileId !== null && (
       <>
@@ -101,9 +115,9 @@ export const SideBar: () => ReactElement = () => {
           prompts={activePrompts}
           onDelete={(promptId) => { deletePrompt(activeProfileId, promptId); }}
           onNameChange={(promptId, newName) => { changePromptName(activeProfileId, promptId, newName); }}
-           onSelect={(promptId) => {
-             setActiveVariableModal(getPrompt(promptId));
-           }}/>
+          onSelect={(promptId) => {
+            setActiveVariableModal(getPrompt(promptId));
+          }} />
         <div>
           <button className={'cc-sidebar__add-prompt'}>
             <IconPlus size={ICON_SIZE} />
@@ -123,11 +137,7 @@ export const SideBar: () => ReactElement = () => {
             variables={activeVariableModal.variables.map((variable) => {
               return variable.name;
             })}
-            onSubmit={(data) => {
-              const message = `//todo: Prompt String Builder\n${activeVariableModal?.prompt}\n${data.join(', ')}`;
-              injectPrompt(message);
-              setActiveVariableModal(null);
-            }} />
+            onSubmit={handleSubmit} />
         )}
       </>
     )}
