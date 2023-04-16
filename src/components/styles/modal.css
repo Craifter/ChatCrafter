@@ -28,7 +28,13 @@
 .modal__item-title {
   font-size: 1rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: var(--cc-text-white);
+  margin: 8px 0 4px 0;
+}
+
+.modal__text {
+  font-size: 1rem;
+  color: var(--cc-text-white);
   margin: 8px 0 4px 0;
 }
 
@@ -51,12 +57,6 @@
   color: var(--cc-text-white);
 }
 
-.modal__input:focus, .modal__textarea:focus {
-  outline: none;
-  border: var(--cc-border);
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
-}
-
 .modal__button {
   position: relative;
   width: 100%;
@@ -64,6 +64,12 @@
   border: var(--cc-border);
   border-radius: var(--cc-border-radius);
   margin: 8px 0 8px 0;
+}
+
+.modal__input:focus, .modal__textarea:focus, .modal__button:focus {
+  outline: none;
+  border: var(--cc-border);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
 .modal__button:hover {
