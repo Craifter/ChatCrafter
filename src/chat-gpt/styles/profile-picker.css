@@ -37,6 +37,7 @@
   border-radius: var(--cc-border-radius);
   overflow-y: auto;
   max-height: 600px;
+  z-index: 5;
 }
 
 .cc-profile-picker__actions {
