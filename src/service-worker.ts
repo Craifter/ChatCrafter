@@ -1,4 +1,6 @@
 import browser from 'webextension-polyfill';
+import Browser from 'webextension-polyfill';
+import { profilesInit } from './utils/profiles/profilesInit';
 
 const setBrowserIcons = async (isBlack: boolean = true): Promise<void> => {
   const suffix = isBlack ? 'black' : 'white';
@@ -27,6 +29,7 @@ const onStorageSyncChange = async (changes: Record<string, browser.Storage.Stora
 const main = async (): Promise<void> => {
   await setupConfig();
   browser.storage.onChanged.addListener(onStorageSyncChange);
+  await profilesInit();
 };
 
 main().catch(console.error);
