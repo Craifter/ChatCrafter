@@ -1,6 +1,6 @@
-import React, { type FC } from 'react';
+import React, { type FC, useState } from 'react';
 import { type Prompt } from '../../types/prompt';
-import { IconClipboardText, IconTrash } from '@tabler/icons-react';
+import { IconCheck, IconClipboardText, IconTrash, IconX } from '@tabler/icons-react';
 import { ICON_SIZE } from '../../constants';
 import { type NodeModel } from '@minoru/react-dnd-treeview';
 
@@ -9,14 +9,18 @@ interface PromptItemProps {
   depth?: number
   isPlaceholder?: boolean
   isDragging?: boolean
+  onDelete?: (promptId: string) => void
 }
 
 export const PromptItem: FC<PromptItemProps> = ({
   isPlaceholder = false,
   isDragging = false,
   node,
-  depth = 0
+  depth = 0,
+  onDelete
 }) => {
+  const [tryDelete, setTryDelete] = useState<boolean>(false);
+
   let itemModifiers = '';
   if (isPlaceholder) {
     itemModifiers = 'cc-prompt-item--placeholder';
@@ -38,9 +42,26 @@ export const PromptItem: FC<PromptItemProps> = ({
         <IconClipboardText size={ICON_SIZE}/>
       </div>
       <div className="cc-prompt-item__name">{data.name}</div>
-      <div className="cc-prompt-item__actions">
-        <IconTrash size={ICON_SIZE}/>
-      </div>
+      {onDelete !== undefined && !isDragging && (<>
+          {!tryDelete
+            ? (<div className="cc-prompt-item__actions" onClick={() => {
+                setTryDelete(true);
+              }}>
+              <IconTrash size={ICON_SIZE}/>
+            </div>)
+            : (<>
+              <div className="cc-prompt-item__actions" onClick={() => {
+                onDelete(data.id);
+              }}>
+                <IconCheck size={ICON_SIZE}/>
+              </div>
+              <div className="cc-prompt-item__actions" onClick={() => {
+                setTryDelete(false);
+              }}>
+                <IconX size={ICON_SIZE}/>
+              </div>
+            </>)}
+        </>)}
     </div>)
     : <></>);
 };
