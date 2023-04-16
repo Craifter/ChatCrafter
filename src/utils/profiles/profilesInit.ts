@@ -8,7 +8,7 @@ function getExample (): Prompt {
     name: 'name ' + Math.random().toString(36).substring(2, 6),
     description: 'The name of the person you are talking to.',
     prompt: 'Hi, my name is {{name}}.',
-    variables: [],
+    variables: DEFAULT_PROMPTS.prompts[0].variables,
     tags: [],
     metadata: {
       author: 'Craifter',

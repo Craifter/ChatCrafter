@@ -15,7 +15,11 @@ export const DEFAULT_PROMPTS: Prompts = {
       name: 'name',
       description: 'The name of the person you are talking to.',
       prompt: 'Hi, my name is {{name}}.',
-      variables: [],
+      variables: [{
+        name: 'name',
+        description: 'The name of the person you are talking to.',
+        type: 'string'
+      }],
       tags: [],
       metadata: {
         author: 'Craifter',
