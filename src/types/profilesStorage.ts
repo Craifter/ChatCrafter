@@ -8,4 +8,6 @@ export interface ProfilesStorage {
   name: string
   /** Profile prompts */
   prompts: Prompts
+  /** if Profile is editable */
+  editable: boolean
 }
