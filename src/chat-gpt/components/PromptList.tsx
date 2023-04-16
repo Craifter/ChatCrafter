@@ -51,6 +51,7 @@ export const PromptList: FC<PromptListProps> = ({
           ? ((<PromptItem
           node={node}
           depth={depth}
+          onDelete={onDelete}
         />))
           : (<></>)}
         dragPreviewRender={(monitorProps) => {

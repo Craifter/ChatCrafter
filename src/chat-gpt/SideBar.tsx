@@ -6,6 +6,7 @@ import { type ProfilesStorage } from '../types/profilesStorage';
 import { PromptList } from './components/PromptList';
 import { profilesStorage, profilesStorageGet } from '../utils/profiles/profilesStorage';
 import { uuid } from '../utils/uuid';
+import { profilesPromptsRemove } from '../utils/profiles/profilesPrompts';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -38,15 +39,26 @@ export const SideBar: () => ReactElement = () => {
     }
   };
 
-  useEffect(() => {
+  const loadProfiles = (openProfilId?: string): void => {
     void profilesStorageGet().then((profiles) => {
       setProfiles(profiles);
-      if (profiles.length > 0) {
+      if (profiles.length === 0) {
+        return;
+      }
+      if (openProfilId === undefined) {
         setActiveProfileId(profiles[0].id);
         setActivePrompts(profiles[0].prompts.prompts);
+        return;
+      }
+      const profile = profiles.find((profile) => profile.id === openProfilId);
+      if (profile != null) {
+        setActiveProfileId(profile.id);
+        setActivePrompts(profile.prompts.prompts);
       }
     });
-  }, []);
+  };
+
+  useEffect(loadProfiles, []);
 
   return (<>
     {profiles.length > 0 && activeProfileId !== null && (
@@ -56,7 +68,11 @@ export const SideBar: () => ReactElement = () => {
           loadList: () => {}
         }
         }/>
-        <PromptList prompts={activePrompts} onDelete={() => {}}/>
+        <PromptList prompts={activePrompts} onDelete={(promptId) => {
+          void profilesPromptsRemove(activeProfileId, promptId).then(() => {
+            loadProfiles(activeProfileId);
+          });
+        }}/>
       </>
     )}
     {profiles.length === 0 && (
