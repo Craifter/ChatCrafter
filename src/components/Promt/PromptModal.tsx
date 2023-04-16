@@ -7,7 +7,11 @@ interface Props {
   onUpdatePrompt: (prompt: Prompt) => void
 }
 
-export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
+export const PromptModal: FC<Props> = ({
+  prompt,
+  onClose,
+  onUpdatePrompt
+}) => {
   const [name, setName] = useState(prompt.name);
   const [description, setDescription] = useState(prompt.description);
   const [content, setContent] = useState(prompt.prompt);
@@ -17,7 +21,12 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
 
   const handleEnter = (e: KeyboardEvent<HTMLDivElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      onUpdatePrompt({ ...prompt, name, description, prompt: content.trim() });
+      onUpdatePrompt({
+        ...prompt,
+        name,
+        description,
+        prompt: content.trim()
+      });
     }
   };
 
@@ -44,80 +53,57 @@ export const PromptModal: FC<Props> = ({ prompt, onClose, onUpdatePrompt }) => {
     nameInputRef.current?.focus();
   }, []);
 
-  return (
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-100"
-      onKeyDown={handleEnter}
-    >
-      <div className="fixed inset-0 z-10 overflow-y-auto">
-        <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-          <div
-            className="hidden sm:inline-block sm:h-screen sm:align-middle"
-            aria-hidden="true"
-          />
-
-          <div
-            ref={modalRef}
-            className="border-netural-400 inline-block max-h-[400px] transform overflow-hidden rounded-lg border px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all bg-gray-900 sm:my-8 sm:max-h-[600px] sm:w-full sm:max-w-lg sm:p-6 sm:align-middle"
-            role="dialog"
-          >
-            <div className="text-sm font-bold text-neutral-200">
-              Name
-            </div>
-            <input
-              ref={nameInputRef}
-              className="mt-2 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
-              placeholder={'A name for your prompt.'}
-              value={name}
-              onChange={(e) => { setName(e.target.value); }}
-            />
-
-            <div className="mt-6 text-sm font-bold text-neutral-200">
-              Description
-            </div>
-            <textarea
-              className="mt-2 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
-              style={{ resize: 'none' }}
-              placeholder={'A description for your prompt.'}
-              value={description}
-              onChange={(e) => { setDescription(e.target.value); }}
-              rows={3}
-            />
-
-            <div className="mt-6 text-sm font-bold text-neutral-200">
-              Prompt
-            </div>
-            <textarea
-              className="mt-2 w-full rounded-lg border  px-4 py-2 shadow focus:outline-none border-neutral-800 border-opacity-50 bg-gray-900 text-neutral-100"
-              style={{ resize: 'none' }}
-              placeholder={
-                'Prompt content. Use {{}} to denote a variable. Ex: {{ name }} is a {{ adjective }} {{ noun }}'
-              }
-              value={content}
-              onChange={(e) => { setContent(e.target.value); }}
-              rows={10}
-            />
-
-            <button
-              type="button"
-              className="text-black w-full px-4 py-2 mt-6 border rounded-lg shadow border-neutral-500 hover:bg-neutral-100 focus:outline-none dark:border-neutral-800 dark:border-opacity-50 dark:bg-white dark:text-black dark:hover:bg-neutral-300"
-              onClick={() => {
-                const updatedPrompt = {
-                  ...prompt,
-                  name,
-                  description,
-                  content: content.trim()
-                };
-
-                onUpdatePrompt(updatedPrompt);
-                onClose();
-              }}
-            >
-              {'Save'}
-            </button>
-          </div>
-        </div>
-      </div>
+  return (<div className="modal__background" onKeyDown={handleEnter}>
+    <div className="modal__content" ref={modalRef} role="dialog">
+      <div className="model__title">Create a new Prompt</div>
+      <div className="modal__item-title">Name</div>
+      <input
+        ref={nameInputRef}
+        className="modal__input"
+        placeholder={'A name for your prompt.'}
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+      <div className="modal__item-title">Description</div>
+      <textarea
+        className="modal__textarea"
+        style={{ resize: 'none' }}
+        placeholder={'A description for your prompt.'}
+        value={description}
+        onChange={(e) => {
+          setDescription(e.target.value);
+        }}
+        rows={3}
+      />
+      <div className="modal__item-title">Prompt</div>
+      <textarea
+        className="modal__textarea"
+        style={{ resize: 'none' }}
+        placeholder={'Prompt content. Use {{}} to denote a variable.\nEx: {{\u00A0name\u00A0}} is a {{\u00A0adjective\u00A0}} {{\u00A0noun\u00A0}}'}
+        value={content}
+        onChange={(e) => {
+          setContent(e.target.value);
+        }}
+        rows={10}
+      />
+      <button
+        type="button"
+        className="modal__button"
+        onClick={() => {
+          const updatedPrompt = {
+            ...prompt,
+            name,
+            description,
+            content: content.trim()
+          };
+          // todo missing checking if all fields are filled
+          onUpdatePrompt(updatedPrompt);
+        }}
+      >
+        Save
+      </button>
     </div>
-  );
+  </div>);
 };

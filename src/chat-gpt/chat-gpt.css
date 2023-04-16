@@ -5,6 +5,7 @@
 @import url('./styles/profile-picker.css');
 @import url('./styles/prompt-list.css');
 @import url('./styles/prompt-item.css');
+@import url('../components/styles/modal.css');
 @import url('../components/styles/variable-modal.css');
 
 :root {
@@ -14,3 +15,4 @@
   --cc-border: 1px solid rgba(255,255,255,0.2);
   --cc-border-radius: 0.375rem;
 }
+
