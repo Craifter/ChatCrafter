@@ -9,7 +9,7 @@ interface ProfilePickerProps {
   onProfileSelect: (id: string) => void
   actions: {
     createProfile: (name: string) => void
-    loadList: () => void
+    openOptions: () => void
   }
 }
 
@@ -27,15 +27,11 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
   const sidebarProfilesActions = [{
     label: 'Edit',
     icon: <IconPencil size={ICON_SIZE}/>,
-    handler: () => {
-      // todo: send message to service worker to open options page
-    }
+    handler: () => { actions.openOptions(); }
   }, {
     label: 'Create',
     icon: <IconPlus size={ICON_SIZE}/>,
-    handler: () => {
-      setIsCreateOpen(!isCreateOpen);
-    }
+    handler: () => { setIsCreateOpen(!isCreateOpen); }
   }];
   const handleSelect = (id: string): void => {
     setActiveProfile(id);

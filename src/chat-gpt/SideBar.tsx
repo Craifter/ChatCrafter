@@ -13,24 +13,6 @@ export const SideBar: () => ReactElement = () => {
   const [activeProfileId, setActiveProfileId] = React.useState<string | null>(null);
   const [activePrompts, setActivePrompts] = React.useState<Prompt[]>([]);
 
-  const createProfile = (name: string): void => {
-    const profile: ProfilesStorage = {
-      id: uuid(),
-      name,
-      prompts: {
-        version: '1.0.0',
-        generator: 'chatcrafter',
-        prompts: []
-      },
-      editable: true
-    };
-    void profilesStorage([profile]).then(() => {
-      setProfiles([profile, ...profiles]);
-      setActiveProfileId(profile.id);
-      setActivePrompts(profile.prompts.prompts);
-    });
-  };
-
   const openProfile = (id: string): void => {
     const profile = profiles.find((profile) => profile.id === id);
     if (profile != null) {
@@ -60,14 +42,33 @@ export const SideBar: () => ReactElement = () => {
 
   useEffect(loadProfiles, []);
 
+  const profilePickerActions = {
+    createProfile: (name: string): void => {
+      const profile: ProfilesStorage = {
+        id: uuid(),
+        name,
+        prompts: {
+          version: '1.0.0',
+          generator: 'chatcrafter',
+          prompts: []
+        },
+        editable: true
+      };
+      void profilesStorage([profile]).then(() => {
+        setProfiles([profile, ...profiles]);
+        setActiveProfileId(profile.id);
+        setActivePrompts(profile.prompts.prompts);
+      });
+    },
+    openOptions: () => {
+      // todo: send message to service worker to open options page
+    }
+  };
+
   return (<>
     {profiles.length > 0 && activeProfileId !== null && (
       <>
-        <ProfilePicker profiles={profiles} selectedProfile={profiles[0].id} onProfileSelect={(id) => { openProfile(id); }} actions={{
-          createProfile,
-          loadList: () => {}
-        }
-        }/>
+        <ProfilePicker profiles={profiles} selectedProfile={profiles[0].id} onProfileSelect={(id) => { openProfile(id); }} actions={profilePickerActions}/>
         <PromptList prompts={activePrompts} onDelete={(promptId) => {
           void profilesPromptsRemove(activeProfileId, promptId).then(() => {
             loadProfiles(activeProfileId);
