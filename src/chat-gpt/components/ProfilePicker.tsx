@@ -11,7 +11,7 @@ export interface ProfilePickerActionProps {
 
 interface ProfilePickerProps {
   profiles: ProfilesStorage[]
-  activeProfile: string
+  startProfile: string
   onProfileSelect: (id: string) => void
   actions: ProfilePickerActionProps[]
 }
@@ -19,10 +19,11 @@ interface ProfilePickerProps {
 export const ProfilePicker: FC<ProfilePickerProps> = ({
   profiles,
   onProfileSelect,
-  actions
+  actions,
+  startProfile
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeProfile, setActiveProfile] = useState(profiles[0].id);
+  const [activeProfile, setActiveProfile] = useState(startProfile);
   const handleSelect = (id: string): void => {
     setIsOpen(false);
     setActiveProfile(id);
