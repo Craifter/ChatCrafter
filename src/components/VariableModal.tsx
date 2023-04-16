@@ -38,6 +38,7 @@ export const VariableModal: FC<Props> = ({
     }
 
     onSubmit(updatedVariables.map((variable) => variable.value));
+    onClose();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
