@@ -24,10 +24,9 @@ const menuItems: Array<{
   pageContent: <PromptsPastePrompts/>
 }];
 
-export interface OptionsPageOwnPromptsProps {
-}
+export interface OptionsPageProfilesProps { }
 
-export const OptionsPagesPrompts: FC<OptionsPageOwnPromptsProps> = () => {
+export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
 
   const addPrompt = (): void => {
