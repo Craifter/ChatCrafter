@@ -72,5 +72,5 @@
 }
 
 .cc-prompt-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--cc-background-color-hover);
 }

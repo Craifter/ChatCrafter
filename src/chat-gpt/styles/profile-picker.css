@@ -14,7 +14,7 @@
 }
 
 .cc-profile-picker__button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--cc-background-color-hover);
 }
 
 .cc-profile-picker__button--center {
@@ -22,23 +22,19 @@
 }
 
 .cc-profile-picker__button--border {
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(255, 255, 255, 0.2);
-  border-radius: 0.375rem;
+  border: var(--cc-border);
+  border-radius: var(--cc-border-radius);
 }
 
 .cc-profile-picker__list {
   position: absolute;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   width: 100%;
   color: var(--cc-text-white);
   background: var(--cc-background-color);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 1px rgba(0, 0, 0, 0.1);
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(255, 255, 255, 0.2);
-  border-radius: 0.375rem;
+  border: var(--cc-border);
+  border-radius: var(--cc-border-radius);
   overflow-y: auto;
   max-height: 600px;
 }
@@ -74,7 +70,7 @@
   width: 99%;
   padding: 8px;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: var(--cc-border-radius);
   background-color: rgba(255, 255, 255, 0.1);
   color: var(--cc-text-white);
 }
@@ -82,7 +78,6 @@
 .cc-profile-picker__create__button {
   padding: 4px;
   border: none;
-  border-radius: 0.375rem;
-  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: var(--cc-border-radius);
   color: var(--cc-text-white);
 }
