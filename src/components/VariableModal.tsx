@@ -73,16 +73,16 @@ export const VariableModal: FC<Props> = ({
   }, []);
 
   return (
-    <div className="variable-modal__background" onKeyDown={handleKeyDown}>
-      <div ref={modalRef} className="variable-modal" role="dialog">
-        <div className="variable-modal__title">{prompt.name}</div>
-        <div className="variable-modal__description">{prompt.description}</div>
+    <div className="modal__background" onKeyDown={handleKeyDown}>
+      <div ref={modalRef} className="modal__content" role="dialog">
+        <div className="model__title">{prompt.name}</div>
+        <div className="modal__text">{prompt.description}</div>
         {updatedVariables.map((variable, index) => (
           <div key={index}>
-            <div className="variable-modal__variable-title">{variable.key}</div>
+            <div className="modal__item-title">{variable.key}</div>
             <textarea
               ref={index === 0 ? nameInputRef : undefined}
-              className="variable-modal__variable-textarea"
+              className="modal__textarea"
               style={{ resize: 'none' }}
               placeholder={`Enter a value for ${variable.key}...`}
               value={variable.value}
@@ -91,8 +91,8 @@ export const VariableModal: FC<Props> = ({
             />
           </div>
         ))}
-        {errorMessage != null && (<div className="variable-modal__error-message">{errorMessage}</div>)}
-        <button className="variable-modal__submit" onClick={handleSubmit}>Submit</button>
+        {errorMessage != null && (<div className="modal__text">{errorMessage}</div>)}
+        <button className="modal__button" onClick={handleSubmit}>Submit</button>
       </div>
     </div>
   );
