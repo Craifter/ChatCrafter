@@ -45,6 +45,10 @@
   transition: opacity 0.2s ease;
 }
 
+.cc-prompt-item__actions--open {
+  opacity: 1;
+}
+
 .cc-prompt-item:hover .cc-prompt-item__actions {
   opacity: 1;
 }
