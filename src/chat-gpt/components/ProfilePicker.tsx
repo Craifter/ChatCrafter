@@ -79,11 +79,11 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
         </button>))}
       </li>
       {isCreateOpen && (<li key={'create'} className={'cc-profile-picker__create'}>
-          <label htmlFor="create-profile">
+          <label htmlFor="cc-create-profile">
             <div className={'cc-profile-picker__create__label'}>Profile Name</div>
           </label>
           <div className={'cc-profile-picker__create__container'}>
-            <input className={'cc-profile-picker__create__input'} id="create-profile" type="text" placeholder={''}
+            <input className={'cc-profile-picker__create__input'} id="cc-create-profile" type="text" placeholder={''}
                    value={createName} onChange={(event) => {
                      setCreateName(event.target.value);
                    }}/>
