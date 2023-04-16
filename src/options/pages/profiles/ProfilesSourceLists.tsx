@@ -7,11 +7,11 @@ interface SourceList {
   url: string
 }
 
-export interface PromptsSourceListsProps {
+export interface ProfilesSourceListsProps {
 
 }
 
-export const PromptsSourceListsPrompts: FC<PromptsSourceListsProps> = () => {
+export const ProfilesSourceListsPrompts: FC<ProfilesSourceListsProps> = () => {
   const importList = (): void => {
     console.log('Import'); // todo import list
   };

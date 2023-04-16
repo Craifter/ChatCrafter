@@ -1,27 +1,27 @@
 import React, { type FC, type ReactNode, useState } from 'react';
 import { Button } from '../../components/Button';
-import { IconFile, IconLink, IconPackageImport, IconPlus } from '@tabler/icons-react';
+import { IconLink, IconPackageImport, IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../../constants';
-import { PromptsShowPrompts } from './prompts/PromptsShowPrompts';
-import { PromptsSourceListsPrompts } from './prompts/PromptsSourceLists';
-import { PromptsPastePrompts } from './prompts/PromptsPastePrompts';
+import { ProfilesShowPrompts } from './profiles/ProfilesShowPrompts';
+import { ProfilesSourceListsPrompts } from './profiles/ProfilesSourceLists';
+import { ProfilesEdit } from './profiles/ProfilesEdit';
 
 const menuItems: Array<{
   label: string
   icon: ReactNode
   pageContent: ReactNode
 }> = [{
+  label: 'Edit Profile',
+  icon: <IconPackageImport size={ICON_SIZE}/>,
+  pageContent: <ProfilesEdit/>
+}, {
   label: 'Show Prompts',
   icon: <IconPackageImport size={ICON_SIZE}/>,
-  pageContent: <PromptsShowPrompts/>
+  pageContent: <ProfilesShowPrompts/>
 }, {
   label: 'Show Source Lists',
   icon: <IconLink size={ICON_SIZE}/>,
-  pageContent: <PromptsSourceListsPrompts/>
-}, {
-  label: 'Paste Prompts',
-  icon: <IconFile size={ICON_SIZE}/>,
-  pageContent: <PromptsPastePrompts/>
+  pageContent: <ProfilesSourceListsPrompts/>
 }];
 
 export interface OptionsPageProfilesProps { }
