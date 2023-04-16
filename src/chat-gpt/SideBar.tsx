@@ -7,6 +7,8 @@ import { PromptList } from './components/PromptList';
 import { profilesStorage, profilesStorageGet } from '../utils/profiles/profilesStorage';
 import { uuid } from '../utils/uuid';
 import { profilesPromptsById, profilesPromptsRemove, profilesPromptsUpdate } from '../utils/profiles/profilesPrompts';
+import { IconPlus } from '@tabler/icons-react';
+import { ICON_SIZE } from '../constants';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -76,6 +78,7 @@ export const SideBar: () => ReactElement = () => {
       });
     },
     openOptions: () => {
+      console.log('//todo open options page');
       // todo: send message to service worker to open options page
     }
   };
@@ -91,6 +94,18 @@ export const SideBar: () => ReactElement = () => {
           prompts={activePrompts}
           onDelete={(promptId) => { deletePrompt(activeProfileId, promptId); }}
           onNameChange={(promptId, newName) => { changePromptName(activeProfileId, promptId, newName); }} />
+        <div>
+          <button className={'cc-sidebar__add-prompt'}>
+            <IconPlus size={ICON_SIZE} />
+            Add Prompt
+          </button>
+          <div className={'cc-sidebar__info'} onClick={profilePickerActions.openOptions}>
+            <span className={'cc-sidebar__info__options'}>
+              Options
+            </span>
+            ChatCrafter v0.0.1
+          </div>
+        </div>
       </>
     )}
     {profiles.length === 0 && (

@@ -1,8 +1,40 @@
 .cc-sidebar {
-  display: block;
-  padding: 8px;
+  display: flex;
+  padding: 8px 8px 2px 8px;
   width: 260px;
   height: 100%;
   flex-direction: column;
   background-color: var(--cc-background-color);
+  color: var(--cc-text-white);
+}
+
+.cc-sidebar__add-prompt {
+  position: relative;
+  width: 100%;
+  padding: 8px;
+  border: var(--cc-border);
+}
+
+.cc-sidebar__add-prompt svg {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.9rem;
+}
+
+.cc-sidebar__add-prompt:hover {
+  background-color: var(--cc-background-color-hover);
+}
+
+.cc-sidebar__info {
+  padding-top: 2px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cc-sidebar__info__options {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
 }
