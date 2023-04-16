@@ -101,6 +101,9 @@ export const PromptItem: FC<PromptItemProps> = ({
         </>)}
         {tryEdit && (<>
           <div className="cc-prompt-item__actions cc-prompt-item__actions--open" onClick={() => {
+            if (editValue.length === 0) {
+              return;
+            }
             onNameChange(data.id, editValue);
             setTryEdit(false);
             data.name = editValue;
