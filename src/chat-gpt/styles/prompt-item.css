@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 12px 4px;
+  padding: 12px;
   margin: 4px 0;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -20,11 +20,18 @@
 }
 
 .cc-prompt-item__image {
+  margin-top: 2px;
   margin-left: 8px;
 }
 
-.cc-prompt-item__image, .cc-prompt-item__actions {
+.cc-prompt-item__actions {
   margin-top: 2px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cc-prompt-item:hover .cc-prompt-item__actions {
+  opacity: 1;
 }
 
 .cc-prompt-item--placeholder {
