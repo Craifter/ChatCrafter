@@ -59,7 +59,7 @@ module.exports = async (env, argv) => {
     profileCreateIfMissing: true,
     chromiumProfile: path.join(__dirname, 'profile/chromium'),
     firefoxProfile: path.join(__dirname, 'profile/firefox'),
-    runLint: isProduction
+    runLint: isProduction && vendor === 'firefox',
   };
 
   const WEP = (await WebExtPlugin).default;
