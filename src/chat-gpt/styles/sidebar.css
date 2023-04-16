@@ -14,7 +14,7 @@
   padding: 8px;
   border: var(--cc-border);
   border-radius: var(--cc-border-radius);
-  margin: 0px 0px 8px 0px;
+  margin: 0 0 8px 0;
 }
 
 .cc-sidebar__add-prompt svg {
