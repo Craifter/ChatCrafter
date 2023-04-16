@@ -1,5 +1,4 @@
 import browser from 'webextension-polyfill';
-import Browser from 'webextension-polyfill';
 import { profilesInit } from './utils/profiles/profilesInit';
 
 const setBrowserIcons = async (isBlack: boolean = true): Promise<void> => {
@@ -26,10 +25,24 @@ const onStorageSyncChange = async (changes: Record<string, browser.Storage.Stora
   }
 };
 
+const listenForMessages = async (): Promise<void> => {
+  browser.runtime.onMessage.addListener(async (message: {
+    command: string
+    data: any
+  }) => {
+    switch (message.command) {
+      case 'openOptions':
+        await browser.runtime.openOptionsPage();
+        break;
+    }
+  });
+};
+
 const main = async (): Promise<void> => {
   await setupConfig();
   browser.storage.onChanged.addListener(onStorageSyncChange);
   await profilesInit();
+  await listenForMessages();
 };
 
 main().catch(console.error);

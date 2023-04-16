@@ -18,6 +18,7 @@ import { VariableModal } from '../components/VariableModal';
 import { injectPrompt } from './injectors';
 import { buildPromptString } from '../utils/prompts/promptTemplateWriter';
 import { PromptModal } from '../components/Promt/PromptModal';
+import browser from 'webextension-polyfill';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -93,8 +94,7 @@ export const SideBar: () => ReactElement = () => {
       });
     },
     openOptions: () => {
-      console.log('//todo open options page');
-      // todo: send message to service worker to open options page
+      void browser.runtime.sendMessage({ command: 'openOptions' });
     }
   };
 
