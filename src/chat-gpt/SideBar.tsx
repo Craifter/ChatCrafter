@@ -1,17 +1,34 @@
 import './chat-gpt.css';
 import React, { type ReactElement, useEffect } from 'react';
 import { type Prompt } from '../types/prompt';
-import { ProfilePicker, type ProfilePickerActionProps } from './components/ProfilePicker';
+import { ProfilePicker } from './components/ProfilePicker';
 import { type ProfilesStorage } from '../types/profilesStorage';
-import { IconCloudDownload, IconPlus } from '@tabler/icons-react';
-import { ICON_SIZE } from '../constants';
 import { PromptList } from './components/PromptList';
-import { profilesStorageGet } from '../utils/profiles/profilesStorage';
+import { profilesStorage, profilesStorageGet } from '../utils/profiles/profilesStorage';
+import { uuid } from '../utils/uuid';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
   const [activeProfileId, setActiveProfileId] = React.useState<string | null>(null);
   const [activePrompts, setActivePrompts] = React.useState<Prompt[]>([]);
+
+  const createProfile = (name: string): void => {
+    const profile: ProfilesStorage = {
+      id: uuid(),
+      name,
+      prompts: {
+        version: '1.0.0',
+        generator: 'chatcrafter',
+        prompts: []
+      },
+      editable: true
+    };
+    void profilesStorage([profile]).then(() => {
+      setProfiles([profile, ...profiles]);
+      setActiveProfileId(profile.id);
+      setActivePrompts(profile.prompts.prompts);
+    });
+  };
 
   const openProfile = (id: string): void => {
     const profile = profiles.find((profile) => profile.id === id);
@@ -22,37 +39,23 @@ export const SideBar: () => ReactElement = () => {
   };
 
   useEffect(() => {
-    console.log('eeeeeeefe');
-    if (profiles.length > 0 && activeProfileId == null) {
-      return;
-    }
     void profilesStorageGet().then((profiles) => {
-      console.log(profiles[1].prompts.prompts);
       setProfiles(profiles);
       if (profiles.length > 0) {
-        openProfile(profiles[0].id);
-        setActivePrompts(profiles[1].prompts.prompts);
+        setActiveProfileId(profiles[0].id);
+        setActivePrompts(profiles[0].prompts.prompts);
       }
     });
   }, []);
 
-  const sidebarProfilesActions: ProfilePickerActionProps[] = [{
-    label: 'Load',
-    icon: <IconCloudDownload size={ICON_SIZE}/>,
-    handler: () => {
-      console.log('Load');
-    }
-  }, {
-    label: 'Create',
-    icon: <IconPlus size={ICON_SIZE}/>,
-    handler: () => {
-      console.log('Create');
-    }
-  }];
   return (<>
-    {profiles.length > 0 && (
+    {profiles.length > 0 && activeProfileId !== null && (
       <>
-        <ProfilePicker profiles={profiles} startProfile={profiles[0].id} onProfileSelect={(id) => { openProfile(id); }} actions={sidebarProfilesActions}/>
+        <ProfilePicker profiles={profiles} selectedProfile={profiles[0].id} onProfileSelect={(id) => { openProfile(id); }} actions={{
+          createProfile,
+          loadList: () => {}
+        }
+        }/>
         <PromptList prompts={activePrompts} onDelete={() => {}}/>
       </>
     )}
