@@ -10,6 +10,7 @@ import { profilesPromptsById, profilesPromptsRemove, profilesPromptsUpdate } fro
 import { IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../constants';
 import { VariableModal } from '../components/VariableModal';
+import { injectPrompt } from './injectors';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -123,8 +124,9 @@ export const SideBar: () => ReactElement = () => {
               return variable.name;
             })}
             onSubmit={(data) => {
-              console.log(activeVariableModal);
-              console.log(data);
+              const message = `//todo: Prompt String Builder\n${activeVariableModal?.prompt}\n${data.join(', ')}`;
+              injectPrompt(message);
+              setActiveVariableModal(null);
             }} />
         )}
       </>
