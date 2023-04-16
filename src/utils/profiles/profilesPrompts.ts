@@ -29,3 +29,12 @@ export const profilesPromptsUpdate = async (profileId: string, prompt: Prompt): 
   profile.prompts.prompts[index] = prompt;
   await profilesStorageUpdate(profile);
 };
+
+export const profilesPromptsById = async (profileId: string, promptId: string): Promise<Prompt> => {
+  const profile = await profilesStorageById(profileId);
+  const prompt = profile.prompts.prompts.find((p) => p.id === promptId);
+  if (prompt == null) {
+    throw new Error('Prompt not found ' + promptId + ' in ' + profileId + ' profile');
+  }
+  return prompt;
+};
