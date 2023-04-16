@@ -5,7 +5,7 @@ import { type Prompt } from '../../types/prompt';
 function getExample (): Prompt {
   return {
     id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-    name: 'name',
+    name: 'name ' + Math.random().toString(36).substring(2, 6),
     description: 'The name of the person you are talking to.',
     prompt: 'Hi, my name is {{name}}.',
     variables: [],
@@ -34,11 +34,15 @@ export const profilesInit = async (): Promise<void> => {
       },
       {
         id: 'default2',
-        name: 'Default2',
+        name: 'Default 2',
         prompts: {
           version: '1.0.0',
           generator: 'generator-yeoman',
           prompts: [
+            getExample(),
+            getExample(),
+            getExample(),
+            getExample(),
             getExample(),
             getExample(),
             getExample()
