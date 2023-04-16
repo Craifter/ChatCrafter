@@ -1,55 +1,41 @@
-import React, { type ReactElement } from 'react';
+import './chat-gpt.css';
+import React, { type ReactElement, useEffect } from 'react';
 import { type Prompt } from '../types/prompt';
 import { ProfilePicker, type ProfilePickerActionProps } from './components/ProfilePicker';
 import { type ProfilesStorage } from '../types/profilesStorage';
 import { IconCloudDownload, IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../constants';
 import { PromptList } from './components/PromptList';
-import './chat-gpt.css';
-
-const prompts: Prompt[] = [{
-  id: 'name-generator1',
-  name: 'name generator 1',
-  description: 'Gives names for a gender',
-  prompt: 'Give me names for a {{gender}}',
-  variables: [{
-    name: 'gender',
-    type: 'string',
-    description: 'Girl or Boy'
-  }],
-  tags: ['person', 'names'],
-  metadata: {
-    author: 'Craifter',
-    creation_date: '2023-04-05',
-    source: 'https://github.com/Craifter/oprm'
-  },
-  model: {
-    id: 'gpt-3.5-turbo',
-    name: 'GPT-3.5',
-    maxLength: 12000,
-    tokenLimit: 4000
-  }
-}];
-
-const profiles: ProfilesStorage[] = [{
-  id: '1',
-  name: 'Profile 1',
-  prompts: {
-    version: '1.0.0',
-    generator: 'chatcrafter',
-    prompts: []
-  }
-}, {
-  id: '2',
-  name: 'Profile 2',
-  prompts: {
-    version: '1.0.0',
-    generator: 'chatcrafter',
-    prompts: []
-  }
-}];
+import { profilesStorageGet } from '../utils/profiles/profilesStorage';
 
 export const SideBar: () => ReactElement = () => {
+  const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
+  const [activeProfileId, setActiveProfileId] = React.useState<string | null>(null);
+  const [activePrompts, setActivePrompts] = React.useState<Prompt[]>([]);
+
+  const openProfile = (id: string): void => {
+    const profile = profiles.find((profile) => profile.id === id);
+    if (profile != null) {
+      setActiveProfileId(profile.id);
+      setActivePrompts(profile.prompts.prompts);
+    }
+  };
+
+  useEffect(() => {
+    console.log('eeeeeeefe');
+    if (profiles.length > 0 && activeProfileId == null) {
+      return;
+    }
+    void profilesStorageGet().then((profiles) => {
+      console.log(profiles[1].prompts.prompts);
+      setProfiles(profiles);
+      if (profiles.length > 0) {
+        openProfile(profiles[0].id);
+        setActivePrompts(profiles[1].prompts.prompts);
+      }
+    });
+  }, []);
+
   const sidebarProfilesActions: ProfilePickerActionProps[] = [{
     label: 'Load',
     icon: <IconCloudDownload size={ICON_SIZE}/>,
@@ -63,9 +49,15 @@ export const SideBar: () => ReactElement = () => {
       console.log('Create');
     }
   }];
-
   return (<>
-    <ProfilePicker profiles={profiles} activeProfile="1" onProfileSelect={() => {}} actions={sidebarProfilesActions}/>
-    <PromptList prompts={prompts} onDelete={() => {}}/>
+    {profiles.length > 0 && (
+      <>
+        <ProfilePicker profiles={profiles} startProfile={profiles[0].id} onProfileSelect={(id) => { openProfile(id); }} actions={sidebarProfilesActions}/>
+        <PromptList prompts={activePrompts} onDelete={() => {}}/>
+      </>
+    )}
+    {profiles.length === 0 && (
+      <div>Missing Profiles</div>
+    )}
   </>);
 };
