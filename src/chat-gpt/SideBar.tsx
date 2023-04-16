@@ -6,7 +6,7 @@ import { type ProfilesStorage } from '../types/profilesStorage';
 import { PromptList } from './components/PromptList';
 import { profilesStorage, profilesStorageGet } from '../utils/profiles/profilesStorage';
 import { uuid } from '../utils/uuid';
-import { profilesPromptsRemove } from '../utils/profiles/profilesPrompts';
+import { profilesPromptsById, profilesPromptsRemove, profilesPromptsUpdate } from '../utils/profiles/profilesPrompts';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -42,6 +42,21 @@ export const SideBar: () => ReactElement = () => {
 
   useEffect(loadProfiles, []);
 
+  const deletePrompt = (profileId: string, promptId: string): void => {
+    void profilesPromptsRemove(profileId, promptId).then(() => {
+      loadProfiles(profileId);
+    });
+  };
+
+  const changePromptName = (profileId: string, promptId: string, newName: string): void => {
+    void profilesPromptsById(profileId, promptId).then((prompt) => {
+      prompt.name = newName;
+      void profilesPromptsUpdate(profileId, prompt).then(() => {
+        loadProfiles(profileId);
+      });
+    });
+  };
+
   const profilePickerActions = {
     createProfile: (name: string): void => {
       const profile: ProfilesStorage = {
@@ -68,12 +83,14 @@ export const SideBar: () => ReactElement = () => {
   return (<>
     {profiles.length > 0 && activeProfileId !== null && (
       <>
-        <ProfilePicker profiles={profiles} selectedProfile={profiles[0].id} onProfileSelect={(id) => { openProfile(id); }} actions={profilePickerActions}/>
-        <PromptList prompts={activePrompts} onDelete={(promptId) => {
-          void profilesPromptsRemove(activeProfileId, promptId).then(() => {
-            loadProfiles(activeProfileId);
-          });
-        }}/>
+        <ProfilePicker
+          profiles={profiles}
+          selectedProfile={profiles[0].id}
+          onProfileSelect={(id) => { openProfile(id); }} actions={profilePickerActions} />
+        <PromptList
+          prompts={activePrompts}
+          onDelete={(promptId) => { deletePrompt(activeProfileId, promptId); }}
+          onNameChange={(promptId, newName) => { changePromptName(activeProfileId, promptId, newName); }} />
       </>
     )}
     {profiles.length === 0 && (
