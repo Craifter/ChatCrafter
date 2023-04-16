@@ -1,4 +1,4 @@
-import React, { type FC, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import { type Prompt } from '../../types/prompt';
 import {
   Tree, MultiBackend, getBackendOptions, type NodeModel, DndProvider
@@ -29,6 +29,11 @@ export const PromptList: FC<PromptListProps> = ({
     droppable: false
   }));
   const [treeData, setTreeData] = useState<Array<NodeModel<Prompt>>>(data);
+
+  useEffect(() => {
+    setTreeData(data);
+  }, [prompts]);
+
   const handleDrop = (newTree: Array<NodeModel<Prompt>>): void => {
     setTreeData(newTree);
   };
