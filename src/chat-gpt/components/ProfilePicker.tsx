@@ -1,34 +1,55 @@
-import React, { type FC, useState } from 'react';
+import React, { type FC, useEffect, useState } from 'react';
 import { type ProfilesStorage } from '../../types/profilesStorage';
-import { IconCaretDown, IconCaretUp } from '@tabler/icons-react';
+import { IconCaretDown, IconCaretUp, IconCloudDownload, IconPlus } from '@tabler/icons-react';
 import { ICON_SIZE } from '../../constants';
-
-export interface ProfilePickerActionProps {
-  label: string
-  icon: React.ReactNode
-  handler: () => void
-}
 
 interface ProfilePickerProps {
   profiles: ProfilesStorage[]
-  startProfile: string
+  selectedProfile: string
   onProfileSelect: (id: string) => void
-  actions: ProfilePickerActionProps[]
+  actions: {
+    createProfile: (name: string) => void
+    loadList: () => void
+  }
 }
 
 export const ProfilePicker: FC<ProfilePickerProps> = ({
   profiles,
   onProfileSelect,
   actions,
-  startProfile
+  selectedProfile
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeProfile, setActiveProfile] = useState(startProfile);
+  const [activeProfile, setActiveProfile] = useState(selectedProfile);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+  const sidebarProfilesActions = [{
+    label: 'Load',
+    icon: <IconCloudDownload size={ICON_SIZE}/>,
+    handler: () => {
+      console.log('Load');
+    }
+  }, {
+    label: 'Create',
+    icon: <IconPlus size={ICON_SIZE}/>,
+    handler: () => {
+      setIsCreateOpen(!isCreateOpen);
+    }
+  }];
   const handleSelect = (id: string): void => {
-    setIsOpen(false);
     setActiveProfile(id);
     onProfileSelect(id);
+    setIsOpen(false);
   };
+
+  const handleCreate = (): void => {
+    setIsOpen(false);
+    actions.createProfile('test123');
+  };
+
+  useEffect(() => {
+    setActiveProfile(selectedProfile);
+  }, [selectedProfile]);
 
   return (<div className="relative" onBlur={(event) => {
     if (!event.currentTarget.contains(event.relatedTarget as Node)) {
@@ -47,9 +68,9 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
         </span>
     </button>
     {isOpen && (<ul
-      className="cc-profile-picker__list">
+      className="cc-profile-picker__list" tabIndex={0}>
       <li key={'config'} className={'cc-profile-picker__actions'}>
-        {actions.map((action) => (<button
+        {sidebarProfilesActions.map((action) => (<button
           className={'cc-profile-picker__button cc-profile-picker__button--center'}
           onClick={action.handler}
           key={action.label}
@@ -58,6 +79,21 @@ export const ProfilePicker: FC<ProfilePickerProps> = ({
           {action.label}
         </button>))}
       </li>
+      {isCreateOpen && (
+        <li key={'create'} className={'cc-profile-picker__create'}>
+          <label htmlFor="create-profile">
+            <div className={'cc-profile-picker__create__label'}>Profile Name</div>
+          </label>
+          <div className={'cc-profile-picker__create__container'}>
+            <input className={'cc-profile-picker__create__input'} id="create-profile" type="text" placeholder={''}/>
+            <button className={'cc-profile-picker__create__button'} onClick={() => {
+              handleCreate();
+            }}>
+              <IconPlus size={ICON_SIZE}/>
+            </button>
+          </div>
+        </li>
+      )}
       {profiles.map((profile) => (<li key={profile.id}>
         <button className={'cc-profile-picker__button'} onClick={() => {
           handleSelect(profile.id);
