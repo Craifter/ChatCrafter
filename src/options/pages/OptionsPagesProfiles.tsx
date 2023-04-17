@@ -6,7 +6,7 @@ import { ProfilesShowPrompts } from './profiles/ProfilesShowPrompts';
 import { ProfilesEdit } from './profiles/ProfilesEdit';
 import { type ProfilesStorage } from '../../types/profilesStorage';
 import { type Prompt } from '../../types/prompt';
-import { profilesStorageGet, profilesStorageRemove } from '../../utils/profiles/profilesStorage';
+import { profilesStorageGet, profilesStorageRemove, profilesStorageUpdate } from '../../utils/profiles/profilesStorage';
 import { uuid } from '../../utils/uuid';
 import { PromptModal } from '../../components/Promt/PromptModal';
 import { profilesPromptsAdd } from '../../utils/profiles/profilesPrompts';
@@ -20,7 +20,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
   const [activeProfileId, setActiveProfileId] = React.useState<string | null>(null);
-  const [activePrompts, setActivePrompts] = React.useState<Prompt[]>([]);
+  const [activeProfile, setActiveProfile] = React.useState<ProfilesStorage | null>(null);
 
   const [activePromptModal, setActivePromptModal] = React.useState<Prompt | null>(null);
 
@@ -31,7 +31,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   }> = [{
     label: 'Show Prompts',
     icon: <IconPackageImport size={ICON_SIZE}/>,
-    pageContent: <ProfilesShowPrompts prompts={activePrompts} onAddPrompt={() => {
+    pageContent: <ProfilesShowPrompts prompts={activeProfile !== null ? activeProfile.prompts.prompts : []} onAddPrompt={() => {
       setActivePromptModal({
         id: uuid(),
         name: 'New Prompt',
@@ -51,6 +51,19 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
     label: 'Profile Settings',
     icon: <IconSettings size={ICON_SIZE}/>,
     pageContent: <ProfilesEdit
+      profileName={activeProfile !== null ? activeProfile.name : ''}
+      onSave={async (options) => {
+        const currentProfile = profiles.find((profile) => profile.id === activeProfileId);
+        if (currentProfile == null) {
+          return;
+        }
+        const newProfile = {
+          ...currentProfile,
+          name: options.name
+        };
+        await profilesStorageUpdate(newProfile);
+        loadProfiles();
+      }}
       onExportProfile={async () => {
         if (activeProfileId === null) {
           return;
@@ -79,7 +92,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
     const profile = profiles.find((profile) => profile.id === id);
     if (profile != null) {
       setActiveProfileId(profile.id);
-      setActivePrompts(profile.prompts.prompts);
+      setActiveProfile(profile);
     }
   };
 
@@ -92,13 +105,13 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
       setProfiles(profiles);
       if (openProfilId === undefined) {
         setActiveProfileId(profiles[0].id);
-        setActivePrompts(profiles[0].prompts.prompts);
+        setActiveProfile(profiles[0]);
         return;
       }
       const profile = profiles.find((profile) => profile.id === openProfilId);
       if (profile != null) {
         setActiveProfileId(profile.id);
-        setActivePrompts(profile.prompts.prompts);
+        setActiveProfile(profile);
       }
     });
   };
@@ -111,23 +124,20 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
           <select
             className={'border border-blue-500 dark:border-blue-950 rounded-md bg-blue-500 dark:bg-blue-950 hover:bg-blue-700 pt-1 pl-4 pr-8 h-8'}
             value={activeProfileId ?? ''}
-            onChange={(event) => {
-              openProfile(event.target.value);
-            }}>
-            {profiles.map((profile) => (<option className={'select-option active:bg-black'} key={profile.id}
-                                                value={profile.id}>{profile.name}</option>))}
+            onChange={(event) => { openProfile(event.target.value); }}>
+            {profiles.map((profile) => (
+              <option className={'select-option active:bg-black'} key={profile.id} value={profile.id}>{profile.name}</option>
+            ))}
           </select>
-
-          {menuItems.map((menuItem, index) => (<Button
+          {menuItems.map((menuItem, index) => (
+            <Button
             key={menuItem.label}
             icon={menuItem.icon}
-            onClick={() => {
-              setSelectedMenuItem(index);
-            }}
-            extendButtonClass={selectedMenuItem === index ? 'underline underline-offset-2' : ''}
-          >
+            onClick={() => { setSelectedMenuItem(index); }}
+            extendButtonClass={selectedMenuItem === index ? 'underline underline-offset-2' : ''}>
             {menuItem.label}
-          </Button>))}
+          </Button>
+          ))}
           <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={async () => {
             const newProfileId = await profilesImport();
             loadProfiles(newProfileId);
