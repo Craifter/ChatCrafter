@@ -19,6 +19,7 @@ import { injectPrompt } from './injectors';
 import { buildPromptString } from '../utils/prompts/promptTemplateWriter';
 import { PromptModal } from '../components/Promt/PromptModal';
 import browser from 'webextension-polyfill';
+import { profilesInit } from '../utils/profiles/profilesInit';
 
 export const SideBar: () => ReactElement = () => {
   const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
@@ -36,11 +37,12 @@ export const SideBar: () => ReactElement = () => {
   };
 
   const loadProfiles = (openProfilId?: string): void => {
-    void profilesStorageGet().then((profiles) => {
-      setProfiles(profiles);
+    void profilesStorageGet().then(async (profiles) => {
       if (profiles.length === 0) {
-        return;
+        await profilesInit();
+        profiles = await profilesStorageGet();
       }
+      setProfiles(profiles);
       if (openProfilId === undefined) {
         setActiveProfileId(profiles[0].id);
         setActivePrompts(profiles[0].prompts.prompts);
@@ -204,9 +206,6 @@ export const SideBar: () => ReactElement = () => {
             }} />
         )}
       </>
-    )}
-    {profiles.length === 0 && (
-      <div>Missing Profiles</div>
     )}
   </>);
 };
