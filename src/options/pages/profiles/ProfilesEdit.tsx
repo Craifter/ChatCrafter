@@ -26,19 +26,19 @@ export const ProfilesEdit: FC<ProfilesEditProps> = ({
   ];
 
   return (
-    <>
-      <div className="scrollbar flex flex-nowrap overflow-x-auto gap-2 pb-2 text-white">
+    <div className={'max-w-4xl mx-auto p-4 bg-white dark:bg-gray-900 rounded-lg shadow-lg text-base dark:text-white'}>
+      <p className={'dark:text-white'}>
+        Todos for this page:<br />
+        Change Name<br />
+        Change Description<br />
+      </p>
+      <div className="mt-4 flex flex-nowrap overflow-x-auto gap-2 pb-2 text-white">
         {actions.map((action) => (
           <Button key={action.label} onClick={action.onClick} icon={action.icon}>
             {action.label}
           </Button>
         ))}
       </div>
-      <p className={'dark:text-white'}>
-        Todos for this page:<br />
-        Change Name<br />
-        Change Description<br />
-      </p>
-    </>
+    </div>
   );
 };
