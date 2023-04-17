@@ -109,7 +109,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
       <div className={'flex flex-col'}>
         <div className={'scrollbar flex flex-nowrap overflow-x-auto gap-2 pb-2 text-white'}>
           <select
-            className={'border border-blue-500 dark:border-blue-950 rounded-md bg-blue-500 dark:bg-blue-950 hover:bg-blue-700 pt-1 pl-2 pr-8 h-8'}
+            className={'border border-blue-500 dark:border-blue-950 rounded-md bg-blue-500 dark:bg-blue-950 hover:bg-blue-700 pt-1 pl-4 pr-8 h-8'}
             value={activeProfileId ?? ''}
             onChange={(event) => {
               openProfile(event.target.value);
