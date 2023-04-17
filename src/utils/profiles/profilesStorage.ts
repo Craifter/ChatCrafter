@@ -48,3 +48,15 @@ export const profilesListenerStorage = (setState: (state: ProfilesStorage[]) => 
     }
   });
 };
+
+/** Remove profile from storage */
+export const profilesStorageRemove = async (id: string): Promise<ProfilesStorage[]> => {
+  const storage = await profilesStorageGet();
+  const index = storage.findIndex((p) => p.id === id);
+  if (index === -1) {
+    throw new Error('Profile not found');
+  }
+  storage.splice(index, 1);
+  await profilesStorageSet(storage);
+  return storage;
+};

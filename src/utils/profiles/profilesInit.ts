@@ -24,17 +24,11 @@ function getExample (): Prompt {
  */
 export const profilesInit = async (): Promise<void> => {
   let storage = await profilesStorageGet();
-  if (storage == null) {
+  if (storage == null || storage.length === 0) {
     storage = [
       {
         id: 'default',
         name: 'Default',
-        prompts: DEFAULT_PROMPTS,
-        editable: true
-      },
-      {
-        id: 'default2',
-        name: 'Default 2',
         prompts: {
           version: '1.0.0',
           generator: 'generator-yeoman',
