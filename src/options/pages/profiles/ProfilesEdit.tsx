@@ -6,6 +6,12 @@ export interface ProfilesEditProps {
 
 export const ProfilesEdit: FC<ProfilesEditProps> = () => {
   return (
-    <h1>Edit Profile</h1>
+    <p className={'dark:text-white'}>
+      Todos for this page:<br />
+      Change Name<br />
+      Change Description<br />
+      Export Profile<br />
+      Delete Profile
+    </p>
   );
 };
