@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode, useEffect, useState } from 'react';
 import { Button } from '../../components/Button';
-import { IconPackageImport, IconPlus, IconSettings } from '@tabler/icons-react';
+import { IconCopy, IconPackageImport, IconPencil, IconPlus, IconSettings, IconTrash } from '@tabler/icons-react';
 import { ICON_SIZE } from '../../constants';
 import { ProfilesShowPrompts } from './profiles/ProfilesShowPrompts';
 import { ProfilesEdit } from './profiles/ProfilesEdit';
@@ -9,10 +9,11 @@ import { type Prompt } from '../../types/prompt';
 import { profilesStorageGet, profilesStorageRemove, profilesStorageUpdate } from '../../utils/profiles/profilesStorage';
 import { uuid } from '../../utils/uuid';
 import { PromptModal } from '../../components/Promt/PromptModal';
-import { profilesPromptsAdd } from '../../utils/profiles/profilesPrompts';
+import { profilesPromptsAdd, profilesPromptsRemove } from '../../utils/profiles/profilesPrompts';
 import { exportProfile } from '../../utils/profiles/profilesExport';
 import { profilesInit } from '../../utils/profiles/profilesInit';
 import { profilesImport } from '../../utils/profiles/profilesImport';
+import { type PromptCardActions } from '../../components/PromptCard';
 
 export interface OptionsPageProfilesProps { }
 
@@ -23,6 +24,35 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   const [activeProfile, setActiveProfile] = React.useState<ProfilesStorage | null>(null);
 
   const [activePromptModal, setActivePromptModal] = React.useState<Prompt | null>(null);
+
+  const profilesShowPromptsActions: PromptCardActions[] = [
+    {
+      label: 'Delete Prompt',
+      icon: <IconTrash size={ICON_SIZE}/>,
+      action: async (prompt) => {
+        if (activeProfileId == null) return;
+        await profilesPromptsRemove(activeProfileId, prompt.id);
+        loadProfiles();
+      }
+    },
+    {
+      label: 'Duplicate Prompt',
+      icon: <IconCopy size={ICON_SIZE}/>,
+      action: (prompt) => {
+        setActivePromptModal({
+          ...prompt,
+          id: uuid()
+        });
+      }
+    },
+    {
+      label: 'Edit Prompt',
+      icon: <IconPencil size={ICON_SIZE}/>,
+      action: (prompt) => {
+        setActivePromptModal(prompt);
+      }
+    }
+  ];
 
   const menuItems: Array<{
     label: string
@@ -46,7 +76,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
         model: '',
         tags: []
       });
-    }}/>
+    }} cardActions={profilesShowPromptsActions}/>
   }, {
     label: 'Profile Settings',
     icon: <IconSettings size={ICON_SIZE}/>,
