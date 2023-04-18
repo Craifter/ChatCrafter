@@ -4,7 +4,12 @@ import { type Prompt } from '../../types/prompt';
 /** Add prompt to profile */
 export const profilesPromptsAdd = async (profileId: string, prompt: Prompt): Promise<void> => {
   const profile = await profilesStorageById(profileId);
-  profile.prompts.prompts.push(prompt);
+  const index = profile.prompts.prompts.findIndex((p) => p.id === prompt.id);
+  if (index !== -1) {
+    profile.prompts.prompts[index] = prompt;
+  } else {
+    profile.prompts.prompts.push(prompt);
+  }
   await profilesStorageUpdate(profile);
 };
 
