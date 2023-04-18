@@ -19,11 +19,11 @@ export interface OptionsPageProfilesProps { }
 
 export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
-  const [profiles, setProfiles] = React.useState<ProfilesStorage[]>([]);
-  const [activeProfileId, setActiveProfileId] = React.useState<string | null>(null);
-  const [activeProfile, setActiveProfile] = React.useState<ProfilesStorage | null>(null);
+  const [profiles, setProfiles] = useState<ProfilesStorage[]>([]);
+  const [activeProfileId, setActiveProfileId] = useState<string | null>(null);
+  const [activeProfile, setActiveProfile] = useState<ProfilesStorage | null>(null);
 
-  const [activePromptModal, setActivePromptModal] = React.useState<Prompt | null>(null);
+  const [activePromptModal, setActivePromptModal] = useState<Prompt | null>(null);
 
   const profilesShowPromptsActions: PromptCardActions[] = [
     {
