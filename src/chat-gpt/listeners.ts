@@ -23,6 +23,9 @@ export function listenersChatChanged (cb: (chatId: string) => void): void {
       cb(currentUrl.split('/').pop() ?? '');
     }, 500);
   }
-  container.addEventListener('DOMNodeInserted', listenersContainerDom);
+
+  const observer = new MutationObserver(listenersContainerDom);
+  observer.observe(container, { childList: true, subtree: true });
+
   listenersContainerDom();
 }

@@ -1,5 +1,6 @@
 import { type Prompt } from '../../types/prompt';
 import React, { type FC, type KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { PromptEditor } from './PromptEditor';
 
 interface Props {
   prompt: Prompt
@@ -88,6 +89,7 @@ export const PromptModal: FC<Props> = ({
         }}
         rows={10}
       />
+      <PromptEditor />
       <button
         type="button"
         className="modal__button"

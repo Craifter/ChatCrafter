@@ -25,24 +25,26 @@ const onStorageSyncChange = async (changes: Record<string, browser.Storage.Stora
   }
 };
 
-const listenForMessages = async (): Promise<void> => {
-  browser.runtime.onMessage.addListener(async (message: {
-    command: string
-    data: any
-  }) => {
-    switch (message.command) {
-      case 'openOptions':
-        await browser.runtime.openOptionsPage();
-        break;
-    }
-  });
+const listenForMessages = async (message: {
+  command: string
+  data: any
+}): Promise<void> => {
+  switch (message.command) {
+    case 'openOptions':
+      await browser.runtime.openOptionsPage();
+      break;
+  }
 };
 
 const main = async (): Promise<void> => {
   await setupConfig();
   browser.storage.onChanged.addListener(onStorageSyncChange);
+  browser.runtime.onMessage.addListener(listenForMessages);
+  window.addEventListener('unload', () => {
+    browser.storage.onChanged.removeListener(onStorageSyncChange);
+    browser.runtime.onMessage.removeListener(listenForMessages);
+  });
   await profilesInit();
-  await listenForMessages();
 };
 
 main().catch(console.error);

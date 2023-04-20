@@ -1,13 +1,16 @@
+export interface PromptVariable {
+  name: string
+  type: string
+  description?: string
+  default?: string
+}
+
 export interface Prompt {
   id: string
   name: string
   description: string
   prompt: string
-  variables: Array<{
-    name: string
-    type: string
-    description: string
-  }>
+  variables: PromptVariable[]
   tags: string[]
   metadata: {
     author: string
