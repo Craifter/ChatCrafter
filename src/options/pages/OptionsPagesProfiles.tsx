@@ -61,7 +61,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   }> = [{
     label: 'Show Prompts',
     icon: <IconPackageImport size={ICON_SIZE}/>,
-    pageContent: <ProfilesShowPrompts prompts={activeProfile !== null ? activeProfile.prompts.prompts : []} onAddPrompt={() => {
+    pageContent: <ProfilesShowPrompts prompts={activeProfile !== null ? activeProfile.prompts : []} onAddPrompt={() => {
       setActivePromptModal({
         id: uuid(),
         name: 'New Prompt',

@@ -104,6 +104,8 @@ export function promptsValidate (prompts: any): Prompts {
   return {
     version: prompts.version,
     generator: prompts.generator,
-    prompts: validatedPrompts
+    prompts: validatedPrompts,
+    id: prompts.id,
+    name: prompts.name
   };
 }

@@ -29,19 +29,17 @@ export const profilesInit = async (): Promise<void> => {
       {
         id: 'default',
         name: 'Default',
-        prompts: {
-          version: '1.0.0',
-          generator: 'generator-yeoman',
-          prompts: [
-            getExample(),
-            getExample(),
-            getExample(),
-            getExample(),
-            getExample(),
-            getExample(),
-            getExample()
-          ]
-        },
+        version: '1.0.0',
+        generator: 'generator-yeoman',
+        prompts: [
+          getExample(),
+          getExample(),
+          getExample(),
+          getExample(),
+          getExample(),
+          getExample(),
+          getExample()
+        ],
         editable: true
       }
     ];

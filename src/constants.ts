@@ -1,4 +1,5 @@
 import { type Prompts } from './types/prompts';
+import { uuid } from './utils/uuid';
 
 export const EXAMPLE_PROMPTS_URL = 'https://github.com/Craifter/oprm/blob/main/examples/examples.oprm';
 export const CHATGTP_URL = 'https://chat.openai.com/chat';
@@ -9,6 +10,8 @@ export const CHATCRAFTER_DESCRIPTION = 'A browser extension that enhances the Ch
 export const DEFAULT_PROMPTS: Prompts = {
   version: '1.0.0',
   generator: 'Craifter',
+  name: 'Default',
+  id: uuid(),
   prompts: [
     {
       id: 'default',

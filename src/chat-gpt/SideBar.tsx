@@ -32,7 +32,7 @@ export const SideBar: () => ReactElement = () => {
     const profile = profiles.find((profile) => profile.id === id);
     if (profile != null) {
       setActiveProfileId(profile.id);
-      setActivePrompts(profile.prompts.prompts);
+      setActivePrompts(profile.prompts);
     }
   };
 
@@ -45,13 +45,13 @@ export const SideBar: () => ReactElement = () => {
       setProfiles(profiles);
       if (openProfilId === undefined) {
         setActiveProfileId(profiles[0].id);
-        setActivePrompts(profiles[0].prompts.prompts);
+        setActivePrompts(profiles[0].prompts);
         return;
       }
       const profile = profiles.find((profile) => profile.id === openProfilId);
       if (profile != null) {
         setActiveProfileId(profile.id);
-        setActivePrompts(profile.prompts.prompts);
+        setActivePrompts(profile.prompts);
       }
     });
   };
@@ -82,17 +82,15 @@ export const SideBar: () => ReactElement = () => {
       const profile: ProfilesStorage = {
         id: uuid(),
         name,
-        prompts: {
-          version: '1.0.0',
-          generator: 'chatcrafter',
-          prompts: []
-        },
+        version: '1.0.0',
+        generator: 'chatcrafter',
+        prompts: [],
         editable: true
       };
       void profilesStorage([profile]).then(() => {
         setProfiles([profile, ...profiles]);
         setActiveProfileId(profile.id);
-        setActivePrompts(profile.prompts.prompts);
+        setActivePrompts(profile.prompts);
       });
     },
     openOptions: () => {
