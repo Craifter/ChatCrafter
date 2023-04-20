@@ -160,9 +160,13 @@ export const SideBar: () => ReactElement = () => {
           <VariableModal
             prompt={activeVariableModal}
             onClose={() => { setActiveVariableModal(null); }}
-            variables={activeVariableModal.variables.map((variable) => {
-              return variable.name;
-            })}
+            variables={
+              activeVariableModal.variables !== undefined
+                ? activeVariableModal.variables?.map((variable) => {
+                  return variable.name;
+                })
+                : []
+            }
             onSubmit={handleSubmit} />
         )}
         {activePromptModal !== null && (

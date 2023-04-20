@@ -15,8 +15,7 @@ export const VariableModal: FC<Props> = ({
   onClose
 }) => {
   const [updatedVariables, setUpdatedVariables] = useState<Array<{ key: string, value: string }>>(
-    variables
-      .map((variable) => ({ key: variable, value: '' }))
+    variables.map((variable) => ({ key: variable, value: '' }))
       .filter((item, index, array) => array.findIndex((t) => t.key === item.key) === index)
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

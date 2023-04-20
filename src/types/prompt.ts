@@ -8,14 +8,14 @@ export interface PromptVariable {
 export interface Prompt {
   id: string
   name: string
-  description: string
+  description?: string
   prompt: string
-  variables: PromptVariable[]
-  tags: string[]
-  metadata: {
+  variables?: PromptVariable[]
+  tags?: string[]
+  metadata?: {
     author: string
     creation_date: string
     source: string
   }
-  model: any
+  model?: any
 }
