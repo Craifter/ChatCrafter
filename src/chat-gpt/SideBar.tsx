@@ -17,7 +17,7 @@ import { ICON_SIZE } from '../constants';
 import { VariableModal } from '../components/VariableModal';
 import { injectPrompt } from './injectors';
 import { buildPromptString } from '../utils/prompts/promptTemplateWriter';
-import { PromptModal } from '../components/Promt/PromptModal';
+import { PromptModal } from '../components/Prompt/PromptModal';
 import browser from 'webextension-polyfill';
 import { profilesInit } from '../utils/profiles/profilesInit';
 
