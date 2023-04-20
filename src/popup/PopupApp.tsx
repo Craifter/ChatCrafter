@@ -3,14 +3,14 @@ import { PopupLayout } from './components/PopupLayout';
 import { PopupHeader } from './components/PopupHeader';
 import { PopupContent, type PopupContentPropsLinks } from './components/PopupContent';
 import browser from 'webextension-polyfill';
-import { CHATGTP_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE } from '../constants';
+import { CHATGPT_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE } from '../constants';
 import { IconList, IconRobot, IconSettings } from '@tabler/icons-react';
 
 const links: PopupContentPropsLinks[] = [
   {
     menuName: 'Open ChatGPT',
     menuIcon: <IconRobot size={ICON_SIZE} />,
-    onClick: () => { window.open(CHATGTP_URL); }
+    onClick: () => { window.open(CHATGPT_URL); }
   },
   {
     menuName: 'Open Options',
