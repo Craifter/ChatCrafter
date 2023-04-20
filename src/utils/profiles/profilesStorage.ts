@@ -9,7 +9,6 @@ export const profilesStorageSet = async (storage: ProfilesStorage[]): Promise<vo
 /** Add profiles to storage */
 export const profilesStorage = async (storage: ProfilesStorage[]): Promise<void> => {
   const current = await profilesStorageGet();
-  // check if id already exists and ask what to do
   const newIds = storage.map((p) => p.id);
   const currentIds = current.map((p) => p.id);
   const intersection = newIds.filter((id) => currentIds.includes(id));
