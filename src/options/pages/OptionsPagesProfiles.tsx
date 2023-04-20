@@ -24,6 +24,7 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
   const [activeProfile, setActiveProfile] = useState<ProfilesStorage | null>(null);
 
   const [activePromptModal, setActivePromptModal] = useState<Prompt | null>(null);
+  const [importError, setImportError] = useState<boolean>(false);
 
   const profilesShowPromptsActions: PromptCardActions[] = [
     {
@@ -169,9 +170,16 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
           </Button>
           ))}
           <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={async () => {
-            const newProfileId = await profilesImport();
-            loadProfiles(newProfileId);
-          }}> Import new Profile </Button>
+            try {
+              const newProfileId = await profilesImport();
+              loadProfiles(newProfileId);
+            } catch (e) {
+              setImportError(true);
+            }
+          }}>
+            Import new Profile
+            {importError && (<span className={'text-red-500'}> - Error importing profile</span>)}
+          </Button>
           <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={() => {}}>
             Create new Profile
           </Button>
