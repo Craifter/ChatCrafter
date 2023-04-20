@@ -3,10 +3,18 @@
 
 
 ## Install ChatCrafter Firefox Add-on
-1. Open Settings
-2. Go to Extensions & Themes
-3. Click the Settings Icon and then "Debug Add-ons"
-4. Load the Add-on via "Load Temporary Add-on..."
+1. Download [Firefox Add-on](https://github.com/Craifter/ChatCrafter/releases/download/v0.0.1/chatcrafter-0.0.1_firefox.zip)
+2. Open Settings
+3. Go to Extensions & Themes
+4. Click the Settings Icon and then "Debug Add-ons"
+5. Load the Add-on via "Load Temporary Add-on..."
+
+## Install ChatCrafter Chrome Plugin
+1. Download [Chrome Plugin](https://github.com/Craifter/ChatCrafter/releases/download/v0.0.1/chatcrafter-0.0.1_chromium.zip)
+2. Open Settings
+3. Click on Extensions or go to ***chrome://extensions***
+4. Activate "Developer mode"
+5. Click on "Load unpacked" and select the unpacked plugin directory
 
 ## Installation
 1. Download/clone the project from GitHub.
