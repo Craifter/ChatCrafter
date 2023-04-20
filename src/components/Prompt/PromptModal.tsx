@@ -14,19 +14,38 @@ export const PromptModal: FC<Props> = ({
 }) => {
   const [name, setName] = useState(prompt.name);
   const [description, setDescription] = useState(prompt.description);
-  const [content, setContent] = useState(prompt.prompt);
+  const [promptText, setContent] = useState(prompt.prompt);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
-  const handleEnter = (e: KeyboardEvent<HTMLDivElement>): void => {
+  const handleSubmit = (): void => {
+    if (name.length === 0) {
+      setErrorMessage('Please fill give the promt a name.');
+      return;
+    }
+    if (promptText.length === 0) {
+      setErrorMessage('Please fill out the prompt.');
+      return;
+    }
+
+    setErrorMessage('');
+    const updatedPrompt: Prompt = {
+      ...prompt,
+      name,
+      description,
+      prompt: promptText.trim()
+    };
+    onUpdatePrompt(updatedPrompt);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      onUpdatePrompt({
-        ...prompt,
-        name,
-        description,
-        prompt: content.trim()
-      });
+      e.preventDefault();
+      handleSubmit();
+    } else if (e.key === 'Escape') {
+      onClose();
     }
   };
 
@@ -53,7 +72,7 @@ export const PromptModal: FC<Props> = ({
     nameInputRef.current?.focus();
   }, []);
 
-  return (<div className="modal__background" onKeyDown={handleEnter}>
+  return (<div className="modal__background" onKeyDown={handleKeyDown}>
     <div className="modal__content" ref={modalRef} role="dialog">
       <div className="model__title">Create a new Prompt</div>
       <div className="modal__item-title">Name</div>
@@ -82,25 +101,17 @@ export const PromptModal: FC<Props> = ({
         className="modal__textarea"
         style={{ resize: 'none' }}
         placeholder={'Prompt content. Use {{}} to denote a variable.\nEx: {{\u00A0name\u00A0}} is a {{\u00A0adjective\u00A0}} {{\u00A0noun\u00A0}}'}
-        value={content}
+        value={promptText}
         onChange={(e) => {
           setContent(e.target.value);
         }}
         rows={10}
       />
+      {errorMessage != null && (<div className="modal__text modal__text--underline">{errorMessage}</div>)}
       <button
         type="button"
         className="modal__button"
-        onClick={() => {
-          const updatedPrompt = {
-            ...prompt,
-            name,
-            description,
-            content: content.trim()
-          };
-          // todo missing checking if all fields are filled
-          onUpdatePrompt(updatedPrompt);
-        }}
+        onClick={handleSubmit}
       >
         Save
       </button>
