@@ -8,7 +8,7 @@ import { type ProfilesStorage } from '../../types/profilesStorage';
 import { type Prompt } from '../../types/prompt';
 import { profilesStorageGet, profilesStorageRemove, profilesStorageUpdate } from '../../utils/profiles/profilesStorage';
 import { uuid } from '../../utils/uuid';
-import { PromptModal } from '../../components/Promt/PromptModal';
+import { PromptModal } from '../../components/Prompt/PromptModal';
 import { profilesPromptsAdd, profilesPromptsRemove } from '../../utils/profiles/profilesPrompts';
 import { exportProfile } from '../../utils/profiles/profilesExport';
 import { profilesInit } from '../../utils/profiles/profilesInit';

@@ -10,13 +10,13 @@ export const PromptArea: FC<Props> = () => {
   const [prompts, setPrompts] = useState('');
 
   useEffect(() => {
-    const loadPromts = async (): Promise<void> => {
+    const loadPrompts = async (): Promise<void> => {
       const propts = await browser.storage.local.get('propts');
       if (propts.propts != null) {
         setPrompts(propts.propts);
       }
     };
-    loadPromts().catch((e) => { console.error(e); });
+    loadPrompts().catch((e) => { console.error(e); });
   }, []);
 
   const handleButtonClick = useCallback(async () => {
