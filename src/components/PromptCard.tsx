@@ -32,8 +32,8 @@ export const PromptCard: FC<PromptCardProps> = ({
           <b>Model:</b> {prompt.model}
         </div>)
       }
-      {prompt.metadata.source !== undefined && prompt.metadata.source.length > 0 && (<div className={'overflow-y-auto scrollbar'}>{prompt.metadata.source}</div>)}
-      {prompt.metadata.author !== undefined && prompt.metadata.author.length > 0 && (<div>Created by <b>{prompt.metadata.author}</b></div>)}
+      {prompt.metadata?.source !== undefined && prompt.metadata.source.length > 0 && (<div className={'overflow-y-auto scrollbar'}>{prompt.metadata.source}</div>)}
+      {prompt.metadata?.author !== undefined && prompt.metadata.author.length > 0 && (<div>Created by <b>{prompt.metadata.author}</b></div>)}
       {
         actions.length > 0 && (<div className={'flex flex-row mt-2 gap-4'}>
           {actions.map((action, index) => (
