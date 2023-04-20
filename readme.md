@@ -1,7 +1,12 @@
 # ChatCrafter
 > A browser extension that enhances the ChatGPT interface by providing prompt templates in the OPRM (Open Prompt) format, making it easier to write and use prompts. Compatible with Chrome, Firefox, and other popular browsers. Streamline the process of crafting effective messages with customizable prompts featuring variables.
 
-## Still under development, not yet ready to run
+
+## Install ChatCrafter Firefox Add-on
+1. Open Settings
+2. Go to Extensions & Themes
+3. Click the Settings Icon and then "Debug Add-ons"
+4. Load the Add-on via "Load Temporary Add-on..."
 
 ## Installation
 1. Download/clone the project from GitHub.
