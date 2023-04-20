@@ -2,7 +2,7 @@ import React, { type ReactElement } from 'react';
 import { OptionsLayout } from './components/OptionsLayout';
 import { OptionsHeader } from './components/OptionsHeader';
 import { type OptionContentPropsExternal, type OptionContentPropsPage, OptionsContent } from './components/OptionsContent';
-import { CHATCRAFTER_DESCRIPTION, CHATGTP_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE, SUPPORT_CHATCRAFTER } from '../constants';
+import { CHATCRAFTER_DESCRIPTION, CHATGPT_URL, EXAMPLE_PROMPTS_URL, ICON_SIZE, SUPPORT_CHATCRAFTER } from '../constants';
 import {
   IconFile,
   IconHeartHandshake,
@@ -38,9 +38,9 @@ const pages: OptionContentPropsPage[] = [
 
 const externals: OptionContentPropsExternal[] = [
   {
-    menuName: 'ChatGTP',
+    menuName: 'ChatGPT',
     menuIcon: <IconRobot size={ICON_SIZE} />,
-    externalUrl: CHATGTP_URL
+    externalUrl: CHATGPT_URL
   },
   {
     menuName: 'Example Prompts File',
