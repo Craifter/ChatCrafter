@@ -9,8 +9,20 @@ export const profilesStorageSet = async (storage: ProfilesStorage[]): Promise<vo
 /** Add profiles to storage */
 export const profilesStorage = async (storage: ProfilesStorage[]): Promise<void> => {
   const current = await profilesStorageGet();
-  current.push(...storage);
-  await profilesStorageSet(current);
+  // check if id already exists and ask what to do
+  const newIds = storage.map((p) => p.id);
+  const currentIds = current.map((p) => p.id);
+  const intersection = newIds.filter((id) => currentIds.includes(id));
+  if (intersection.length > 0) {
+    const msg = `The following profiles already exist with the same id: ${intersection.join(', ')}. Do you want to overwrite them?`;
+    const overwrite = window.confirm(msg);
+    if (!overwrite) {
+      return;
+    }
+  }
+  const newProfiles = current.filter((p) => !newIds.includes(p.id));
+  newProfiles.push(...storage);
+  await profilesStorageSet(newProfiles);
 };
 
 /** Update profile in storage */
