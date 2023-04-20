@@ -14,8 +14,23 @@ export const DEFAULT_PROMPTS: Prompts = {
   id: uuid(),
   prompts: [
     {
-      id: 'default',
-      name: 'name',
+      id: uuid(),
+      name: 'Getting Started',
+      description: 'A promts to getting started with ChatCrafter',
+      prompt: `ChatCrafter is a browser plugin that extends the normal interface of ChatGPT. 
+                The goal of ChatCrafter is to allow the user of a better use of ChatGPT. For this purpose it integrates an additional sidebar. In the sidebar you can save, edit and sort prompts. In addition, prompts can be added by templating variables, which allows a better use of predefined prompts. Prompts can be exported and imported through a standardized file format called OPRT (open prompt).
+                Act as documentation so that users can ask you questions via ChatCrafter and you answer them.`,
+      tags: [],
+      metadata: {
+        author: 'Craifter',
+        creation_date: '2023-04-20',
+        source: ''
+      },
+      model: {}
+    },
+    {
+      id: uuid(),
+      name: 'Example variable',
       description: 'The name of the person you are talking to.',
       prompt: 'Hi, my name is {{name}}.',
       variables: [{
@@ -26,7 +41,7 @@ export const DEFAULT_PROMPTS: Prompts = {
       tags: [],
       metadata: {
         author: 'Craifter',
-        creation_date: '1997-08-29',
+        creation_date: '2023-04-20',
         source: ''
       },
       model: {}
