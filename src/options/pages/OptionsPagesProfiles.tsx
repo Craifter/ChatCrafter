@@ -6,7 +6,12 @@ import { ProfilesShowPrompts } from './profiles/ProfilesShowPrompts';
 import { ProfilesEdit } from './profiles/ProfilesEdit';
 import { type ProfilesStorage } from '../../types/profilesStorage';
 import { type Prompt } from '../../types/prompt';
-import { profilesStorageGet, profilesStorageRemove, profilesStorageUpdate } from '../../utils/profiles/profilesStorage';
+import {
+  profilesStorage,
+  profilesStorageGet,
+  profilesStorageRemove,
+  profilesStorageUpdate
+} from '../../utils/profiles/profilesStorage';
 import { uuid } from '../../utils/uuid';
 import { PromptModal } from '../../components/Prompt/PromptModal';
 import { profilesPromptsAdd, profilesPromptsRemove } from '../../utils/profiles/profilesPrompts';
@@ -180,7 +185,19 @@ export const OptionsPagesProfiles: FC<OptionsPageProfilesProps> = () => {
             Import new Profile
             {importError && (<span className={'text-red-500'}> - Error importing profile</span>)}
           </Button>
-          <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={() => {}}>
+          <Button icon={<IconPlus size={ICON_SIZE}/>} onClick={async () => {
+            const newProfile: ProfilesStorage = {
+              id: uuid(),
+              name: 'New Profile',
+              prompts: [],
+              generator: 'ChatCrafter',
+              version: '1.0.0',
+              editable: true
+            };
+            await profilesStorage([newProfile]);
+            loadProfiles(newProfile.id);
+            setSelectedMenuItem(1);
+          }}>
             Create new Profile
           </Button>
         </div>
