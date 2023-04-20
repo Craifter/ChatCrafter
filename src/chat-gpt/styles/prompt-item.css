@@ -54,13 +54,13 @@
 }
 
 .cc-prompt-item--placeholder {
-  background: red;
+  opacity: 0.4;
 }
 
 .cc-prompt-item--dragging {
   position: absolute;
   max-width: 300px;
-  background: pink;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .cc-prompt-item--dragging .cc-prompt-item__actions {
