@@ -12,6 +12,7 @@ interface PromptItemProps {
   onDelete?: (promptId: string) => void
   onNameChange?: (promptId: string, newName: string) => void
   onSelect?: (promptId: string) => void
+  onEdit?: (promptId: string) => void
 }
 
 export const PromptItem: FC<PromptItemProps> = ({
@@ -21,11 +22,10 @@ export const PromptItem: FC<PromptItemProps> = ({
   depth = 0,
   onDelete,
   onNameChange,
-  onSelect
+  onSelect,
+  onEdit
 }) => {
   const [tryDelete, setTryDelete] = useState<boolean>(false);
-  const [tryEdit, setTryEdit] = useState<boolean>(false);
-  const [editValue, setEditValue] = useState<string>(node.data?.name ?? '');
 
   let itemModifiers = '';
   if (isPlaceholder) {
@@ -33,18 +33,6 @@ export const PromptItem: FC<PromptItemProps> = ({
   } else if (isDragging) {
     itemModifiers = 'cc-prompt-item--dragging';
   }
-
-  const setFocusOnInput = (recursiveCounter: number = 0): void => {
-    if (recursiveCounter > 20) {
-      return;
-    }
-    const input = document.getElementById('cc-profile-name');
-    if (input === null) {
-      setTimeout(() => { setFocusOnInput(recursiveCounter + 1); }, 10 * recursiveCounter);
-    } else {
-      input.focus();
-    }
-  };
 
   const {
     data
@@ -74,45 +62,24 @@ export const PromptItem: FC<PromptItemProps> = ({
         <IconClipboardText size={ICON_SIZE}/>
       </div>
       <div className="cc-prompt-item__name">
-        {tryEdit
-          ? (
-          <input id="cc-profile-name" className={'cc-prompt-item__name__input'} type="text" value={editValue} onChange={(e) => { setEditValue(e.target.value); }}/>
-            )
-          : data.name}
+        {data.name}
       </div>
       {onDelete !== undefined && onNameChange !== undefined && !isDragging && (<>
-        {!tryEdit && !tryDelete && (<>
-            <div className="cc-prompt-item__actions" onClick={(event) => { setTryEdit(true); setFocusOnInput(); }}>
+        {!tryDelete && (<>
+          {onEdit !== undefined && (
+            <div className="cc-prompt-item__actions" onClick={() => { onEdit(data.id); }}>
               <IconPencil size={ICON_SIZE}/>
             </div>
+          )}
             <div className="cc-prompt-item__actions" onClick={() => { setTryDelete(true); }}>
               <IconTrash size={ICON_SIZE}/>
             </div>
           </>)}
-
         {tryDelete && (<>
           <div className="cc-prompt-item__actions cc-prompt-item__actions--open" onClick={() => { onDelete(data.id); }}>
             <IconCheck size={ICON_SIZE}/>
           </div>
           <div className="cc-prompt-item__actions cc-prompt-item__actions--open" onClick={() => { setTryDelete(false); }}>
-            <IconX size={ICON_SIZE}/>
-          </div>
-        </>)}
-        {tryEdit && (<>
-          <div className="cc-prompt-item__actions cc-prompt-item__actions--open" onClick={() => {
-            if (editValue.length === 0) {
-              return;
-            }
-            onNameChange(data.id, editValue);
-            setTryEdit(false);
-            data.name = editValue;
-          }}>
-            <IconCheck size={ICON_SIZE}/>
-          </div>
-          <div className="cc-prompt-item__actions cc-prompt-item__actions--open" onClick={() => {
-            setTryEdit(false);
-            setEditValue(data.name);
-          }}>
             <IconX size={ICON_SIZE}/>
           </div>
         </>)}

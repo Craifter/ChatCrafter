@@ -122,6 +122,9 @@ export const SideBar: () => ReactElement = () => {
           prompts={activePrompts}
           onDelete={(promptId) => { deletePrompt(activeProfileId, promptId); }}
           onNameChange={(promptId, newName) => { changePromptName(activeProfileId, promptId, newName); }}
+          onEdit={(promptId) => {
+            setActivePromptModal(getPrompt(promptId));
+          }}
           onSelect={(promptId) => {
             setActiveVariableModal(getPrompt(promptId));
           }} />

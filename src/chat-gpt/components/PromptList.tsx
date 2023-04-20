@@ -10,6 +10,7 @@ interface PromptListProps {
   onDelete: (promptId: string) => void
   onNameChange: (promptId: string, newName: string) => void
   onSelect: (promptId: string) => void
+  onEdit: (promptId: string) => void
 }
 
 /**
@@ -20,7 +21,8 @@ export const PromptList: FC<PromptListProps> = ({
   prompts,
   onDelete,
   onNameChange,
-  onSelect
+  onSelect,
+  onEdit
 }) => {
   const data = prompts.map((prompt) => ({
     id: prompt.id,
@@ -54,6 +56,7 @@ export const PromptList: FC<PromptListProps> = ({
             onDelete={onDelete}
             onNameChange={onNameChange}
             onSelect={onSelect}
+            onEdit={onEdit}
           />}
         dragPreviewRender={(monitorProps) => {
           return (<>
