@@ -9,6 +9,7 @@
     "build": "webpack --config webpack.config.js",
     "build:chromium": "cross-env vendor=chromium npm run build",
     "build:prod": "npm run build -- --mode=production",
+    "build:prod:chromium": "cross-env vendor=chromium npm run build:prod",
     "analyze": "npm run build -- --mode=production --analyze",
     "watch": "npm run build -- --watch",
     "lint": "eslint --ext .ts,.tsx src",
