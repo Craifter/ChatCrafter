@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { SideBar } from './SideBar';
 
 const QUERY_CONTAINER = 'body>div>div:not(:empty)';
-const QUERY_TEXT_AREA = 'textarea[placeholder="Send a message..."]';
+const QUERY_TEXT_AREA = 'textarea[placeholder="Send a message."]';
 
 const ID_SIDEBAR = 'chatcrafter-sidebar';
 const ID_DESCRIPTION = 'chatcrafter-description';
